@@ -330,15 +330,10 @@ body {
     line-height: 1.7;
 }
 
-.about__image {
-    max-width: 50%;
-    height: auto;
-    border-radius: 16px;
-}
 
 .experience-card {
     position: relative;
-    display: flex; /* можно заменить grid на flex для простоты */
+    display: flex;
     align-items: center;
     justify-content: center;
 
@@ -865,9 +860,7 @@ body {
     .about__title {
         font-size: 32px;
     }
-    .about__logo {
-        max-width: 50px;
-    }
+
 
     .about__wrapper {
         flex-direction: column;

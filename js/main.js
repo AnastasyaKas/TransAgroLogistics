@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const burgerBtn = document.querySelector('.header__burger');
     const menu = document.querySelector('.header__menu');
     const body = document.body;
+    const menuLinks = document.querySelectorAll('.header__link');
 
     // Проверяем, что все элементы существуют
     if (burgerBtn && menu) {
@@ -19,6 +20,31 @@ document.addEventListener('DOMContentLoaded', () => {
             // Обновляем aria-атрибуты для доступности
             const isExpanded = burgerBtn.getAttribute('aria-expanded') === 'true';
             burgerBtn.setAttribute('aria-expanded', !isExpanded);
+        });
+
+        // Добавляем обработчик событий для каждой ссылки в меню
+        menuLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                // Находим соответствующий якорь
+                const targetId = link.getAttribute('href').slice(1);
+                const targetElement = document.getElementById(targetId);
+
+                if (targetElement) {
+                    // Плавно прокручиваем страницу к якорю
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+
+                    // Закрываем меню и восстанавливаем состояние
+                    burgerBtn.classList.remove('is-active');
+                    menu.classList.remove('is-open');
+                    body.classList.remove('no-scroll');
+
+                    // Обновляем aria-атрибуты для доступности
+                    burgerBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
         });
     }
 });
@@ -84,3 +110,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- КОНЕЦ ЛОГИКИ ДЛЯ ПОПАПА ---
 });
+
+
+
