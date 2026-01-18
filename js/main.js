@@ -1,106 +1,76 @@
+
+
 document.addEventListener('DOMContentLoaded', () => {
-    // Находим все необходимые элементы
+    // Бургер-меню
     const burgerBtn = document.querySelector('.header__burger');
     const menu = document.querySelector('.header__menu');
     const body = document.body;
     const menuLinks = document.querySelectorAll('.header__link');
 
-    // Проверяем, что все элементы существуют
     if (burgerBtn && menu) {
         burgerBtn.addEventListener('click', () => {
-            // Переключаем класс 'is-active' на бургере для анимации в крестик
             burgerBtn.classList.toggle('is-active');
-
-            // Переключаем класс 'is-open' на меню для его показа/скрытия
             menu.classList.toggle('is-open');
-
-            // Блокируем/разблокируем скролл страницы
             body.classList.toggle('no-scroll');
-
-            // Обновляем aria-атрибуты для доступности
             const isExpanded = burgerBtn.getAttribute('aria-expanded') === 'true';
             burgerBtn.setAttribute('aria-expanded', !isExpanded);
         });
 
-        // Добавляем обработчик событий для каждой ссылки в меню
         menuLinks.forEach(link => {
             link.addEventListener('click', (event) => {
-                // Находим соответствующий якорь
                 const targetId = link.getAttribute('href').slice(1);
                 const targetElement = document.getElementById(targetId);
 
                 if (targetElement) {
-                    // Плавно прокручиваем страницу к якорю
                     targetElement.scrollIntoView({
                         behavior: 'smooth',
                         block: 'start'
                     });
 
-                    // Закрываем меню и восстанавливаем состояние
                     burgerBtn.classList.remove('is-active');
                     menu.classList.remove('is-open');
                     body.classList.remove('no-scroll');
-
-                    // Обновляем aria-атрибуты для доступности
                     burgerBtn.setAttribute('aria-expanded', 'false');
                 }
             });
         });
     }
-});
 
-
-
-
-// js/main.js
-
-document.addEventListener('DOMContentLoaded', () => {
-
-    // --- ЛОГИКА ДЛЯ ПОПАПА ---
-
-    // Находим все необходимые элементы
+    // Логика для попапа
     const openPopupButtons = document.querySelectorAll('.js-open-popup');
     const popup = document.querySelector('.popup');
     const closePopupButton = document.querySelector('.popup__close-btn');
-    const body = document.body;
 
-    // Функция открытия попапа
     function openPopup() {
-        if (!popup) return; // Если попапа нет на странице, ничего не делаем
-        popup.classList.add('is-visible');
-        body.classList.add('no-scroll'); // Блокируем скролл основной страницы
+        if (popup) {
+            popup.classList.add('is-visible');
+            body.classList.add('no-scroll');
+        }
     }
 
-    // Функция закрытия попапа
     function closePopup() {
-        if (!popup) return;
-        popup.classList.remove('is-visible');
-        body.classList.remove('no-scroll'); // Возвращаем скролл
+        if (popup) {
+            popup.classList.remove('is-visible');
+            body.classList.remove('no-scroll');
+        }
     }
 
-    // Добавляем обработчики событий
     if (popup && openPopupButtons.length > 0) {
-
-        // 1. Открытие по клику на любую из кнопок
         openPopupButtons.forEach(button => {
             button.addEventListener('click', (e) => {
-                e.preventDefault(); // Предотвращаем стандартное действие ссылки
+                e.preventDefault();
                 openPopup();
             });
         });
 
-        // 2. Закрытие по клику на крестик
         closePopupButton.addEventListener('click', closePopup);
 
-        // 3. Закрытие по клику на оверлей (темный фон)
         popup.addEventListener('click', (e) => {
-            // Если клик был по самому оверлею, а не по его контенту
             if (e.target === popup) {
                 closePopup();
             }
         });
 
-        // 4. Закрытие по нажатию на клавишу Escape
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && popup.classList.contains('is-visible')) {
                 closePopup();
@@ -108,8 +78,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- КОНЕЦ ЛОГИКИ ДЛЯ ПОПАПА ---
+    // Логика отправки формы
+    const forms = document.querySelectorAll('.popup__form');
+    forms.forEach(form => {
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            // Показать сообщение
+            // alert('Форма успешно отправлена, но сейчас работает только фронтенд. Мы свяжемся с вами позже!');
+
+            // Очистить форму
+            form.reset();
+
+            // Закрыть попап
+            closePopup();
+        });
+    });
 });
-
-
 
