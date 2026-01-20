@@ -1,0 +1,59 @@
+.header {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 100;
+  background: #fff;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+}
+
+.logoLink {
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.menu {
+  // стили меню
+  &.isOpen { // Обрати внимание: .isOpen без пробела, если это доп. класс
+    display: block;
+  }
+}
+
+.btn {
+  cursor: pointer;
+  // общие стили кнопок
+
+  &Mobile { display: none; }
+  &Desktop { display: block; }
+}
+
+.burger {
+  display: none;
+
+  &.isActive {
+    .burgerLine {
+      // стили для активного бургера
+    }
+  }
+}
+
+.burgerLine {
+  display: block;
+  width: 25px;
+  height: 2px;
+  background: #000;
+  margin: 4px 0;
+}
+
+// Медиа-запросы
+@media (max-width: 768px) {
+  .burger { display: block; }
+  .btnDesktop { display: none; }
+  .btnMobile { display: block; }
+}
