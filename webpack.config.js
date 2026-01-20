@@ -5,12 +5,16 @@ module.exports = {
     mode: 'development',  // Режим разработки
     entry: './src/index.tsx', // Точка входа
     output: {
-        path: path.resolve(__dirname, 'dist'),  // Папка для скомпилированных файлов
-        filename: 'bundle.js',  // Название скомпилированного файла
-        publicPath: '/',  // Публичный путь для ресурсов (например, статика)
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'bundle.js',
+        publicPath: '/', // Убедись, что это здесь
+        clean: true,
     },
     resolve: {
-        extensions: ['.ts', '.tsx', '.js', '.jsx'],  // Расширения для разрешения модулей
+        extensions: ['.ts', '.tsx', '.js', '.jsx'],
+        alias: {
+            '@': path.resolve(__dirname, 'src'), // Теперь @ = папка src
+        },
     },
     module: {
         rules: [
@@ -26,12 +30,12 @@ module.exports = {
                     {
                         loader: 'css-loader',
                         options: {
-                            importLoaders: 2, // Важно для цепочки с sass-loader
+                            url: true, // Включает обработку url()
+                            importLoaders: 1,
                             modules: {
                                 auto: true,
-                                localIdentName: '[name]__[local]--[hash:base64:5]',
-                                namedExport: false, // ВАЖНО: отключаем именованные экспорты для версии 7.x
-                                exportLocalsConvention: 'camelCase', // Позволяет писать styles.layoutWrapper
+                                namedExport: false,
+                                exportLocalsConvention: 'camelCase',
                             },
                         },
                     },
@@ -54,8 +58,20 @@ module.exports = {
                 ],
             },
             {
-                test: /\.(png|jpg|svg|gif)$/i,  // Правило для изображений
-                type: 'asset/resource',  // Импортируем ресурсы как отдельные файлы
+                test: /\.(woff2?|eot|ttf|otf)$/i,
+                type: 'asset/resource',
+                generator: {
+                    // Добавляем хеш [hash]. Это поможет нам понять, работает ли Webpack.
+                    // Если Webpack работает, в браузере ссылка будет типа /fonts/Name.a1b2c3.woff2
+                    filename: 'fonts/[name].[hash:8][ext]'
+                }
+            },
+            {
+                test: /\.(png|jpe?g|gif|svg)$/i,
+                type: 'asset/resource',
+                generator: {
+                    filename: 'assets/images/[name][ext]'
+                }
             },
         ],
     },
@@ -77,7 +93,9 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: './src/index.html',  // Шаблон для генерируемого HTML
+            template: './src/index.html',
+            // Путь должен быть верным! Проверь, лежит ли там файл
+            favicon: './src/assets/images/favicon.ico',
         }),
     ],
 };

@@ -1,0 +1,74 @@
+// Вместо @import используем @use
+@use 'fonts';
+@use 'variables' as v; // 'as v' позволяет обращаться к переменным через v.$name
+
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body, h1, h2, h3, h4, p, ul, ol, li, figure {
+  margin: 0;
+  padding: 0;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button, input, textarea, select {
+  font: inherit;
+}
+
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: v.$font-main;
+  color: v.$color-dark;
+  background-color: v.$color-white;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+// Глобальный контейнер
+.container {
+  max-width: v.$container-width;
+  margin: 0 auto;
+  padding: 0 v.$container-padding;
+}
+
+// Вспомогательный класс для скрытия заголовков (для SEO)
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+// Запрет скролла (для открытого меню или попапа)
+:global(body.no-scroll) {
+  overflow: hidden;
+}

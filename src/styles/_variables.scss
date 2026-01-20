@@ -1,6 +1,9 @@
-// src/styles/_variables.scss
-$color-primary: #2c3e50;
-$color-accent: #e74c3c;
-$font-main: 'Inter', sans-serif;
-$tablet: 768px;
-$mobile: 480px;
+$font-main: 'Open Sans', sans-serif;
+$font-secondary: 'Roboto', sans-serif;
+
+$color-dark: #222222;
+$color-white: #ffffff;
+$color-accent: #007bff; // Пример синего
+
+$container-width: 1200px;
+$container-padding: 15px;
