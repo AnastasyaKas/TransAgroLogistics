@@ -56,6 +56,12 @@ body {
   padding: 0 v.$container-padding;
 }
 
+.wideContainer {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 32px;                 // чуть больше воздуха
+}
+
 // Вспомогательный класс для скрытия заголовков (для SEO)
 .visually-hidden {
   position: absolute;
@@ -71,4 +77,11 @@ body {
 // Запрет скролла (для открытого меню или попапа)
 :global(body.no-scroll) {
   overflow: hidden;
+}
+
+
+@media (max-width: 768px) {
+  .wideContainer {
+    padding: 0 20px;
+  }
 }

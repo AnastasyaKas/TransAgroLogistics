@@ -1,23 +1,28 @@
-import React from 'react';
-import Header from './components/Header/Header';  // Заголовок
-import Footer from './components/Footer/Footer';  // Футер
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // Для роутинга
-import Home from './pages/Home';  // Главная страница
-import About from './pages/About';  // Страница "О нас"
-import Contact from './pages/Contact';  // Страница "Контакты"
-// import './styles/style.css';  // Локальные стили для этого компонента
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
+import Home from '@/pages/Home/Home';
+import About from '@/pages/About/About';
+import Contact from '@/pages/Contact/Contact';
+import Popup from '@/components/Popup/Popup';
 
-const App = () => {
+const App: React.FC = () => {
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+    const handleOpenPopup = () => setIsPopupOpen(true);
+    const handleClosePopup = () => setIsPopupOpen(false);
+
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<Home />} />
+                <Route path="/" element={<Home onOpenPopup={handleOpenPopup} />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
             </Routes>
+
+            <Popup isOpen={isPopupOpen} onClose={handleClosePopup} />
         </Router>
     );
-}
+};
 
 export default App;
