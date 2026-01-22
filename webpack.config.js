@@ -1,5 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+
 
 module.exports = {
     mode: 'development',  // Режим разработки
@@ -19,9 +21,14 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.tsx?$/,  // Правило для TypeScript файлов
-                use: 'ts-loader',  // Используем ts-loader для компиляции TS
-                exclude: /node_modules/,  // Исключаем node_modules
+                test: /\.tsx?$/,
+                use: {
+                    loader: 'ts-loader',
+                    options: {
+                        transpileOnly: true,
+                    },
+                },
+                exclude: /node_modules/,
             },
             {
                 test: /\.scss$/,
@@ -97,5 +104,6 @@ module.exports = {
             // Путь должен быть верным! Проверь, лежит ли там файл
             favicon: './src/assets/images/favicon.ico',
         }),
+        new ForkTsCheckerWebpackPlugin(),
     ],
 };
