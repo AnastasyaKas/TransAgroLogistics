@@ -5,11 +5,12 @@ import heroImage from '@/assets/images/main-image.png';
 import servicesBg from '@/assets/images/services-bg.png';
 import { advantages } from './homeData';
 import aboutTitle from '@/assets/images/about-title.svg';
-import stageIcon1 from '@/assets/images/stages-icon-1.png';
-import stageIcon2 from '@/assets/images/stages-icon-2.png';
-import stageIcon3 from '@/assets/images/stages-icon-3.png';
-import stageIcon4 from '@/assets/images/stages-icon-4.png';
-import avatarIcon from '@/assets/images/avatar.svg';
+import stageIcon1 from '@/assets/images/stages-icon-1.svg';
+import stageIcon2 from '@/assets/images/stages-icon-2.svg';
+import stageIcon3 from '@/assets/images/stages-icon-3.svg';
+import stageIcon4 from '@/assets/images/stages-icon-4.svg';
+
+
 
 
 
@@ -104,11 +105,6 @@ const supportStats = [
     { value: '3:45', label: 'Минут — среднее время ответа на запрос' },
 ];
 
-const reviews = [
-    { name: 'Михаил', stars: '★★★★☆', text: 'Надёжные перевозки и отличная поддержка. Работаем не первый раз!' },
-    { name: 'Роман', stars: '★★★★★' },
-    { name: 'Юлия', stars: '★★★★★', text: 'Отличная компания — всегда вовремя, груз в целости. Рекомендую!' },
-];
 
 const Home: React.FC<HomeProps> = ({ onOpenPopup }) => {
     return (
@@ -231,8 +227,6 @@ const Home: React.FC<HomeProps> = ({ onOpenPopup }) => {
                     <div className={styles.aboutInner}>
                         <div className={styles.aboutContent}>
                             <div className={styles.aboutBrand}>
-                                {/* Если есть svg-логотип как на старом лендосе */}
-                                {/* Если нет — можно оставить текстом */}
                                 <img
                                     src={aboutTitle}
                                     alt="ТРАНСАГРО"
@@ -308,7 +302,9 @@ const Home: React.FC<HomeProps> = ({ onOpenPopup }) => {
                         {/* LEFT */}
                         <div className={styles.supportLeft}>
                             <div className={styles.supportContent}>
-                                <h2 id="support-title" className={styles.supportTitle}>Поддержка 24/7</h2>
+                                <h2 id="support-title" className={styles.supportTitle}>
+                                    Поддержка 24/7
+                                </h2>
 
                                 <p className={styles.supportText}>
                                     Наши специалисты оперативно решают любые вопросы — от оформления документов до
@@ -337,7 +333,6 @@ const Home: React.FC<HomeProps> = ({ onOpenPopup }) => {
                                     <div
                                         className={styles.reviewAvatar}
                                         aria-hidden="true"
-                                        style={{backgroundImage: `url(${avatarIcon})`}}
                                     />
                                     <div className={styles.reviewInfo}>
                                         <span className={styles.reviewName}>Михаил</span>
@@ -354,7 +349,6 @@ const Home: React.FC<HomeProps> = ({ onOpenPopup }) => {
                                     <div
                                         className={styles.reviewAvatar}
                                         aria-hidden="true"
-                                        style={{backgroundImage: `url(${avatarIcon})`}}
                                     />
                                     <div className={styles.reviewInfo}>
                                         <span className={styles.reviewName}>Роман</span>
@@ -368,7 +362,6 @@ const Home: React.FC<HomeProps> = ({ onOpenPopup }) => {
                                     <div
                                         className={styles.reviewAvatar}
                                         aria-hidden="true"
-                                        style={{backgroundImage: `url(${avatarIcon})`}}
                                     />
                                     <div className={styles.reviewInfo}>
                                         <span className={styles.reviewName}>Юлия</span>
@@ -380,7 +373,6 @@ const Home: React.FC<HomeProps> = ({ onOpenPopup }) => {
                                 </p>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </section>

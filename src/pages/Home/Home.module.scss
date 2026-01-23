@@ -1,12 +1,13 @@
 @use '../../styles/variables' as v;
 
-/* ========== BASE ========== */
+/* =========================
+   BASE
+========================= */
 
 .main {
   background: #E9EEF5;
 }
 
-/* Общие заголовки секций */
 .sectionTitle {
   margin: 0 0 60px;
   font-family: v.$font-secondary;
@@ -15,7 +16,9 @@
   color: v.$color-text-dark;
 }
 
-/* ========== HERO ========== */
+/* =========================
+   HERO
+========================= */
 
 .hero {
   padding-top: 40px;
@@ -82,6 +85,7 @@
   border-radius: 25px;
   border: 1px solid v.$color-accent;
   cursor: pointer;
+
   transition: transform 0.15s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
@@ -111,7 +115,9 @@
   height: auto;
 }
 
-/* ========== ADVANTAGES ========== */
+/* =========================
+   ADVANTAGES
+========================= */
 
 .advantages {
   padding: 48px 0 80px;
@@ -122,6 +128,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
+
   margin: 0;
   padding: 0;
   list-style: none;
@@ -198,7 +205,9 @@
   border-color: v.$color-text-dark;
 }
 
-/* ========== SERVICES ========== */
+/* =========================
+   SERVICES
+========================= */
 
 .services {
   padding: 120px 0 160px;
@@ -235,7 +244,6 @@
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
 }
 
-/* затемнение */
 .serviceItem::before {
   content: '';
   position: absolute;
@@ -244,7 +252,6 @@
   z-index: 0;
 }
 
-/* цветной оверлей */
 .serviceBlue::after,
 .serviceGreen::after,
 .serviceDark::after {
@@ -288,7 +295,6 @@
   max-width: 360px;
 }
 
-/* кнопка как на скрине */
 .serviceBtn {
   align-self: flex-start;
 
@@ -316,7 +322,9 @@
   border-color: rgba(255, 255, 255, 0.9);
 }
 
-/* ========== ABOUT ========== */
+/* =========================
+   ABOUT
+========================= */
 
 .about {
   padding: 120px 0;
@@ -413,7 +421,9 @@
   color: rgba(255, 255, 255, 0.95);
 }
 
-/* ========== STAGES ========== */
+/* =========================
+   STAGES
+========================= */
 
 .stages {
   padding: 120px 0;
@@ -475,7 +485,6 @@
   opacity: 0.95;
 }
 
-/* раскладка */
 .stage_request { grid-column: 1 / 2; grid-row: 1 / 2; }
 .stage_estimate { grid-column: 1 / 2; grid-row: 2 / 3; }
 .stage_start { grid-column: 2 / 3; grid-row: 1 / 3; }
@@ -488,7 +497,9 @@
   margin-top: 22px;
 }
 
-/* ========== SUPPORT ========== */
+/* =========================
+   SUPPORT (DESKTOP)
+========================= */
 
 .support {
   padding: 120px 0;
@@ -502,37 +513,28 @@
   padding: 64px;
 
   display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
+  grid-template-columns: minmax(0, 1fr) minmax(420px, 520px);
   column-gap: 56px;
 
-  background: linear-gradient(
-                  180deg,
-                  rgba(166, 233, 212, 1) 0%,
-                  rgba(31, 190, 141, 1) 100%
-  );
-
-  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(180deg, rgba(166, 233, 212, 1) 0%, rgba(31, 190, 141, 1) 100%);
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.10);
 }
 
-/* мягкая подсветка */
 .supportCard::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(
-                  80% 70% at 15% 10%,
-                  rgba(255, 255, 255, 0.22) 0%,
-                  rgba(255, 255, 255, 0) 60%
-  );
+  background: radial-gradient(80% 70% at 15% 10%, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0) 60%);
   pointer-events: none;
 }
 
-/* ===== LEFT ===== */
-
-.supportLeft {
+.supportLeft,
+.supportRight {
   position: relative;
   z-index: 1;
+}
 
+.supportLeft {
   display: flex;
   flex-direction: column;
   min-height: 420px;
@@ -559,8 +561,6 @@
   margin-top: 18px;
 }
 
-/* stats */
-
 .supportStats {
   margin-top: auto;
   padding: 0;
@@ -571,10 +571,15 @@
   gap: 32px;
 }
 
+.supportStat {
+  min-width: 0;
+}
+
 .supportStatValue {
   font-family: v.$font-secondary;
   font-size: 56px;
   font-weight: 800;
+  line-height: 1;
   color: #fff;
 }
 
@@ -582,18 +587,14 @@
   margin-top: 10px;
   font-size: 13px;
   line-height: 1.35;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.90);
 }
 
-/* ===== RIGHT / REVIEWS ===== */
-
 .supportRight {
-  position: relative;
-  z-index: 1;
   min-height: 420px;
 }
 
-/* общая карточка */
+/* Reviews (absolute layout only on wide desktop) */
 .reviewCard {
   position: absolute;
   right: 0;
@@ -606,30 +607,30 @@
   border: 1px solid rgba(255, 255, 255, 0.18);
   backdrop-filter: blur(8px);
 
-  border-radius: 28px;
   color: #fff;
 }
 
-/* позиции */
 .reviewTop {
   top: 0;
+  border-radius: 28px 28px 28px 0;
 }
 
 .reviewMid {
-  top: 170px;
-  right: 260px;
+  top: 158px;
+  right: 0;
 
-  width: 260px;
-  max-width: 260px;
+  width: 280px;
+  max-width: 280px;
   padding: 18px;
-  border-radius: 26px;
+
+  border-radius: 28px 28px 0 28px;
 }
 
 .reviewBottom {
   bottom: 0;
+  border-radius: 28px 28px 28px 0;
 }
 
-/* header */
 .reviewHeader {
   display: flex;
   align-items: center;
@@ -637,16 +638,40 @@
   margin-bottom: 12px;
 }
 
+.reviewInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Avatar: круг + SVG через mask (ВАЖНО: относительный путь!) */
 .reviewAvatar {
   width: 44px;
   height: 44px;
   border-radius: 50%;
 
-  background-color: rgba(255, 255, 255, 0.25);
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: radial-gradient(circle at 35% 35%, #0FA878 100%, #fff 40%);
 
-  mask: url('@/assets/images/avatar.svg') center / 22px 22px no-repeat;
-  -webkit-mask: url('@/assets/images/avatar.svg') center / 22px 22px no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow:
+          inset 0 0 0 2px rgba(255, 255, 255, 0.35),
+          0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+.reviewAvatar::after {
+  content: '';
+  width: 20px;
+  height: 20px;
+
+  background-color: rgba(255, 255, 255, 0.95);
+
+  /* ВАЖНО: Home.module.scss лежит в src/pages/Home
+     до src/assets/images = ../../assets/images */
+  mask: url('../../assets/images/avatar.svg') center / contain no-repeat;
+  -webkit-mask: url('../../assets/images/avatar.svg') center / contain no-repeat;
 }
 
 .reviewName {
@@ -657,7 +682,6 @@
 .reviewStars {
   font-size: 16px;
   letter-spacing: 0.06em;
-  margin-top: 4px;
 }
 
 .reviewText {
@@ -667,7 +691,9 @@
   color: rgba(255, 255, 255, 0.92);
 }
 
-/* ========== CONTACT CTA ========== */
+/* =========================
+   CONTACT
+========================= */
 
 .contact {
   padding: 80px 0;
@@ -710,10 +736,69 @@
   transform: scale(1.02);
 }
 
-/* ========== RESPONSIVE ========== */
+/* =========================
+   RESPONSIVE
+========================= */
 
-/* Планшеты */
-@media (max-width: 992px) {
+@media (max-width: 1200px) {
+  .supportCard {
+    padding: 48px;
+    column-gap: 32px;
+    grid-template-columns: minmax(0, 1fr) minmax(380px, 460px);
+  }
+
+  .supportStats {
+    grid-template-columns: repeat(2, minmax(160px, 1fr));
+    column-gap: 32px;
+    row-gap: 22px;
+  }
+
+  /* 3-й стат блок (3:45) под 10 (в левую колонку) */
+  .supportStat:nth-child(3) {
+    grid-column: 1;
+  }
+
+  .reviewMid {
+    width: 260px;
+    max-width: 260px;
+    top: 150px;
+  }
+}
+
+
+@media (max-width: 1100px) {
+  .supportCard {
+    grid-template-columns: 1fr;
+    row-gap: 34px;
+  }
+
+  .supportRight {
+    min-height: auto;
+    position: static;
+
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    align-items: center;
+  }
+
+  .reviewCard {
+    position: static;
+    width: 100%;
+    max-width: 560px;
+    border-radius: 28px;
+  }
+
+  .reviewMid {
+    width: 320px;
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+
+@media (max-width: 1024px) {
   .heroInner {
     min-height: auto;
   }
@@ -765,7 +850,6 @@
     grid-template-rows: auto auto auto;
   }
 
-  /* сброс “сложной” схемы */
   .stage_request,
   .stage_estimate,
   .stage_start,
@@ -778,30 +862,23 @@
     width: 170px;
   }
 
+  /* SUPPORT */
   .supportCard {
-    grid-template-columns: 1fr;
-    row-gap: 40px;
     padding: 44px;
+    text-align: center;
   }
 
-  .supportRight {
-    position: static;
+  .supportLeft {
     min-height: auto;
-
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+    align-items: center;
   }
 
-  .reviewCard {
-    position: static;
-    width: 100%;
-    max-width: 520px;
+  .supportText {
+    max-width: 620px;
   }
 
-  .reviewMid {
-    width: 260px;
-    max-width: 260px;
+  .supportStats {
+    justify-items: center;
   }
 }
 
@@ -914,10 +991,19 @@
     font-size: 44px;
   }
 
-  .reviewCard,
+  .supportRight {
+    align-items: stretch;
+  }
+
+  .reviewCard {
+    max-width: 100%;
+    width: 100%;
+  }
+
   .reviewMid {
     width: 100%;
     max-width: 100%;
+    margin: 0;
   }
 
   .contact {
