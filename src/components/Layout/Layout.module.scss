@@ -1,10 +1,9 @@
 .layoutWrapper {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; // Растягивает на всю высоту экрана
+  min-height: 100vh;
 }
 
 .mainContent {
-  flex: 1 0 auto; // Прижимает футер к низу, если контента мало
-  padding-top: 80px; // Отступ сверху, чтобы контент не залезал под фиксированный Header
+  flex: 1 0 auto;
 }

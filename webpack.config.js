@@ -4,18 +4,18 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 
 module.exports = {
-    mode: 'development',  // Режим разработки
-    entry: './src/index.tsx', // Точка входа
+    mode: 'development',
+    entry: './src/index.tsx',
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js',
-        publicPath: '/', // Убедись, что это здесь
+        publicPath: '/',
         clean: true,
     },
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.jsx'],
         alias: {
-            '@': path.resolve(__dirname, 'src'), // Теперь @ = папка src
+            '@': path.resolve(__dirname, 'src'),
         },
     },
     module: {
@@ -37,7 +37,7 @@ module.exports = {
                     {
                         loader: 'css-loader',
                         options: {
-                            url: true, // Включает обработку url()
+                            url: true,
                             importLoaders: 1,
                             modules: {
                                 auto: true,
@@ -58,7 +58,7 @@ module.exports = {
                         options: {
                             modules: {
                                 auto: true,
-                                namedExport: false, // И здесь тоже
+                                namedExport: false,
                             },
                         },
                     },
@@ -68,8 +68,6 @@ module.exports = {
                 test: /\.(woff2?|eot|ttf|otf)$/i,
                 type: 'asset/resource',
                 generator: {
-                    // Добавляем хеш [hash]. Это поможет нам понять, работает ли Webpack.
-                    // Если Webpack работает, в браузере ссылка будет типа /fonts/Name.a1b2c3.woff2
                     filename: 'fonts/[name].[hash:8][ext]'
                 }
             },
@@ -84,24 +82,23 @@ module.exports = {
     },
     devServer: {
         static: {
-            directory: path.join(__dirname, 'dist'),  // Папка для статичных файлов
+            directory: path.join(__dirname, 'dist'),
         },
-        compress: true,  // Включаем сжатие
-        port: 9000,  // Порт сервера
-        historyApiFallback: true,  // Поддержка для React Router
-        hot: true,  // Включаем горячую перезагрузку
+        compress: true,
+        port: 9000,
+        historyApiFallback: true,
+        hot: true,
         client: {
             webSocketURL: {
-                hostname: 'localhost',  // Указываем локальный хост для WebSocket
-                port: 9000,  // Порт для WebSocket
-                protocol: 'ws',  // Протокол WebSocket
+                hostname: 'localhost',
+                port: 9000,
+                protocol: 'ws',
             },
         },
     },
     plugins: [
         new HtmlWebpackPlugin({
             template: './src/index.html',
-            // Путь должен быть верным! Проверь, лежит ли там файл
             favicon: './src/assets/images/favicon.ico',
         }),
         new ForkTsCheckerWebpackPlugin(),

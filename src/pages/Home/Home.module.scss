@@ -152,6 +152,10 @@
   gap: 8px;
 }
 
+
+
+
+
 .cardTitle {
   margin: 0;
   font-family: v.$font-secondary;
@@ -599,7 +603,6 @@
   min-height: 420px;
 }
 
-/* Reviews (absolute layout only on wide desktop) */
 .reviewCard {
   position: absolute;
   right: 0;
@@ -649,7 +652,6 @@
   gap: 4px;
 }
 
-/* Avatar: круг + SVG через mask (ВАЖНО: относительный путь!) */
 .reviewAvatar {
   width: 44px;
   height: 44px;
@@ -673,8 +675,6 @@
 
   background-color: rgba(255, 255, 255, 0.95);
 
-  /* ВАЖНО: Home.module.scss лежит в src/pages/Home
-     до src/assets/images = ../../assets/images */
   mask: url('../../assets/images/avatar.svg') center / contain no-repeat;
   -webkit-mask: url('../../assets/images/avatar.svg') center / contain no-repeat;
 }
@@ -758,7 +758,6 @@
     row-gap: 22px;
   }
 
-  /* 3-й стат блок (3:45) под 10 (в левую колонку) */
   .supportStat:nth-child(3) {
     grid-column: 1;
   }

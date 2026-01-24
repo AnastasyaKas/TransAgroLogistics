@@ -108,6 +108,7 @@ const supportStats = [
 
 const Home: React.FC<HomeProps> = ({ onOpenPopup }) => {
     return (
+
         <main className={styles.main}>
             {/* HERO */}
             <section className={styles.hero} aria-labelledby="hero-title">
@@ -185,6 +186,7 @@ const Home: React.FC<HomeProps> = ({ onOpenPopup }) => {
             </section>
 
             {/* SERVICES (ANCHOR) */}
+
             <section className={styles.services} id="services" aria-labelledby="services-title">
                 <div className="wideContainer">
                     <h2 id="services-title" className={styles.sectionTitle}>
@@ -402,28 +404,6 @@ const Home: React.FC<HomeProps> = ({ onOpenPopup }) => {
 
 export default Home;
 
-
-// // import React from 'react';
-//
-// import React from 'react';
-// import Layout from '../../components/Layout/Layout';
-//
-// const Home = () => {
-//     return (
-//         <Layout>
-//             <div className="container">
-//                 <div className="hero">
-//                     <h1 className="hero__title">Транспортируем. Сохраняем. Доставляем.</h1>
-//                     {/* ... остальной контент ... */}
-//                 </div>
-//             </div>
-//         </Layout>
-//     );
-// }
-//
-// export default Home;
-//
-//
 
 
 

@@ -1,7 +1,7 @@
 import React, {useEffect, useId, useState} from 'react';
+
 import {Link, NavLink} from 'react-router-dom';
 import logo from '@/assets/images/logo.svg';
-// 1. Импортируем стили как объект styles
 import styles from './Header.module.scss';
 
 interface HeaderProps {
@@ -31,9 +31,7 @@ const Header: React.FC<HeaderProps> = ({ onOpenPopup }) => {
 
 
     return (
-        // 2. Используем styles.имяКласса
         <header className={styles.header} id="header">
-            {/* Глобальный класс "container" пишем строкой, если он в global.scss */}
             <div className="container">
                 <div className={styles.wrapper}>
                     <Link to="/" className={styles.logoLink} aria-label="Трансагро — на главную" onClick={closeMenu}>
@@ -44,16 +42,15 @@ const Header: React.FC<HeaderProps> = ({ onOpenPopup }) => {
                         />
                     </Link>
 
-                    {/* 3. Для динамических классов используем шаблонную строку */}
                     <nav
                         id={navId}
                         className={`${styles.menu} ${isMenuOpen ? styles.isOpen : ''}`}
                         aria-label="Основная навигация">
                         <ul className={styles.list}>
                             <li className={styles.item}>
-                                <Link to="/#services" className={styles.link}>
+                                <NavLink to="/#services" className={styles.link}>
                                     Услуги
-                                </Link>
+                                </NavLink>
                             </li>
 
                             <li className={styles.item}>

@@ -3,17 +3,11 @@ import Layout from '../../components/Layout/Layout';
 
 const Contact = () => {
     return (
-        <>
-            <Layout>
-            <main className="main">
-                <div className="container">
-                    <h2 className="contact__title">Будем рады ответить на ваши вопросы</h2>
-                    <a className=" button--contact js-open-popup">Контакты</a>
-                </div>
-            </main>
-            </Layout>
-        </>
+            <div className="container">
+                <h2 className="contact__title">Контакты</h2>
+                <a className="button--contact js-open-popup">Связаться с нами</a>
+            </div>
     );
-}
+};
 
 export default Contact;

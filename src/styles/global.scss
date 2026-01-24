@@ -49,7 +49,7 @@ body {
   min-height: 100vh;
 }
 
-// Глобальный контейнер
+
 .container {
   max-width: v.$container-width;
   margin: 0 auto;
@@ -59,10 +59,10 @@ body {
 .wideContainer {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 0 32px;                 // чуть больше воздуха
+  padding: 0 32px;
 }
 
-// Вспомогательный класс для скрытия заголовков (для SEO)
+
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -74,7 +74,7 @@ body {
   border: 0;
 }
 
-// Запрет скролла (для открытого меню или попапа)
+
 :global(body.no-scroll) {
   overflow: hidden;
 }

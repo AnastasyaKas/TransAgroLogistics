@@ -1,7 +1,7 @@
 @use '@/styles/variables' as v;
 
 .footer {
-  background: v.$color-bg-main;
+  background: #C3CFE2;
   color: v.$color-text-dark;
   padding: 48px 0 28px;
 }
@@ -59,7 +59,7 @@
 
 .logo {
   display: block;
-  height: 98px; /* подгони под макет */
+  height: 98px;
   width: auto;
 }
 
@@ -100,7 +100,6 @@
   color: v.$color-text-light;
 }
 
-/* выравнивание правой ссылки */
 .bottom > :last-child {
   justify-self: end;
 }
@@ -132,15 +131,15 @@
   }
 
   .bottom > :first-child {
-    order: 1; /* Пользовательское соглашение */
+    order: 1;
   }
 
   .bottom > :nth-child(3) {
-    order: 2; /* Политика конфиденциальности */
+    order: 2;
   }
 
   .bottom > :nth-child(2) {
-    order: 3; /* дисклеймер — последним */
+    order: 3;
   }
 
   .disclaimer {

@@ -1,8 +1,11 @@
+//Header.module.scss
+
 @use '@/styles/variables' as v;
 
 
+
 .header {
-  position: sticky; /* можно заменить на fixed, если нужно */
+  position: sticky;
   top: 0;
   z-index: 100;
   background: v.$color-white;
@@ -32,12 +35,10 @@
 
 /* NAV */
 .menu {
-  /* центрируем меню на десктопе */
   display: flex;
   align-items: center;
   justify-content: center;
 
-  /* важно: даём nav занимать центр, а кнопке — оставаться справа */
   flex: 1;
 }
 
@@ -126,12 +127,12 @@
 }
 
 .btnMobile {
-  display: none; /* показываем только в мобильном меню */
+  display: none;
 }
 
 /* BURGER */
 .burger {
-  display: none; /* ← ВАЖНО */
+  display: none;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -190,9 +191,8 @@
   }
 
   .menu {
-    /* превращаем nav в выезжающее меню */
     position: fixed;
-    top: 64px; /* высота хедера на мобилке */
+    top: 64px;
     left: 0;
     right: 0;
 
@@ -249,7 +249,6 @@
   }
 }
 
-/* Маленькие экраны */
 @media (max-width: 420px) {
   .logoLink {
     font-size: 22px;
