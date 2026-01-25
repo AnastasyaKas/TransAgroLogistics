@@ -1,6 +1,6 @@
-import React, {useEffect, useId, useState} from 'react';
-
-import {Link, NavLink} from 'react-router-dom';
+import React, { useEffect, useState, useId } from 'react';  // Импортируем useId
+import { Link, NavLink } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link'; // импортируем HashLink
 import logo from '@/assets/images/logo.svg';
 import styles from './Header.module.scss';
 
@@ -10,7 +10,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ onOpenPopup }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const navId = useId();
+    const navId = useId();  // Создаём уникальный id с помощью useId
 
     const closeMenu = () => setIsMenuOpen(false);
     const toggleMenu = () => setIsMenuOpen((prev) => !prev);
@@ -21,7 +21,7 @@ const Header: React.FC<HeaderProps> = ({ onOpenPopup }) => {
     }, [isMenuOpen]);
 
     useEffect(() => {
-        if(!isMenuOpen) return;
+        if (!isMenuOpen) return;
         const onKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'Escape') closeMenu();
         };
@@ -29,34 +29,27 @@ const Header: React.FC<HeaderProps> = ({ onOpenPopup }) => {
         return () => window.removeEventListener('keydown', onKeyDown);
     }, [isMenuOpen]);
 
-
     return (
         <header className={styles.header} id="header">
             <div className="container">
                 <div className={styles.wrapper}>
                     <Link to="/" className={styles.logoLink} aria-label="Трансагро — на главную" onClick={closeMenu}>
-                        <img
-                            src={logo}
-                            alt="Трансагро"
-                            className={styles.logoImage}
-                        />
+                        <img src={logo} alt="Трансагро" className={styles.logoImage} />
                     </Link>
 
-                    <nav
-                        id={navId}
-                        className={`${styles.menu} ${isMenuOpen ? styles.isOpen : ''}`}
-                        aria-label="Основная навигация">
+                    <nav id={navId} className={`${styles.menu} ${isMenuOpen ? styles.isOpen : ''}`} aria-label="Основная навигация">
                         <ul className={styles.list}>
                             <li className={styles.item}>
-                                <NavLink to="/#services" className={styles.link}>
+                                {/* Используем HashLink для плавного скроллинга */}
+                                <HashLink to="/#services" className={styles.link} onClick={closeMenu}>
                                     Услуги
-                                </NavLink>
+                                </HashLink>
                             </li>
 
                             <li className={styles.item}>
                                 <NavLink
                                     to="/about"
-                                    className={({ isActive }) => `${styles.link} ${isActive ? styles.active : ''}`}
+                                    className={({ isActive }: { isActive: boolean }) => `${styles.link} ${isActive ? styles.active : ''}`}
                                     onClick={closeMenu}
                                 >
                                     О компании
@@ -66,7 +59,7 @@ const Header: React.FC<HeaderProps> = ({ onOpenPopup }) => {
                             <li className={styles.item}>
                                 <NavLink
                                     to="/contact"
-                                    className={({ isActive}) => `${styles.link} ${isActive ? styles.active : ''}`}
+                                    className={({ isActive }: { isActive: boolean }) => `${styles.link} ${isActive ? styles.active : ''}`}
                                     onClick={closeMenu}
                                 >
                                     Контакты
@@ -85,7 +78,6 @@ const Header: React.FC<HeaderProps> = ({ onOpenPopup }) => {
                             Заказать звонок
                         </button>
                     </nav>
-
 
                     <button
                         type="button"
@@ -111,6 +103,6 @@ const Header: React.FC<HeaderProps> = ({ onOpenPopup }) => {
             </div>
         </header>
     );
-}
+};
 
 export default Header;
