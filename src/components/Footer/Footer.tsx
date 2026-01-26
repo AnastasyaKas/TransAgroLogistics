@@ -39,7 +39,7 @@ const Footer: React.FC = () => {
 
                 {/* BOTTOM */}
                 <div className={styles.bottom}>
-                    <Link to="#" className={styles.policyLink}>
+                    <Link to="/terms-of-service" className={styles.policyLink}>
                         Пользовательское соглашение
                     </Link>
 
@@ -47,7 +47,7 @@ const Footer: React.FC = () => {
                         Информация на сайте носит ознакомительный характер и не является публичной офертой
                     </p>
 
-                    <Link to="#" className={styles.policyLink}>
+                    <Link to="/privacy-policy" className={styles.policyLink}>
                         Политика конфиденциальности
                     </Link>
                 </div>
