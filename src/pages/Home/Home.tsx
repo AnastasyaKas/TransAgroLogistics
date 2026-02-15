@@ -1,7 +1,10 @@
 import React, { type ReactNode } from 'react';
 import styles from './Home.module.scss';
 
-import heroImage from '@/assets/images/main-image.png';
+import heroBg from "@/assets/images/main-image.png";
+
+import heroTitleSvg from "@/assets/images/hero-title.svg";
+
 import servicesBg from '@/assets/images/services-bg.png';
 import { advantages } from './homeData';
 import aboutTitle from '@/assets/images/about-title.svg';
@@ -110,80 +113,129 @@ const Home: React.FC<HomeProps> = ({ onOpenPopup }) => {
     return (
 
         <main className={styles.main}>
-            {/* HERO */}
-            <section className={styles.hero} aria-labelledby="hero-title">
+            <section
+                className={styles.hero}
+                style={{["--hero-bg" as any]: `url(${heroBg})`}}
+            >
                 <div className="wideContainer">
                     <div className={styles.heroInner}>
+                        <h1 id="hero-title" className={styles.srOnly}>
+                            Логистика для бизнеса
+                        </h1>
+
                         <div className={styles.heroContent}>
-                            <h1 id="hero-title" className={styles.heroTitle}>
-                                Транспортируем. Сохраняем. Доставляем.
-                            </h1>
+                            <img
+                                className={styles.heroTitleSvg}
+                                src={heroTitleSvg}
+                                alt="Логистика для бизнеса"
+                                loading="eager"
+                            />
+
                             <p className={styles.heroSubtitle}>
-                                Работаем с юридическими лицами и крупным бизнесом по всей стране
+                                Надёжная логистика для корпоративных клиентов
                             </p>
 
-                            <div className={styles.heroActions}>
-                                <button
-                                    type="button"
-                                    className={styles.primaryBtn}
-                                    onClick={onOpenPopup}
-                                >
-                                    Рассчитать стоимость
-                                </button>
-
-                                <button
-                                    type="button"
-                                    className={styles.secondaryBtn}
-                                    onClick={onOpenPopup}
-                                >
-                                    Получить консультацию
-                                </button>
-                            </div>
+                            <button type="button" className={styles.primaryBtn} onClick={onOpenPopup}>
+                                <span className={styles.btnText}>Рассчитать стоимость</span>
+                            </button>
                         </div>
 
-                        <img
-                            className={styles.heroImage}
-                            src={heroImage}
-                            alt="Грузовой автомобиль"
-                            loading="eager"
-                        />
+                        <ul className={styles.advantagesList}>
+                            {advantages.map((item) => (
+                                <li key={item.title} className={styles.advantagesCard}>
+                                    <div className={styles.cardTop}>
+                                        <h3 className={styles.cardTitle}>{item.title}</h3>
+                                        <p className={styles.cardText}>{item.text}</p>
+                                    </div>
+
+                                    <div className={styles.cardBottom}>
+                                        <img src={item.icon} alt="" aria-hidden="true" className={styles.cardIcon}/>
+                                        <button type="button" className={styles.cardBtn} onClick={onOpenPopup}>
+                                            <span className={styles.btnText}>Подробнее</span>
+                                        </button>
+                                    </div>
+                                </li>
+                            ))}
+                        </ul>
                     </div>
                 </div>
             </section>
 
-            {/* ADVANTAGES */}
-            <section className={styles.advantages}>
-                <div className="wideContainer">
-                    <ul className={styles.advantagesList}>
-                        {advantages.map((item) => (
-                            <li key={item.title} className={styles.advantagesCard}>
-                                <div className={styles.cardTop}>
-                                    <h3 className={styles.cardTitle}>{item.title}</h3>
-                                    <p className={styles.cardText}>{item.text}</p>
-                                </div>
 
-                                <div className={styles.cardBottom}>
-                                    <img
-                                        src={item.icon}
-                                        alt=""
-                                        aria-hidden="true"
-                                        className={styles.cardIcon}
-                                    />
+            {/* HERO */}
+            {/*<section className={styles.hero} aria-labelledby="hero-title">*/}
+            {/*    <div className="wideContainer">*/}
+            {/*        <div className={styles.heroInner}>*/}
+            {/*            <div className={styles.heroContent}>*/}
+            {/*                <h1 id="hero-title" className={styles.heroTitle}>*/}
+            {/*                    Транспортируем. Сохраняем. Доставляем.*/}
+            {/*                </h1>*/}
+            {/*                <p className={styles.heroSubtitle}>*/}
+            {/*                    Работаем с юридическими лицами и крупным бизнесом по всей стране*/}
+            {/*                </p>*/}
 
-                                    <button
-                                        type="button"
-                                        className={styles.cardBtn}
-                                        onClick={onOpenPopup}
-                                    >
-                                        Подробнее
-                                    </button>
-                                </div>
+            {/*                <div className={styles.heroActions}>*/}
+            {/*                    <button*/}
+            {/*                        type="button"*/}
+            {/*                        className={styles.primaryBtn}*/}
+            {/*                        onClick={onOpenPopup}*/}
+            {/*                    >*/}
+            {/*                        Рассчитать стоимость*/}
+            {/*                    </button>*/}
 
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            </section>
+            {/*                    <button*/}
+            {/*                        type="button"*/}
+            {/*                        className={styles.secondaryBtn}*/}
+            {/*                        onClick={onOpenPopup}*/}
+            {/*                    >*/}
+            {/*                        Получить консультацию*/}
+            {/*                    </button>*/}
+            {/*                </div>*/}
+            {/*            </div>*/}
+
+            {/*            <img*/}
+            {/*                className={styles.heroImage}*/}
+            {/*                src={heroImage}*/}
+            {/*                alt="Грузовой автомобиль"*/}
+            {/*                loading="eager"*/}
+            {/*            />*/}
+            {/*        </div>*/}
+            {/*    </div>*/}
+            {/*</section>*/}
+
+            {/*/!* ADVANTAGES *!/*/}
+            {/*<section className={styles.advantages}>*/}
+            {/*    <div className="wideContainer">*/}
+            {/*        <ul className={styles.advantagesList}>*/}
+            {/*            {advantages.map((item) => (*/}
+            {/*                <li key={item.title} className={styles.advantagesCard}>*/}
+            {/*                    <div className={styles.cardTop}>*/}
+            {/*                        <h3 className={styles.cardTitle}>{item.title}</h3>*/}
+            {/*                        <p className={styles.cardText}>{item.text}</p>*/}
+            {/*                    </div>*/}
+
+            {/*                    <div className={styles.cardBottom}>*/}
+            {/*                        <img*/}
+            {/*                            src={item.icon}*/}
+            {/*                            alt=""*/}
+            {/*                            aria-hidden="true"*/}
+            {/*                            className={styles.cardIcon}*/}
+            {/*                        />*/}
+
+            {/*                        <button*/}
+            {/*                            type="button"*/}
+            {/*                            className={styles.cardBtn}*/}
+            {/*                            onClick={onOpenPopup}*/}
+            {/*                        >*/}
+            {/*                            Подробнее*/}
+            {/*                        </button>*/}
+            {/*                    </div>*/}
+
+            {/*                </li>*/}
+            {/*            ))}*/}
+            {/*        </ul>*/}
+            {/*    </div>*/}
+            {/*</section>*/}
 
             {/* SERVICES (ANCHOR) */}
 

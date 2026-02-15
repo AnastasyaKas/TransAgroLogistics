@@ -2,33 +2,136 @@
 $font-main: 'Open Sans', sans-serif;
 $font-secondary: 'Roboto', sans-serif;
 
-/* Text */
-$color-text-dark: #1F2937;
-$color-text-light: #696969;
 
-/* Backgrounds */
-$color-white: #ffffff;
-$color-bg-main: #E9EEF5;
+/* ========== Core Colors (tokens) ========== */
+$color-bg-900: #0E0F11;
 
-/* Brand */
-$color-accent: #2563EB;
+$color-text-100: #ECEFF3;
+$color-text-300: #AEB4BD;
 
-/* UI states */
-$color-accent-green:  #0FA878;
-$color-accent-red:    #EF4444;
-$color-accent-violet: #8B5CF6;
+$color-blue-500: #3B82F6;
+$color-blue-600: #2563EB;
+$color-blue-700: #1D4ED8;
 
+$color-slate-800: #1F2937;
+
+/* Optional: transparent helpers */
+$alpha-04: 0.04;
+$alpha-25: 0.25;
+$alpha-35: 0.35;
+
+/* ========== Gradients ========== */
+$gradient-surface-primary: linear-gradient(135deg, $color-bg-900 0%, #1B3A8A 100%);
+$gradient-button-primary: linear-gradient(135deg, $color-blue-500 0%, $color-blue-700 100%);
+
+/* ========== Borders ========== */
+$border-color-accent: $color-blue-500;
+$radius-sm: 3px;
+$radius-md: 5px;
+
+/* ========== Shadows ========== */
+$shadow-button: 0 4px 12px rgba(37, 99, 235, 0.25);
+$shadow-card: 0 4px 10px rgba(0, 0, 0, 0.35);
+
+$shadow-s: 0 1px 0 rgba(255, 255, 255, 0.04);
+$shadow-m: 0 8px 24px rgba(0, 0, 0, 0.35);
+$shadow-inner: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+/* ========== Component-level semantics (optional) ========== */
+/* Header / Hero surfaces */
+$surface-header: $gradient-surface-primary;
+$surface-hero-card: linear-gradient(
+                180deg,
+                rgba(44, 50, 61, 0.15) 0%,
+                rgba(27, 58, 138, 0.15) 100%,
+                rgba(14, 15, 17, 0.60)
+);
+/* Buttons */
+$btn-primary-bg: $gradient-button-primary;
+$btn-primary-shadow: $shadow-button;
+
+/* “Ghost” button on cards (твой 1F293725) */
+$btn-card-bg: rgba(31, 41, 55, 0.145); // #1F2937 + ~15% alpha
 
 /* Layout */
 $container-width: 1200px;
 $container-padding: 15px;
 
-/* Radius */
-$radius-sm: 6px;
-$radius-md: 10px;
-$radius-lg: 16px;
-$radius-full: 999px;
 
-/* Shadow */
-$shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.08);
-$shadow-md: 0 8px 20px rgba(0, 0, 0, 0.12);
+
+
+
+///*body*/
+//$color-text-main-light: ECEFF3;
+//$color-text-second-light: AEB4BD;
+//$bg-dark: 0E0F11;
+//
+//
+///* header */
+//$background: linear-gradient(135deg, #0E0F11 0%, #1B3A8A 100%);
+//$button-main: linear-gradient(135deg, #3B82F6 100%, #1D4ED8 100%);
+//$shadow-button: 0 4px 12px rgba(37, 99, 235, 0.25);
+//$border: 3B82F6;
+//
+//
+///* hero block*/
+//$cards: linear-gradient(135deg, #0E0F11 0%, #1B3A8A 100%);
+//$button-cards: 1F293725;
+//$shadow-card-1: 0 4px 10px rgba(0, 0, 0, 0.35);
+//$button-main: linear-gradient(135deg, #3B82F6 100%, #1D4ED8 100%);
+//$shadow-button: 0 4px 12px rgba(37, 99, 235, 0.25);
+//$border: 3B82F6;
+//
+///* services */
+//
+//$shadow-s:0 1px 0px rgba(255, 255, 255, 0.04);
+//$shadow-m:0 8px 24px rgba(0, 0, 0, 0.35);
+//$shadow-inner: inset 0 1px 0px (255, 255, 255);
+
+
+
+
+
+
+
+
+
+
+///* Text */
+//$color-text-dark: #1F2937;
+//$color-text-light: #696969;
+//
+///* Backgrounds */
+//$color-white: #ffffff;
+//$color-bg-main: #E9EEF5;
+//
+///* Brand */
+//$color-accent: #2563EB;
+//
+///* UI states */
+//$color-accent-green:  #0FA878;
+//$color-accent-red:    #EF4444;
+//$color-accent-violet: #8B5CF6;
+//
+//
+///* Layout */
+//$container-width: 1200px;
+//$container-padding: 15px;
+//
+///* Radius */
+//$radius-sm: 6px;
+//$radius-md: 10px;
+//$radius-lg: 16px;
+//$radius-full: 999px;
+//
+///* Shadow */
+//$shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.08);
+//$shadow-md: 0 8px 20px rgba(0, 0, 0, 0.12);
+
+
+
+
+
+
+
+

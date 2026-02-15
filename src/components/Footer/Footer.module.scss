@@ -2,7 +2,6 @@
 
 .footer {
   background: #C3CFE2;
-  color: v.$color-text-dark;
   padding: 48px 0 28px;
 }
 
@@ -23,7 +22,6 @@
   margin: 0 0 16px;
   font-size: 20px;
   font-weight: 700;
-  color: v.$color-text-dark;
 }
 
 .contactLink {
@@ -32,21 +30,20 @@
 
   font-size: 14px;
   font-weight: 500;
-  color: v.$color-text-dark;
   text-decoration: none;
 
   transition: color 0.15s ease;
 }
 
 .contactLink:hover {
-  color: v.$color-accent;
+
 }
 
 .address {
   margin: 0;
   font-size: 14px;
   line-height: 1.4;
-  color: v.$color-text-dark;
+
 }
 
 /* ===== BRAND ===== */
@@ -67,7 +64,7 @@
 
 .divider {
   height: 1px;
-  background: v.$color-bg-main;
+
   margin: 28px 0 18px;
 }
 
@@ -82,14 +79,14 @@
 
 .policyLink {
   font-size: 12px;
-  color: v.$color-text-light;
+
   text-decoration: underline;
 
   transition: color 0.15s ease;
 }
 
 .policyLink:hover {
-  color: v.$color-text-dark;
+
 }
 
 .disclaimer {
@@ -97,7 +94,7 @@
   font-size: 12px;
   line-height: 1.4;
   text-align: center;
-  color: v.$color-text-light;
+
 }
 
 .bottom > :last-child {
