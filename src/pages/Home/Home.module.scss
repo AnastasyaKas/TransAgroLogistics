@@ -438,9 +438,16 @@
 /* =========================
    SERVICES
 ========================= */
-
 .services {
-  padding: 120px 0 160px;
+  color: v.$color-text-100;
+  padding: 160px 0 160px;
+}
+
+.sectionTitle {
+  margin: 0 0 60px;
+  font-family: v.$font-secondary;
+  font-size: 36px;
+  font-weight: 600;
 }
 
 .servicesList {
@@ -453,12 +460,13 @@
   list-style: none;
 }
 
+/* Карточка как на макете: ниже, спокойнее, “дороже” */
 .serviceItem {
   position: relative;
   overflow: hidden;
 
-  height: 520px;
-  border-radius: 28px;
+  height: 420px;
+  border-radius: v.$radius-md;
 
   background-size: cover;
   background-position: center;
@@ -468,101 +476,229 @@
   flex-direction: column;
   justify-content: flex-end;
 
-  padding: 36px;
-  color: #fff;
+  /* чтобы контент был читаемым и одинаково отрабатывал */
+  padding: 0;
 
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.45);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
+.serviceItem:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.55);
+}
+
+
+/* затемнение картинки, чтобы текст читался */
 .serviceItem::before {
   content: "";
   position: absolute;
   inset: 0;
+  z-index: 0;
+
+  /* главное: низ темнее, верх легче — как на 2 фото */
   background: linear-gradient(
                   180deg,
-                  rgba(0, 0, 0, 0.10) 0%,
-                  rgba(0, 0, 0, 0.35) 100%
+                  rgba(14, 15, 17, 0.35) 0%,
+                  rgba(14, 15, 17, 0.65) 55%,
+                  rgba(14, 15, 17, 0.92) 100%
   );
-  z-index: 0;
 }
 
-.serviceBlue::after,
-.serviceGreen::after,
-.serviceDark::after {
+/* цветной слой (очень деликатный, не “плитка”) */
+.serviceItem::after {
   content: "";
   position: absolute;
   inset: 0;
   z-index: 0;
+  opacity: 0.55; /* общая сила тонировки */
 }
 
+/* Варианты: теперь они НЕ яркие, а “профессиональные” */
 .serviceBlue::after {
   background: linear-gradient(
                   180deg,
-                  rgba(37, 99, 235, 0.25) 0%,
-                  rgba(37, 99, 235, 0.88) 100%
+                  rgba(37, 99, 235, 0.18) 0%,
+                  rgba(37, 99, 235, 0.28) 45%,
+                  rgba(37, 99, 235, 0.12) 100%
   );
 }
 
 .serviceGreen::after {
   background: linear-gradient(
                   180deg,
-                  rgba(15, 168, 120, 0.22) 0%,
-                  rgba(15, 168, 120, 0.88) 100%
+                  rgba(15, 168, 120, 0.14) 0%,
+                  rgba(15, 168, 120, 0.22) 45%,
+                  rgba(15, 168, 120, 0.10) 100%
   );
 }
 
 .serviceDark::after {
   background: linear-gradient(
                   180deg,
-                  rgba(17, 24, 39, 0.25) 0%,
-                  rgba(17, 24, 39, 0.90) 100%
+                  rgba(17, 24, 39, 0.10) 0%,
+                  rgba(17, 24, 39, 0.22) 45%,
+                  rgba(17, 24, 39, 0.12) 100%
   );
 }
 
-.serviceItem > * {
+/* Контент поверх слоёв */
+.serviceBody {
   position: relative;
   z-index: 1;
+
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }
 
+/* Заголовок меньше и плотнее — на 2 фото так читается дороже */
 .serviceTitle {
-  margin: 0 0 14px;
+  margin: 0 0 10px;
   font-family: v.$font-secondary;
-  font-size: 24px;
-  font-weight: 500;
-  line-height: 1.2;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: 0.2px;
   max-width: 320px;
+  min-height: 58px;
+  
 }
 
 .serviceText {
-  margin: 0 0 26px;
-  font-size: 15px;
-  line-height: 1.6;
-  opacity: 0.92;
+  margin: 0 0 16px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(236, 239, 243, 0.78);
   max-width: 360px;
 }
 
+/* Кнопка как на 2 фото: маленькая, прямоугольная, с тонкой рамкой */
 .serviceBtn {
+  position: relative;
+  overflow: hidden;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 18px;
+  width: fit-content;
   align-self: flex-start;
 
-  padding: 10px 22px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.45);
+  padding: 7px 12px;        /* было 9px 14px */
+  border-radius: 8px;       /* было 10px */
 
-  background: rgba(233, 238, 245, 0.9);
-  color: rgba(31, 41, 55, 0.9);
-
+  font-size: 11.5px;        /* было 12px */
   font-weight: 600;
-  cursor: pointer;
+  letter-spacing: 0.3px;
 
-  transition: transform 0.15s ease, background-color 0.2s ease, color 0.2s ease,
-  border-color 0.2s ease;
+  color: rgba(236, 239, 243, 0.85);
+
+  background: rgba(31, 41, 55, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  transition:
+          transform 0.15s ease,
+          background-color 0.2s ease,
+          border-color 0.2s ease,
+          color 0.2s ease;
+}
+
+/* лёгкий блик как у кнопки в карточках advantages */
+.serviceBtn::after {
+  content: "";
+  position: absolute;
+  top: -20%;
+  left: -150%;
+  width: 70%;
+  height: 140%;
+
+  background: linear-gradient(
+                  120deg,
+                  transparent 0%,
+                  rgba(255, 255, 255, 0.18) 50%,
+                  transparent 100%
+  );
+
+  transform: skewX(-20deg);
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
 }
 
 .serviceBtn:hover {
-  transform: scale(1.02);
-  background-color: transparent;
-  color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.9);
+  transform: translateY(-1px);
+  background: rgba(31, 41, 55, 0.32);
+  border-color: rgba(255, 255, 255, 0.16);
+  color: rgba(236, 239, 243, 0.95);
+}
+
+.serviceBtn:hover::after {
+  opacity: 1;
+  animation: btn-shine 0.9s ease;
+}
+
+.serviceBtn:active {
+  transform: translateY(0);
+}
+
+.serviceBtn:focus-visible {
+  outline: none;
+  border-color: rgba(37, 99, 235, 0.45);
+  box-shadow:
+          0 0 0 3px rgba(37, 99, 235, 0.18),
+          inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* если keyframes уже есть в файле — не дублируй */
+@keyframes btn-shine {
+  to { left: 150%; }
+}
+
+.serviceBtnPrimary {
+  border: none;
+  color: #fff;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  box-shadow: 0 10px 26px rgba(37, 99, 235, 0.15);
+}
+
+.serviceBtnPrimary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 34px rgba(37, 99, 235, 0.42);
+}
+
+.serviceBtnPrimary:active {
+  transform: translateY(0);
+}
+
+/* GHOST (Больше) */
+.serviceBtnGhost {
+  background: rgba(14, 15, 17, 0.35);
+  color: rgba(236, 239, 243, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.serviceBtnGhost:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255,255,255,0.35);
+  background: rgba(255,255,255,0.05);
+}
+
+.serviceBtnGhost:active {
+  transform: translateY(0);
+}
+
+.serviceBtn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.22);
 }
 
 /* =========================

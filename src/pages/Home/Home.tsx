@@ -31,16 +31,23 @@ type HomeProps = {
 };
 
 
+
 const services: ServiceItem[] = [
     {
-        id: 'intercity',
-        title: 'Междугородние грузоперевозки',
-        text: 'Оперативная доставка по всей России с гарантией сроков и сохранности груза',
-        cta: 'Заказать',
-        variant: 'blue',
+        id: "intercity",
+        title: (
+            <>
+                Междугородние
+                <br />
+                грузоперевозки
+            </>
+        ),
+        text: "Оперативная доставка по всей России с гарантией сроков и сохранности груза",
+        cta: "Заказать",
+        variant: "blue",
     },
     {
-        id: 'storage',
+        id: "storage",
         title: (
             <>
                 Хранение
@@ -48,16 +55,22 @@ const services: ServiceItem[] = [
                 и подготовка грузов
             </>
         ),
-        text: 'Ответственное хранение, упаковка и полная подготовка к отправке',
-        cta: 'Заказать',
-        variant: 'green',
+        text: "Ответственное хранение, упаковка и полная подготовка к отправке",
+        cta: "Заказать",
+        variant: "green",
     },
     {
-        id: 'special',
-        title: 'Транспортировка специальных грузов',
-        text: 'Перевозка нестандартных и тяжелых грузов с оформлением всех необходимых разрешений',
-        cta: 'Больше',
-        variant: 'dark',
+        id: "special",
+        title: (
+            <>
+                Транспортировка
+                <br />
+                специальных грузов
+            </>
+        ),
+        text: "Перевозка нестандартных и тяжелых грузов с оформлением всех необходимых разрешений",
+        cta: "Больше",
+        variant: "dark",
     },
 ];
 
@@ -162,83 +175,6 @@ const Home: React.FC<HomeProps> = ({ onOpenPopup }) => {
             </section>
 
 
-            {/* HERO */}
-            {/*<section className={styles.hero} aria-labelledby="hero-title">*/}
-            {/*    <div className="wideContainer">*/}
-            {/*        <div className={styles.heroInner}>*/}
-            {/*            <div className={styles.heroContent}>*/}
-            {/*                <h1 id="hero-title" className={styles.heroTitle}>*/}
-            {/*                    Транспортируем. Сохраняем. Доставляем.*/}
-            {/*                </h1>*/}
-            {/*                <p className={styles.heroSubtitle}>*/}
-            {/*                    Работаем с юридическими лицами и крупным бизнесом по всей стране*/}
-            {/*                </p>*/}
-
-            {/*                <div className={styles.heroActions}>*/}
-            {/*                    <button*/}
-            {/*                        type="button"*/}
-            {/*                        className={styles.primaryBtn}*/}
-            {/*                        onClick={onOpenPopup}*/}
-            {/*                    >*/}
-            {/*                        Рассчитать стоимость*/}
-            {/*                    </button>*/}
-
-            {/*                    <button*/}
-            {/*                        type="button"*/}
-            {/*                        className={styles.secondaryBtn}*/}
-            {/*                        onClick={onOpenPopup}*/}
-            {/*                    >*/}
-            {/*                        Получить консультацию*/}
-            {/*                    </button>*/}
-            {/*                </div>*/}
-            {/*            </div>*/}
-
-            {/*            <img*/}
-            {/*                className={styles.heroImage}*/}
-            {/*                src={heroImage}*/}
-            {/*                alt="Грузовой автомобиль"*/}
-            {/*                loading="eager"*/}
-            {/*            />*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
-            {/*</section>*/}
-
-            {/*/!* ADVANTAGES *!/*/}
-            {/*<section className={styles.advantages}>*/}
-            {/*    <div className="wideContainer">*/}
-            {/*        <ul className={styles.advantagesList}>*/}
-            {/*            {advantages.map((item) => (*/}
-            {/*                <li key={item.title} className={styles.advantagesCard}>*/}
-            {/*                    <div className={styles.cardTop}>*/}
-            {/*                        <h3 className={styles.cardTitle}>{item.title}</h3>*/}
-            {/*                        <p className={styles.cardText}>{item.text}</p>*/}
-            {/*                    </div>*/}
-
-            {/*                    <div className={styles.cardBottom}>*/}
-            {/*                        <img*/}
-            {/*                            src={item.icon}*/}
-            {/*                            alt=""*/}
-            {/*                            aria-hidden="true"*/}
-            {/*                            className={styles.cardIcon}*/}
-            {/*                        />*/}
-
-            {/*                        <button*/}
-            {/*                            type="button"*/}
-            {/*                            className={styles.cardBtn}*/}
-            {/*                            onClick={onOpenPopup}*/}
-            {/*                        >*/}
-            {/*                            Подробнее*/}
-            {/*                        </button>*/}
-            {/*                    </div>*/}
-
-            {/*                </li>*/}
-            {/*            ))}*/}
-            {/*        </ul>*/}
-            {/*    </div>*/}
-            {/*</section>*/}
-
-            {/* SERVICES (ANCHOR) */}
-
             <section className={styles.services} id="services" aria-labelledby="services-title">
                 <div className="wideContainer">
                     <h2 id="services-title" className={styles.sectionTitle}>
@@ -246,33 +182,42 @@ const Home: React.FC<HomeProps> = ({ onOpenPopup }) => {
                     </h2>
 
                     <ul className={styles.servicesList}>
-                        {services.map((item) => (
-                            <li
-                                key={item.id}
-                                className={`${styles.serviceItem} ${
-                                    item.variant === 'blue'
-                                        ? styles.serviceBlue
-                                        : item.variant === 'green'
-                                            ? styles.serviceGreen
-                                            : styles.serviceDark
-                                }`}
-                                style={{backgroundImage: `url(${servicesBg})`}}
-                            >
-                                <h3 className={styles.serviceTitle}>{item.title}</h3>
-                                <p className={styles.serviceText}>{item.text}</p>
+                        {services.map((item) => {
+                            const variantClass =
+                                item.variant === "blue"
+                                    ? styles.serviceBlue
+                                    : item.variant === "green"
+                                        ? styles.serviceGreen
+                                        : styles.serviceDark;
 
-                                <button
-                                    type="button"
-                                    className={styles.serviceBtn}
-                                    onClick={onOpenPopup}
+                            const btnClass =
+                                item.cta === "Больше" ? styles.serviceBtnGhost : styles.serviceBtnPrimary;
+
+                            return (
+                                <li
+                                    key={item.id}
+                                    className={`${styles.serviceItem} ${variantClass}`}
+                                    style={{backgroundImage: `url(${servicesBg})`}}
                                 >
-                                    {item.cta}
-                                </button>
-                            </li>
-                        ))}
+                                    <div className={styles.serviceBody}>
+                                        <h3 className={styles.serviceTitle}>{item.title}</h3>
+                                        <p className={styles.serviceText}>{item.text}</p>
+
+                                        <button
+                                            type="button"
+                                            className={`${styles.serviceBtn} ${btnClass}`}
+                                            onClick={onOpenPopup}
+                                        >
+                                            {item.cta}
+                                        </button>
+                                    </div>
+                                </li>
+                            );
+                        })}
                     </ul>
                 </div>
             </section>
+
 
             {/* ABOUT */}
             {/* ABOUT */}
