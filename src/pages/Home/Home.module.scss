@@ -705,21 +705,48 @@
    ABOUT
 ========================= */
 
+
 .about {
-  padding: 120px 0;
+  position: relative;
+  padding: 100px 0;
+  color: v.$color-text-100;
 }
 
+.about::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+
+  /* только справа */
+  background: radial-gradient(
+                  circle at 80% 50%,
+                  rgba(37, 99, 235, 0.08),
+                  transparent 70%
+  );
+
+  /* ограничим влияние справа, без width:40% */
+  -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 55%);
+  mask-image: linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 55%);
+}
+
+
 .aboutInner {
+  position: relative;
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
-  align-items: center;
+  align-items: start;
   gap: 80px;
+  z-index: 1;
 }
 
 .aboutContent {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  padding-top: 8px;
+  gap: 32px;
+  margin-top: 0;
 }
 
 .aboutBrand {
@@ -736,79 +763,211 @@
 
 .aboutText {
   margin: 0;
-  max-width: 620px;
-  line-height: 1.7;
+  max-width: 530px;
+
+  font-size: 17px;
+  line-height: 1.75;
+  color: rgba(236, 239, 243, 0.88); /* близко к v.$color-text-100, но мягче */
 }
+
+.aboutText strong {
+  color: #DCE3F0;
+}
+
+/* ===== Experience card ===== */
 
 .experienceCard {
   position: relative;
   overflow: hidden;
 
-  border-radius: 26px;
-  padding: 44px 48px;
-  min-height: 240px;
+  border-radius: 28px;
+  padding: 56px 64px;
+  min-height: 260px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
+  /* Тёмная “премиальная” поверхность в стиле hero */
+  background:
+          radial-gradient(
+                          circle at 78% 18%,
+                          rgba(37, 99, 235, 0.22) 0%,
+                          rgba(37, 99, 235, 0) 58%
+          ),
+          linear-gradient(
+                          135deg,
+                          rgba(14, 15, 17, 0.92) 0%,
+                          rgba(17, 24, 39, 0.88) 100%
+          );
+
+  border: 1px solid rgba(255, 255, 255, 0.06);
+
+  /* мягче чем было, и ближе к твоим shadow-токенам */
+  box-shadow:
+          0 16px 50px rgba(0,0,0,0.5),
+          0 0 40px rgba(37,99,235,0.12);
+}
+
+/* стеклянный блик внутри */
+.experienceCard::after {
+  content: "";
+  position: absolute;
+  inset: -25%;
+  pointer-events: none;
+
   background: linear-gradient(
-                  90deg,
-                  rgba(195, 207, 226, 0.9) 0%,
-                  rgba(233, 238, 245, 0.9) 100%
+                  120deg,
+                  rgba(255, 255, 255, 0.10) 0%,
+                  rgba(255, 255, 255, 0.03) 34%,
+                  rgba(255, 255, 255, 0.00) 60%
   );
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+
+  transform: rotate(8deg);
+  opacity: 0.35;
 }
 
 .experienceMain {
+  position: relative;
+  z-index: 1;
+
   display: flex;
   align-items: baseline;
-  gap: 14px;
+  gap: 6px;
 }
 
 .experienceNumber {
   font-family: v.$font-secondary;
-  font-weight: 800;
-  font-size: 150px;
+  font-weight: 700;
+  font-size: 140px;
   line-height: 0.9;
-  color: rgba(255, 255, 255, 0.95);
+  letter-spacing: -0.02em;
+
+  color: rgba(236, 239, 243, 0.92);
 }
 
 .experienceLabel {
   font-family: v.$font-secondary;
-  font-weight: 700;
-  font-size: 46px;
-  color: rgba(255, 255, 255, 0.95);
+  font-weight: 500;
+  font-size: 42px;
+  letter-spacing: 0.02em;
+  opacity: 0.85;
+
+  color: rgba(174, 180, 189, 0.92); /* v.$color-text-300 */
 }
 
+/* бейдж — строго к углу, без “плавающих” значений */
 .experienceBadge {
   position: absolute;
-  top: 32px;
-  right: 32px;
+  top: 40px;
+  right: 40px;
+  z-index: 2;
 
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
   gap: 2px;
 
-  padding: 12px 14px;
+  padding: 10px 12px;
   border-radius: 14px;
 
-  background: rgba(255, 255, 255, 0.18);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(17, 24, 39, 0.45); /* v.$color-slate-800 с альфой */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  font-family: v.$font-secondary;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.95);
+
+  color: v.$color-text-100;
 }
+
 
 /* =========================
    STAGES
 ========================= */
+/* =========================
+   STAGES (dark version)
+========================= */
 
 .stages {
-  padding: 120px 0;
+  color: #ECEFF3;
+  padding: 160px 0 120px;
+}
+
+.stageCard {
+  position: relative;
+  overflow: hidden;
+
+  border-radius: 24px;
+  padding: 22px 22px 18px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  min-height: 230px;
+
+  // базовая тёмная поверхность
+  background:
+          linear-gradient(135deg,
+                  rgba(14, 15, 17, 0.92) 0%,
+                  rgba(17, 24, 39, 0.82) 100%
+          );
+
+  border: 1px solid rgba(255, 255, 255, 0.06);
+
+  box-shadow:
+          0 16px 50px rgba(0, 0, 0, 0.55),
+          0 1px 0 rgba(255, 255, 255, 0.04) inset;
+
+  transform: translateZ(0); // меньше мерцаний
+  transition: transform 0.18s ease, box-shadow 0.25s ease, border-color 0.2s ease;
+}
+
+.stageCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  opacity: 0;
+  transition: opacity 0.2s ease;
+
+  background:
+          radial-gradient(
+                          220px circle at var(--mx, 50%) var(--my, 50%),
+                          rgba(37, 99, 235, 0.22),
+                          transparent 60%
+          );
+}
+
+.stageCard::after {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  pointer-events: none;
+  opacity: 0.22;
+
+  background: linear-gradient(
+                  120deg,
+                  rgba(255, 255, 255, 0.08) 0%,
+                  rgba(255, 255, 255, 0.02) 40%,
+                  rgba(255, 255, 255, 0.00) 60%
+  );
+  transform: rotate(8deg);
+}
+
+.stageCard:hover::before {
+  opacity: 1;
+}
+
+.stages :global(.wideContainer) {
+  position: relative;
+  z-index: 1;
 }
 
 .stagesGrid {
@@ -822,49 +981,111 @@
   gap: 20px;
 }
 
+/* карточка — тёмная “стеклянная”, как services/about */
 .stageCard {
-  background: #fff;
-  border-radius: 24px;
-  padding: 22px 22px 18px;
+  position: relative;
+  overflow: hidden;
+
+  border-radius: 20px;
+  padding: 18px 18px 16px;
 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 
   min-height: 230px;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.04);
+
+  background:
+          radial-gradient(
+                          circle at 75% 20%,
+                          rgba(37, 99, 235, 0.10) 0%,
+                          rgba(37, 99, 235, 0) 55%
+          ),
+          linear-gradient(
+                          135deg,
+                          rgba(14, 15, 17, 0.92) 0%,
+                          rgba(17, 24, 39, 0.80) 100%
+          );
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  box-shadow:
+          0 18px 50px rgba(0, 0, 0, 0.55),
+          0 0 36px rgba(37, 99, 235, 0.10);
+
+  transition: transform 0.18s ease, border-color 0.2s ease, background 0.2s ease;
 }
 
+/* внутренний блик */
+.stageCard::after {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  pointer-events: none;
+  opacity: 0.28;
+
+  background: linear-gradient(
+                  120deg,
+                  rgba(255, 255, 255, 0.10) 0%,
+                  rgba(255, 255, 255, 0.03) 35%,
+                  rgba(255, 255, 255, 0.00) 60%
+  );
+
+  transform: rotate(8deg);
+}
+
+.stageCard:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* текстовый блок */
 .stageTextBlock {
+  position: relative;
+  z-index: 1;
   max-width: 520px;
 }
 
 .stageTitle {
-  margin: 0 0 12px;
+  margin: 0 0 10px;
+
   font-family: v.$font-secondary;
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 700;
+  letter-spacing: 0.02em;
+
+  color: rgba(236, 239, 243, 0.92); /* v.$color-text-100 */
 }
 
 .stageText {
   margin: 0;
-  line-height: 1.55;
-  font-size: 15px;
+
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(174, 180, 189, 0.82); /* v.$color-text-300 */
 }
 
 .stageText + .stageText {
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
+/* иконки: темнее, “встроены” в карточку */
 .stageIcon {
+  position: relative;
+  z-index: 1;
+
   align-self: flex-end;
   width: 150px;
   max-width: 60%;
   height: auto;
-  margin-top: 14px;
-  opacity: 0.95;
+
+  margin-top: 12px;
+
+  opacity: 0.80;
+  filter: saturate(0.95) contrast(1.05) brightness(0.88);
 }
 
+/* layout как у тебя */
 .stage_request {
   grid-column: 1 / 2;
   grid-row: 1 / 2;
@@ -882,12 +1103,67 @@
   grid-row: 1 / 3;
 }
 
+/* большие карточки — крупнее иконка + чуть больше “воздуха” */
+.stage_start,
+.stage_deliver {
+  padding: 18px 18px 18px;
+}
+
 .stage_start .stageIcon,
 .stage_deliver .stageIcon {
-  width: 230px;
-  max-width: 80%;
-  margin-top: 22px;
+  width: 220px;
+  max-width: 78%;
+  margin-top: 18px;
+  opacity: 0.78;
 }
+
+/* hover — только где есть hover (десктоп/ноут) */
+@media (hover: hover) and (pointer: fine) {
+  .stageCard:hover {
+    transform: translateY(-2px);
+    border-color: rgba(37, 99, 235, 0.22);
+
+    box-shadow:
+            0 22px 60px rgba(0, 0, 0, 0.62),
+            0 0 44px rgba(37, 99, 235, 0.14);
+  }
+
+  .stageCard:hover::before {
+    opacity: 1;
+  }
+}
+
+/* ТЕКСТ (под тёмную тему) */
+.stageTitle {
+  margin: 0 0 12px;
+  font-family: v.$font-secondary;
+  font-size: 18px;
+  font-weight: 700;
+  color: rgba(236, 239, 243, 0.92);
+}
+
+.stageText {
+  margin: 0;
+  line-height: 1.55;
+  font-size: 15px;
+  color: rgba(174, 180, 189, 0.88);
+}
+
+.stageText + .stageText {
+  margin-top: 10px;
+}
+
+.stageIcon {
+  align-self: flex-end;
+  width: 150px;
+  max-width: 60%;
+  height: auto;
+  margin-top: 14px;
+  opacity: 0.92;
+}
+
+
+
 
 /* =========================
    SUPPORT (DESKTOP)
@@ -1235,7 +1511,7 @@
 
   .aboutInner {
     grid-template-columns: 1fr;
-    gap: 36px;
+    gap: 40px;
   }
 
   .aboutText {
@@ -1243,8 +1519,8 @@
   }
 
   .experienceCard {
-    padding: 36px;
-    min-height: 220px;
+    width: 100%;
+    max-width: 640px;
   }
 
   .experienceNumber {
@@ -1383,5 +1659,11 @@
 
   .contactTitle {
     font-size: 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .experienceCard::after {
+    opacity: 0.18;
   }
 }

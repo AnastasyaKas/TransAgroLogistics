@@ -115,6 +115,34 @@ const stages = [
 ] as const;
 
 
+// Home.tsx (внутри компонента Home)
+
+const handleCardMove = (e: React.MouseEvent<HTMLElement>) => {
+    const el = e.currentTarget;
+    const r = el.getBoundingClientRect();
+
+    const x = ((e.clientX - r.left) / r.width) * 100;
+    const y = ((e.clientY - r.top) / r.height) * 100;
+
+    el.style.setProperty("--mx", `${x}%`);
+    el.style.setProperty("--my", `${y}%`);
+};
+
+const handleCardEnter = (e: React.MouseEvent<HTMLElement>) => {
+    // чтобы при первом наведении не было "прыжка" из центра
+    handleCardMove(e);
+};
+
+const handleCardLeave = (e: React.MouseEvent<HTMLElement>) => {
+    const el = e.currentTarget;
+    // возвращаем в центр (можно вообще не трогать)
+    el.style.setProperty("--mx", `50%`);
+    el.style.setProperty("--my", `50%`);
+};
+
+
+
+
 const supportStats = [
     { value: '10', label: 'Специалистов в службе поддержки' },
     { value: '4.9', label: 'Средняя оценка качества обслуживания' },
@@ -220,7 +248,6 @@ const Home: React.FC<HomeProps> = ({ onOpenPopup }) => {
 
 
             {/* ABOUT */}
-            {/* ABOUT */}
             <section className={styles.about} id="about" aria-labelledby="about-title">
                 <div className="container">
                     <div className={styles.aboutInner}>
@@ -234,7 +261,7 @@ const Home: React.FC<HomeProps> = ({ onOpenPopup }) => {
                             </div>
 
                             <p id="about-title" className={styles.aboutText}>
-                                «ТРАНСАГРО» — надёжный логистический партнёр с 5-летним опытом.
+                                <strong>«ТРАНСАГРО»</strong> — надёжный логистический партнёр с 5-летним опытом.
                                 Осуществляем доставку по всей России: от малых отправлений до крупнотоннажных грузов.
                                 Собственный автопарк, страхование, точные сроки и поддержка 24/7 — всё для уверенности
                                 и комфорта наших клиентов.
@@ -270,6 +297,9 @@ const Home: React.FC<HomeProps> = ({ onOpenPopup }) => {
                             <li
                                 key={item.id}
                                 className={`${styles.stageCard} ${styles[`stage_${item.id}`]}`}
+                                onMouseMove={handleCardMove}
+                                onMouseEnter={handleCardEnter}
+                                onMouseLeave={handleCardLeave}
                             >
                                 <div className={styles.stageTextBlock}>
                                     <h3 className={styles.stageTitle}>{item.title}</h3>
@@ -290,6 +320,7 @@ const Home: React.FC<HomeProps> = ({ onOpenPopup }) => {
                             </li>
                         ))}
                     </ol>
+
                 </div>
             </section>
 
@@ -306,7 +337,7 @@ const Home: React.FC<HomeProps> = ({ onOpenPopup }) => {
                                 </h2>
 
                                 <p className={styles.supportText}>
-                                    Наши специалисты оперативно решают любые вопросы — от оформления документов до
+                                Наши специалисты оперативно решают любые вопросы — от оформления документов до
                                     отслеживания груза.
                                 </p>
                                 <p className={styles.supportText}>
