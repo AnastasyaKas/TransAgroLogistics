@@ -12,7 +12,9 @@ import stageIcon1 from '@/assets/images/stages-icon-1.svg';
 import stageIcon2 from '@/assets/images/stages-icon-2.svg';
 import stageIcon3 from '@/assets/images/stages-icon-3.svg';
 import stageIcon4 from '@/assets/images/stages-icon-4.svg';
-
+import mikhailAvatar from "../../assets/images/mikhail.png";
+import romanAvatar from "../../assets/images/roman.png";
+import yuliaAvatar from "../../assets/images/yulia.png";
 
 
 
@@ -293,7 +295,7 @@ const Home: React.FC<HomeProps> = ({ onOpenPopup }) => {
                     </h2>
 
                     <ol className={styles.stagesGrid}>
-                        {stages.map((item) => (
+                        {stages.map((item, index) => (
                             <li
                                 key={item.id}
                                 className={`${styles.stageCard} ${styles[`stage_${item.id}`]}`}
@@ -310,6 +312,9 @@ const Home: React.FC<HomeProps> = ({ onOpenPopup }) => {
                                         </p>
                                     ))}
                                 </div>
+                                <span className={styles.stageNumber} aria-hidden="true">
+                                    {(index + 1).toString().padStart(2, "0")}
+                                </span>
 
                                 <img
                                     src={item.icon}
@@ -360,15 +365,18 @@ const Home: React.FC<HomeProps> = ({ onOpenPopup }) => {
                         <div className={styles.supportRight} aria-label="Отзывы клиентов">
                             <div className={`${styles.reviewCard} ${styles.reviewTop}`}>
                                 <div className={styles.reviewHeader}>
-                                    <div
+                                    <img
                                         className={styles.reviewAvatar}
-                                        aria-hidden="true"
+                                        src={mikhailAvatar}
+                                        alt="Михаил"
+                                        loading="lazy"
                                     />
                                     <div className={styles.reviewInfo}>
                                         <span className={styles.reviewName}>Михаил</span>
                                         <div className={styles.reviewStars}>★★★★☆</div>
                                     </div>
                                 </div>
+
                                 <p className={styles.reviewText}>
                                     Надёжные перевозки и отличная поддержка. Работаем не первый раз!
                                 </p>
@@ -376,9 +384,11 @@ const Home: React.FC<HomeProps> = ({ onOpenPopup }) => {
 
                             <div className={`${styles.reviewCard} ${styles.reviewMid}`}>
                                 <div className={styles.reviewHeader}>
-                                    <div
+                                    <img
                                         className={styles.reviewAvatar}
-                                        aria-hidden="true"
+                                        src={romanAvatar}
+                                        alt="Роман"
+                                        loading="lazy"
                                     />
                                     <div className={styles.reviewInfo}>
                                         <span className={styles.reviewName}>Роман</span>
@@ -389,15 +399,18 @@ const Home: React.FC<HomeProps> = ({ onOpenPopup }) => {
 
                             <div className={`${styles.reviewCard} ${styles.reviewBottom}`}>
                                 <div className={styles.reviewHeader}>
-                                    <div
+                                    <img
                                         className={styles.reviewAvatar}
-                                        aria-hidden="true"
+                                        src={yuliaAvatar}
+                                        alt="Юлия"
+                                        loading="lazy"
                                     />
                                     <div className={styles.reviewInfo}>
                                         <span className={styles.reviewName}>Юлия</span>
                                         <div className={styles.reviewStars}>★★★★★</div>
                                     </div>
                                 </div>
+
                                 <p className={styles.reviewText}>
                                     Отличная компания — всегда вовремя, груз в целости. Рекомендую!
                                 </p>

@@ -209,7 +209,7 @@
   position: relative;
   overflow: hidden;
 
-  border: v.$color-blue-500;
+  border: 1px solid rgba(37, 99, 235, 0.35);
   cursor: pointer;
 
   padding: 14px 26px;
@@ -440,32 +440,36 @@
 ========================= */
 .services {
   color: v.$color-text-100;
-  padding: 160px 0 160px;
-}
-
-.sectionTitle {
-  margin: 0 0 60px;
-  font-family: v.$font-secondary;
-  font-size: 36px;
-  font-weight: 600;
+  padding: 160px 0;
 }
 
 .servicesList {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 28px;
-
   margin: 0;
   padding: 0;
   list-style: none;
+
+  display: grid;
+  gap: 28px;
+
+  /* 3 колонки, но с “умным” ограничением ширины */
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  /* чтобы сетка не “расползалась” на огромных экранах */
+  max-width: 1180px;
+  margin-left: auto;
+  margin-right: auto;
 }
+
 
 /* Карточка как на макете: ниже, спокойнее, “дороже” */
 .serviceItem {
   position: relative;
   overflow: hidden;
 
-  height: 420px;
+  /* ✅ фиксируем “плиточную” геометрию, чтобы не выглядело огромным */
+  aspect-ratio: 4 / 5;          /* вместо жесткой height */
+  min-height: 400px;            /* страховка если aspect-ratio где-то не ок */
+
   border-radius: v.$radius-md;
 
   background-size: cover;
@@ -476,11 +480,17 @@
   flex-direction: column;
   justify-content: flex-end;
 
-  /* чтобы контент был читаемым и одинаково отрабатывал */
   padding: 0;
 
   box-shadow: 0 22px 60px rgba(0, 0, 0, 0.45);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .serviceItem:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 28px 80px rgba(0, 0, 0, 0.55);
+  }
 }
 
 .serviceItem:hover {
@@ -656,9 +666,7 @@
 }
 
 /* если keyframes уже есть в файле — не дублируй */
-@keyframes btn-shine {
-  to { left: 150%; }
-}
+
 
 .serviceBtnPrimary {
   border: none;
@@ -898,73 +906,6 @@
   padding: 160px 0 120px;
 }
 
-.stageCard {
-  position: relative;
-  overflow: hidden;
-
-  border-radius: 24px;
-  padding: 22px 22px 18px;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-
-  min-height: 230px;
-
-  // базовая тёмная поверхность
-  background:
-          linear-gradient(135deg,
-                  rgba(14, 15, 17, 0.92) 0%,
-                  rgba(17, 24, 39, 0.82) 100%
-          );
-
-  border: 1px solid rgba(255, 255, 255, 0.06);
-
-  box-shadow:
-          0 16px 50px rgba(0, 0, 0, 0.55),
-          0 1px 0 rgba(255, 255, 255, 0.04) inset;
-
-  transform: translateZ(0); // меньше мерцаний
-  transition: transform 0.18s ease, box-shadow 0.25s ease, border-color 0.2s ease;
-}
-
-.stageCard::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-
-  opacity: 0;
-  transition: opacity 0.2s ease;
-
-  background:
-          radial-gradient(
-                          220px circle at var(--mx, 50%) var(--my, 50%),
-                          rgba(37, 99, 235, 0.22),
-                          transparent 60%
-          );
-}
-
-.stageCard::after {
-  content: "";
-  position: absolute;
-  inset: -40%;
-  pointer-events: none;
-  opacity: 0.22;
-
-  background: linear-gradient(
-                  120deg,
-                  rgba(255, 255, 255, 0.08) 0%,
-                  rgba(255, 255, 255, 0.02) 40%,
-                  rgba(255, 255, 255, 0.00) 60%
-  );
-  transform: rotate(8deg);
-}
-
-.stageCard:hover::before {
-  opacity: 1;
-}
-
 .stages :global(.wideContainer) {
   position: relative;
   z-index: 1;
@@ -981,39 +922,48 @@
   gap: 20px;
 }
 
-/* карточка — тёмная “стеклянная”, как services/about */
 .stageCard {
   position: relative;
   overflow: hidden;
 
-  border-radius: 20px;
-  padding: 18px 18px 16px;
+  border-radius: 24px;
+  padding: 22px 22px 18px;
+  min-height: 230px;
 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 
-  min-height: 230px;
-
   background:
-          radial-gradient(
-                          circle at 75% 20%,
-                          rgba(37, 99, 235, 0.10) 0%,
-                          rgba(37, 99, 235, 0) 55%
-          ),
-          linear-gradient(
-                          135deg,
-                          rgba(14, 15, 17, 0.92) 0%,
-                          rgba(17, 24, 39, 0.80) 100%
-          );
+          radial-gradient(circle at 75% 20%, rgba(37, 99, 235, 0.10) 0%, rgba(37, 99, 235, 0) 55%),
+          linear-gradient(135deg, rgba(14, 15, 17, 0.92) 0%, rgba(17, 24, 39, 0.80) 100%);
 
   border: 1px solid rgba(255, 255, 255, 0.08);
 
   box-shadow:
           0 18px 50px rgba(0, 0, 0, 0.55),
-          0 0 36px rgba(37, 99, 235, 0.10);
+          0 1px 0 rgba(255, 255, 255, 0.04) inset;
 
-  transition: transform 0.18s ease, border-color 0.2s ease, background 0.2s ease;
+  transform: translateZ(0);
+  transition: transform .18s ease, box-shadow .25s ease, border-color .2s ease;
+}
+
+/* spotlight */
+.stageCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+
+  opacity: 0;
+  transition: opacity .2s ease;
+
+  background: radial-gradient(
+                  220px circle at var(--mx, 50%) var(--my, 50%),
+                  rgba(37, 99, 235, 0.22),
+                  transparent 60%
+  );
 }
 
 /* внутренний блик */
@@ -1021,8 +971,9 @@
   content: "";
   position: absolute;
   inset: -30%;
+  z-index: 0;
   pointer-events: none;
-  opacity: 0.28;
+  opacity: 0.22;
 
   background: linear-gradient(
                   120deg,
@@ -1030,19 +981,39 @@
                   rgba(255, 255, 255, 0.03) 35%,
                   rgba(255, 255, 255, 0.00) 60%
   );
-
   transform: rotate(8deg);
 }
 
-.stageCard:hover {
-  transform: translateY(-2px);
-  border-color: rgba(255, 255, 255, 0.12);
+/* Номер */
+.stageNumber {
+  position: absolute;
+  left: 18px;
+  bottom: 16px;
+  z-index: 1;
+
+  font-family: v.$font-secondary;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+
+  color: rgba(174, 180, 189, 0.65);
+
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity .18s ease, transform .18s ease;
+
+  pointer-events: none;
 }
 
-/* текстовый блок */
-.stageTextBlock {
+/* контент поверх слоёв */
+.stageTextBlock,
+.stageIcon {
   position: relative;
   z-index: 1;
+}
+
+.stageTextBlock {
   max-width: 520px;
 }
 
@@ -1050,64 +1021,41 @@
   margin: 0 0 10px;
 
   font-family: v.$font-secondary;
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 700;
   letter-spacing: 0.02em;
 
-  color: rgba(236, 239, 243, 0.92); /* v.$color-text-100 */
+  color: rgba(236, 239, 243, 0.92);
 }
 
 .stageText {
   margin: 0;
-
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.6;
-  color: rgba(174, 180, 189, 0.82); /* v.$color-text-300 */
+  color: rgba(174, 180, 189, 0.88);
 }
 
 .stageText + .stageText {
-  margin-top: 8px;
+  margin-top: 10px;
 }
 
-/* иконки: темнее, “встроены” в карточку */
 .stageIcon {
-  position: relative;
-  z-index: 1;
-
   align-self: flex-end;
   width: 150px;
   max-width: 60%;
   height: auto;
 
-  margin-top: 12px;
+  margin-top: 14px;
 
   opacity: 0.80;
   filter: saturate(0.95) contrast(1.05) brightness(0.88);
 }
 
-/* layout как у тебя */
-.stage_request {
-  grid-column: 1 / 2;
-  grid-row: 1 / 2;
-}
-.stage_estimate {
-  grid-column: 1 / 2;
-  grid-row: 2 / 3;
-}
-.stage_start {
-  grid-column: 2 / 3;
-  grid-row: 1 / 3;
-}
-.stage_deliver {
-  grid-column: 3 / 4;
-  grid-row: 1 / 3;
-}
-
-/* большие карточки — крупнее иконка + чуть больше “воздуха” */
-.stage_start,
-.stage_deliver {
-  padding: 18px 18px 18px;
-}
+/* layout */
+.stage_request { grid-column: 1 / 2; grid-row: 1 / 2; }
+.stage_estimate { grid-column: 1 / 2; grid-row: 2 / 3; }
+.stage_start { grid-column: 2 / 3; grid-row: 1 / 3; }
+.stage_deliver { grid-column: 3 / 4; grid-row: 1 / 3; }
 
 .stage_start .stageIcon,
 .stage_deliver .stageIcon {
@@ -1117,7 +1065,7 @@
   opacity: 0.78;
 }
 
-/* hover — только где есть hover (десктоп/ноут) */
+/* hover только для устройств с hover */
 @media (hover: hover) and (pointer: fine) {
   .stageCard:hover {
     transform: translateY(-2px);
@@ -1131,77 +1079,74 @@
   .stageCard:hover::before {
     opacity: 1;
   }
-}
 
-/* ТЕКСТ (под тёмную тему) */
-.stageTitle {
-  margin: 0 0 12px;
-  font-family: v.$font-secondary;
-  font-size: 18px;
-  font-weight: 700;
-  color: rgba(236, 239, 243, 0.92);
+  .stageCard:hover .stageNumber {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
-
-.stageText {
-  margin: 0;
-  line-height: 1.55;
-  font-size: 15px;
-  color: rgba(174, 180, 189, 0.88);
-}
-
-.stageText + .stageText {
-  margin-top: 10px;
-}
-
-.stageIcon {
-  align-self: flex-end;
-  width: 150px;
-  max-width: 60%;
-  height: auto;
-  margin-top: 14px;
-  opacity: 0.92;
-}
-
 
 
 
 /* =========================
-   SUPPORT (DESKTOP)
+   SUPPORT (DESKTOP) — DARK
 ========================= */
 
 .support {
   padding: 120px 0;
+  color: v.$color-text-100;
 }
 
 .supportCard {
   position: relative;
   overflow: hidden;
 
-  border-radius: 36px;
-  padding: 64px;
+  border-radius: v.$radius-md;
+  padding: 56px 56px 72px;
 
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(420px, 520px);
+  grid-template-columns: minmax(0, 1fr) minmax(420px, 540px);
   column-gap: 56px;
 
-  background: linear-gradient(
-                  180deg,
-                  rgba(166, 233, 212, 1) 0%,
-                  rgba(31, 190, 141, 1) 100%
-  );
-  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.10);
+  /* тёмная “премиальная” поверхность (как About/Stages) */
+  background:
+          radial-gradient(
+                          900px 520px at 22% 10%,
+                          rgba(37, 99, 235, 0.16),
+                          transparent 60%
+          ),
+          radial-gradient(
+                          700px 420px at 88% 22%,
+                          rgba(37, 99, 235, 0.10),
+                          transparent 58%
+          ),
+          linear-gradient(
+                          135deg,
+                          rgba(14, 15, 17, 0.96) 0%,
+                          rgba(17, 24, 39, 0.88) 100%
+          );
+
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow:
+          0 22px 70px rgba(0, 0, 0, 0.55),
+          0 0 60px rgba(37, 99, 235, 0.10);
 }
 
+/* лёгкий “glass” блик */
 .supportCard::before {
   content: "";
   position: absolute;
-  inset: 0;
-  background: radial-gradient(
-                  80% 70% at 15% 10%,
-                  rgba(255, 255, 255, 0.22) 0%,
-                  rgba(255, 255, 255, 0) 60%
-  );
+  inset: -40%;
   pointer-events: none;
+  opacity: 0.22;
+
+  background: linear-gradient(
+                  120deg,
+                  rgba(255, 255, 255, 0.10) 0%,
+                  rgba(255, 255, 255, 0.03) 36%,
+                  rgba(255, 255, 255, 0.00) 60%
+  );
+  transform: rotate(10deg);
 }
 
 .supportLeft,
@@ -1222,7 +1167,7 @@
   font-size: 56px;
   font-weight: 800;
   line-height: 1.05;
-  color: #fff;
+  color: rgba(236, 239, 243, 0.95);
 }
 
 .supportText {
@@ -1230,7 +1175,7 @@
   max-width: 520px;
   font-size: 16px;
   line-height: 1.65;
-  color: rgba(255, 255, 255, 0.92);
+  color: rgba(174, 180, 189, 0.88);
 }
 
 .supportText + .supportText {
@@ -1244,65 +1189,67 @@
 
   display: grid;
   grid-template-columns: repeat(3, minmax(160px, 1fr));
-  gap: 32px;
-}
-
-.supportStat {
-  min-width: 0;
+  text-align: center;
+  align-items: center;
+  gap: 40px;
 }
 
 .supportStatValue {
+  margin-bottom: 12px;
   font-family: v.$font-secondary;
   font-size: 56px;
   font-weight: 800;
   line-height: 1;
-  color: #fff;
+  letter-spacing: -0.02em;
+  color: rgba(236, 239, 243, 0.78); /* как на макете: не белоснежно */
+  text-shadow: 0 0 20px rgba(37,99,235,0.15);
 }
 
 .supportStatLabel {
+  max-width: 180px;
   margin-top: 10px;
   font-size: 13px;
   line-height: 1.35;
-  color: rgba(255, 255, 255, 0.90);
+  color: rgba(174, 180, 189, 0.88);
 }
 
+/* RIGHT */
 .supportRight {
   min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 26px; // расстояние между отзывами
 }
 
+/* review cards — тёмные “glass” */
 .reviewCard {
-  position: absolute;
-  right: 0;
-
+  position: relative; // вместо absolute
   width: 520px;
   max-width: 520px;
   padding: 22px;
 
-  background: rgba(255, 255, 255, 0.24);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.05); // под тёмную тему
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.45);
+
 
   color: #fff;
 }
 
 .reviewTop {
-  top: 0;
   border-radius: 28px 28px 28px 0;
 }
 
 .reviewMid {
-  top: 158px;
-  right: 0;
-
-  width: 280px;
-  max-width: 280px;
+  width: 320px;       // было 280 — с фоткой тесно
+  max-width: 320px;
   padding: 18px;
 
   border-radius: 28px 28px 0 28px;
 }
 
 .reviewBottom {
-  bottom: 0;
   border-radius: 28px 28px 28px 0;
 }
 
@@ -1316,51 +1263,38 @@
 .reviewInfo {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
 }
 
 .reviewAvatar {
   width: 44px;
   height: 44px;
   border-radius: 50%;
+  object-fit: cover;
 
-  background: radial-gradient(circle at 35% 35%, #0fa878 100%, #fff 40%);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.35), 0 4px 10px rgba(0, 0, 0, 0.12);
-}
-
-.reviewAvatar::after {
-  content: "";
-  width: 20px;
-  height: 20px;
-
-  background-color: rgba(255, 255, 255, 0.95);
-
-  mask: url("../../assets/images/avatar.svg") center / contain no-repeat;
-  -webkit-mask: url("../../assets/images/avatar.svg") center / contain no-repeat;
+  box-shadow:
+          inset 0 0 0 2px rgba(255, 255, 255, 0.18),
+          0 8px 18px rgba(0, 0, 0, 0.35);
 }
 
 .reviewName {
   font-weight: 700;
   font-size: 16px;
+  color: rgba(236, 239, 243, 0.92);
 }
 
 .reviewStars {
-  font-size: 16px;
-  letter-spacing: 0.06em;
+  font-size: 18px;
+  letter-spacing: 0.10em;
+  color: rgba(236, 239, 243, 0.90);
 }
 
 .reviewText {
   margin: 0;
   font-size: 15px;
   line-height: 1.55;
-  color: rgba(255, 255, 255, 0.92);
+  color: rgba(174, 180, 189, 0.90);
 }
-
 /* =========================
    CONTACT
 ========================= */
@@ -1371,299 +1305,450 @@
 
 .contactInner {
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 80px;
+  justify-content: center;
+  gap: 48px;
 
-  padding: 40px 60px;
-  border-radius: 50px;
+  padding: 34px 56px;
+  border-radius: v.$radius-md;
+  transition: transform .25s ease;
+
+  /* тёмная “премиальная” поверхность */
+  background:
+          radial-gradient(
+                          circle at 85% 50%,
+                          rgba(37,99,235,0.20) 0%,
+                          rgba(37,99,235,0) 55%
+          ),
+          linear-gradient(
+                          135deg,
+                          rgba(14,15,17,0.94) 0%,
+                          rgba(17,24,39,0.88) 100%
+          );
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  box-shadow:
+          0 18px 50px rgba(0, 0, 0, 0.55),
+          inset 0 1px 0 rgba(255, 255, 255, 0.04);
+
+  position: relative;
+  overflow: hidden;
+}
+
+
+.contactInner:hover {
+  transform: translateY(-2px);
+}
+
+/* лёгкий стеклянный блик */
+.contactInner::after {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  pointer-events: none;
 
   background: linear-gradient(
-                  90deg,
-                  rgba(195, 207, 226, 1) 60%,
-                  rgba(255, 255, 255, 1) 130%
+                  120deg,
+                  rgba(255, 255, 255, 0.10) 0%,
+                  rgba(255, 255, 255, 0.03) 35%,
+                  rgba(255, 255, 255, 0.00) 60%
   );
+
+  transform: rotate(8deg);
+  opacity: 0.28;
 }
 
 .contactTitle {
   margin: 0;
   font-family: v.$font-secondary;
-  font-size: 30px;
-  font-weight: 500;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+
+  color: rgba(236, 239, 243, 0.92);
+  text-align: center;
 }
 
+/* синяя CTA как в services */
 .contactBtn {
-  padding: 8px 28px;
-  border-radius: 25px;
-  border: none;
+  position: relative;
+  overflow: hidden;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px 22px;
+  border-radius: v.$radius-sm;
+
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
 
   color: #fff;
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 13px;
+
   cursor: pointer;
 
-  transition: transform 0.15s ease, background 0.2s ease;
+  box-shadow: 0 10px 26px rgba(37, 99, 235, 0.30);
+
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
 }
 
-.contactBtn:hover {
-  transform: scale(1.02);
+.contactBtn::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -120%;
+
+  width: 60%;
+  height: 200%;
+
+  background: linear-gradient(
+                  120deg,
+                  rgba(255,255,255,0) 0%,
+                  rgba(255,255,255,0.45) 50%,
+                  rgba(255,255,255,0) 100%
+  );
+
+  transform: rotate(25deg);
+  transition: left 0.6s ease;
 }
+
+/* при hover — блик проходит */
+@media (hover: hover) and (pointer: fine) {
+  .contactBtn:hover::before {
+    left: 130%;
+  }
+
+  .contactBtn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 14px 32px rgba(37, 99, 235, 0.40);
+    filter: brightness(1.02);
+  }
+}
+
+
+.contactBtn:active {
+  transform: translateY(0);
+}
+
+.contactBtn:focus-visible {
+  outline: none;
+  box-shadow:
+          0 0 0 3px rgba(37, 99, 235, 0.20),
+          0 14px 32px rgba(37, 99, 235, 0.40);
+}
+
+
+
+
+
+
+
+
+
+
 
 /* =========================
-   RESPONSIVE
+   HERO — RESPONSIVE
 ========================= */
 
+/* 1200: чуть поджимаем ширины и декоративную подложку */
 @media (max-width: 1200px) {
-  .supportCard {
-    padding: 48px;
-    column-gap: 32px;
-    grid-template-columns: minmax(0, 1fr) minmax(380px, 460px);
+
+  .heroContent {
+    max-width: 680px;
+    padding-top: 34px;
   }
 
-  .supportStats {
-    grid-template-columns: repeat(2, minmax(160px, 1fr));
-    column-gap: 32px;
-    row-gap: 22px;
+  .heroContent::before {
+    width: 620px;
+    height: 140px;
+    top: 56%;
   }
 
-  .supportStat:nth-child(3) {
-    grid-column: 1;
-  }
-
-  .reviewMid {
-    width: 260px;
-    max-width: 260px;
-    top: 150px;
-  }
-}
-
-@media (max-width: 1100px) {
-  .supportCard {
-    grid-template-columns: 1fr;
-    row-gap: 34px;
-  }
-
-  .supportRight {
-    min-height: auto;
-    position: static;
-
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    align-items: center;
-  }
-
-  .reviewCard {
-    position: static;
-    width: 100%;
+  .heroSubtitle {
     max-width: 560px;
-    border-radius: 28px;
+    font-size: 15px;
   }
 
-  .reviewMid {
-    width: 320px;
-    max-width: 320px;
-    margin-left: auto;
-    margin-right: auto;
+  .advantagesList {
+    gap: 14px;
   }
+
+
+
+
+
+
 }
 
-/* планшеты/мобилка: убираем фон-картинку на весь hero, оставляем плашку */
-@media (max-width: 1024px) {
-  .hero {
-    padding: 18px 0 22px;
-    min-height: auto;
 
-    background-image: none !important;
+
+
+
+
+
+
+
+
+/* 1024: планшет — hero становится “плашкой”, карточки идут друг за другом */
+@media (max-width: 1024px) {
+  /* выключаем общий фон hero, чтобы не было “простыни” */
+  .hero {
+    margin-top: 12px;   /* аккуратный отступ от шапки */
   }
 
-  /* на мобилке выключаем общие слои hero (иначе будут мешать "как раньше") */
   .hero::before,
   .hero::after {
     display: none;
   }
 
   .heroInner {
+    padding: 64px 16px 18px;
+    min-height: auto;              /* ✅ убираем max(760px, ...) */
     border-radius: 22px;
-    overflow: hidden;
-
-    padding: 64px 16px 22px;
-    min-height: 520px;
-
-    background: v.$color-bg-900;
-    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.5);
+    background: rgba(14, 15, 17, 0.86);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.55);
   }
 
-  .advantagesList {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .servicesList {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .serviceItem {
-    height: 480px;
-  }
-
-  .about {
-    padding: 80px 0;
-  }
-
-  .aboutInner {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-
-  .aboutText {
-    max-width: 100%;
-  }
-
-  .experienceCard {
-    width: 100%;
+  .heroContent {
     max-width: 640px;
+    padding-top: 22px;
   }
 
-  .experienceNumber {
-    font-size: 120px;
+  .heroContent::before {
+    width: 520px;
+    height: 120px;
+    top: 52%;
   }
 
-  .experienceLabel {
-    font-size: 38px;
+  .heroTitleSvg {
+    width: min(520px, 92%);
+    margin-bottom: 24px;
   }
 
-  .stages {
-    padding: 80px 0;
+  .heroSubtitle {
+    font-size: 15px;
+    margin: 14px 0 18px;
   }
 
-  .stagesGrid {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto auto;
+  .primaryBtn {
+    padding: 13px 22px;
   }
 
-  .stage_request,
-  .stage_estimate,
-  .stage_start,
-  .stage_deliver {
-    grid-column: auto;
-    grid-row: auto;
-  }
-
-  .stageIcon {
-    width: 170px;
-  }
-
-  .supportCard {
-    padding: 44px;
-    text-align: center;
-  }
-
-  .supportLeft {
-    min-height: auto;
-    align-items: center;
-  }
-
-  .supportText {
-    max-width: 620px;
-  }
-
-  .supportStats {
-    justify-items: center;
-  }
-}
-
-/* телефоны */
-@media (max-width: 768px) {
+  /* ✅ как ты хочешь: после 1024 — в одну колонку */
   .advantagesList {
     grid-template-columns: 1fr;
+    justify-items: center;   /* центрируем карточки */
+    gap: 16px;
   }
+
+  .advantagesCard {
+    width: 100%;
+    max-width: 720px;        /* ← ключевое ограничение */
+  }
+
+  .cardTitle {
+    font-size: 15px;
+  }
+
+  .cardText {
+    font-size: 13px;
+    line-height: 1.5;
+    max-width: none;
+  }
+
+
 
   .services {
-    padding: 60px 0;
+    padding: 110px 0; /* было 160/160 — на планшете слишком много воздуха */
   }
 
   .servicesList {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+
+    max-width: 920px; /* чтобы не распухало */
   }
 
   .serviceItem {
-    height: 420px;
+    min-height: 380px;
+    aspect-ratio: 4 / 5;
+  }
+
+  .serviceBody {
     padding: 28px;
   }
 
-  .stages {
-    padding: 60px 0;
+  .serviceTitle {
+    font-size: 20px;
+    min-height: 52px;
   }
 
-  .stagesGrid {
-    grid-template-columns: 1fr;
+  .serviceText {
+    font-size: 13px;
   }
 
-  .stageCard {
-    padding: 18px;
+}
+
+/* 768: телефон — ещё компактнее */
+@media (max-width: 768px) {
+  .heroInner {
+    padding: 56px 14px 16px;
     border-radius: 20px;
   }
 
-  .stageIcon {
-    width: 160px;
-    max-width: 70%;
+  .heroContent {
+    padding-top: 16px;
   }
 
-  .support {
-    padding: 60px 0;
+  .heroContent::before {
+    width: 420px;
+    height: 110px;
+    top: 54%;
+    opacity: 0.85;
   }
 
-  .supportCard {
-    padding: 28px 20px;
-    border-radius: 26px;
+  .heroTitleSvg {
+    width: min(460px, 92%);
+    margin-bottom: 18px;
   }
 
-  .supportTitle {
-    font-size: 34px;
+  .heroSubtitle {
+    font-size: 14px;
+    line-height: 1.55;
+    margin: 12px 0 16px;
   }
 
-  .supportStats {
-    grid-template-columns: 1fr;
-    gap: 18px;
-    margin-top: 28px;
-  }
-
-  .supportStatValue {
-    font-size: 44px;
-  }
-
-  .supportRight {
-    align-items: stretch;
-  }
-
-  .reviewCard {
-    max-width: 100%;
+  .primaryBtn {
     width: 100%;
+    max-width: 320px;
+    padding: 12px 18px;
   }
 
-  .reviewMid {
-    width: 100%;
-    max-width: 100%;
-    margin: 0;
+  .btnText {
+    font-size: 13px;
   }
 
-  .contact {
-    padding: 60px 0;
+  .advantagesList {
+    gap: 12px;
   }
 
-  .contactInner {
-    flex-direction: column;
-    text-align: center;
-    gap: 30px;
-    padding: 40px 20px;
+  .cardBottom {
+    padding-top: 12px;
   }
 
-  .contactTitle {
-    font-size: 22px;
+  .cardIcon {
+    width: 26px;
+    height: 26px;
+  }
+
+
+
+
+  .services {
+    padding: 70px 0;
+  }
+
+  .servicesList {
+    gap: 14px;
+  }
+
+  .serviceItem {
+    height: 320px;
+    border-radius: 20px;
+  }
+
+  .serviceBody {
+    padding: 20px;
+  }
+
+  .serviceTitle {
+    font-size: 18px;
+    line-height: 1.25;
+  }
+
+  .serviceText {
+    font-size: 12.5px;
+    line-height: 1.55;
+  }
+
+  .serviceBtn {
+    margin-top: 14px;
+    padding: 7px 11px;
+    font-size: 11px;
+    border-radius: 8px;
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .experienceCard::after {
-    opacity: 0.18;
+/* 420: очень маленькие экраны */
+@media (max-width: 480px) {
+  .heroInner {
+    padding: 52px 12px 14px;
+  }
+
+  .heroContent::before {
+    width: 340px;
+    height: 100px;
+  }
+
+  .primaryBtn {
+    width: 100%;
+    max-width: 320px;
+    padding: 11px 16px;
+  }
+
+  .btnText {
+    font-size: 12.5px;
+  }
+
+
+
+  .services {
+    padding: 80px 0;
+  }
+
+  .servicesList {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 18px;
+  }
+
+  .serviceItem {
+    width: 100%;
+    max-width: 380px; /* аккуратно, не огромная */
+    min-height: 420px;
+    aspect-ratio: auto;
+  }
+
+  .serviceBody {
+    padding: 24px;
+  }
+
+  .serviceTitle {
+    font-size: 20px;
+    line-height: 1.2;
+  }
+
+  .serviceText {
+    font-size: 13px;
+    line-height: 1.45;
+  }
+}
+
+
+@media (hover: none) and (pointer: coarse) {
+  .serviceItem:hover {
+    transform: none;
+    box-shadow: 0 22px 60px rgba(0, 0, 0, 0.45);
+  }
+
+  .serviceBtn:hover {
+    transform: none;
   }
 }
