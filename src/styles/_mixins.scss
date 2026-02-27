@@ -1,0 +1,135 @@
+@use 'variables' as v;
+
+/* =========================================
+   CONTAINER
+   единая система ширины сайта
+========================================= */
+
+@mixin container {
+  width: 100%;
+  max-width: v.$container-width;
+  margin-inline: auto;
+  padding-inline: v.$container-padding;
+}
+
+/* =========================================
+   FLEX HELPERS
+========================================= */
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+/* =========================================
+   GRID HELPERS
+========================================= */
+
+@mixin grid-center {
+  display: grid;
+  place-items: center;
+}
+
+/* =========================================
+   MEDIA QUERIES (responsive system)
+   основа адаптива проекта
+========================================= */
+
+@mixin laptop {
+  @media (max-width: 1200px) { @content; }
+}
+
+@mixin tablet {
+  @media (max-width: 1024px) { @content; }
+}
+
+@mixin mobile {
+  @media (max-width: 768px) { @content; }
+}
+
+@mixin small {
+  @media (max-width: 480px) { @content; }
+}
+
+/* =========================================
+   TYPOGRAPHY
+========================================= */
+
+@mixin title {
+  font-family: v.$font-secondary;
+  font-weight: 600;
+  color: v.$color-text-100;
+}
+
+@mixin text-muted {
+  color: v.$color-text-300;
+}
+
+/* =========================================
+   SURFACES (карточки / стекло / блоки)
+========================================= */
+
+@mixin surface-card {
+  background: v.$surface-hero-card;
+  border-radius: v.$radius-md;
+  box-shadow: v.$shadow-card;
+}
+
+@mixin surface-section {
+  background: v.$surface-header;
+}
+
+/* =========================================
+   BUTTONS
+========================================= */
+
+@mixin button-primary {
+  background: v.$btn-primary-bg;
+  border-radius: v.$radius-md;
+  box-shadow: v.$btn-primary-shadow;
+  color: v.$color-text-100;
+  cursor: pointer;
+  border: none;
+}
+
+@mixin button-ghost {
+  background: v.$btn-card-bg;
+  border-radius: v.$radius-md;
+  border: 1px solid rgba(255,255,255,.08);
+  cursor: pointer;
+}
+
+/* =========================================
+   EFFECTS
+========================================= */
+
+@mixin hover-lift {
+  transition: transform .25s ease, box-shadow .25s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: v.$shadow-m;
+  }
+}
+
+/* =========================================
+   TEXT TRUNCATION
+========================================= */
+
+@mixin text-ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

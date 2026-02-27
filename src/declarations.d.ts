@@ -1,39 +1,45 @@
-declare module '*.module.scss' {
-    const classes: { [key: string]: string };
+declare module "*.module.scss" {
+    const classes: Record<string, string>;
     export default classes;
 }
 
-declare module '*.module.css' {
-    const classes: { [key: string]: string };
+declare module "*.module.css" {
+    const classes: Record<string, string>;
     export default classes;
 }
 
-declare module '*.svg' {
+declare module "*.svg" {
     const src: string;
     export default src;
 }
 
-declare module '*.png' {
+declare module "*.png" {
     const src: string;
     export default src;
 }
 
-declare module '*.jpg' {
+declare module "*.jpg" {
     const src: string;
     export default src;
 }
 
-declare module '*.jpeg' {
+declare module "*.jpeg" {
     const src: string;
     export default src;
 }
 
-declare module '*.gif' {
+declare module "*.gif" {
     const src: string;
     export default src;
 }
 
-declare module '*.webp' {
+declare module "*.webp" {
     const src: string;
     export default src;
 }
+
+declare module "*.avif" {
+    const src: string;
+    export default src;
+}
+

@@ -1,7 +1,13 @@
-// Header.module.scss
-@use '@/styles/variables' as v;
+@use "../../styles/variables" as v;
+
+/* =========================================
+   HEADER
+========================================= */
 
 .header {
+  /* единый источник высоты (важно для hero/menu) */
+  --header-h: 72px;
+
   position: sticky;
   top: 0;
   z-index: 100;
@@ -12,16 +18,16 @@
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow:
           0 18px 44px rgba(0, 0, 0, 0.28),
           inset 0 1px 0 rgba(255, 255, 255, 0.04);
 
-  overflow: hidden;
+  /* НЕ прячем overflow — иначе иногда режется фокус/эффекты */
   will-change: backdrop-filter;
 }
 
-/* мягкие блики (дорого, без “диско”) */
+/* мягкие блики */
 .header::before {
   content: "";
   position: absolute;
@@ -36,16 +42,14 @@
   opacity: 0.9;
 }
 
-/* тонкий “живой” перелив по бордеру — только на hover */
+/* тонкий перелив по бордеру на hover */
 .header::after {
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
 
-  /* делаем видимый только бордер (через mask) */
   padding: 1px;
-  border-radius: 0; /* хедер обычно без скругления */
 
   background: linear-gradient(
                   120deg,
@@ -89,11 +93,16 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 72px;
+  min-height: var(--header-h);
+
   gap: 24px;
+  min-width: 0; /* анти-выдавливание в flex */
 }
 
-/* LOGO */
+/* =========================================
+   LOGO
+========================================= */
+
 .logoLink {
   display: inline-flex;
   align-items: center;
@@ -106,12 +115,16 @@
   width: auto;
 }
 
-/* NAV */
+/* =========================================
+   NAV
+========================================= */
+
 .menu {
   display: flex;
   align-items: center;
   justify-content: center;
   flex: 1;
+  min-width: 0;
 }
 
 .list {
@@ -119,18 +132,11 @@
   align-items: center;
   gap: 28px;
 
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.item {
   margin: 0;
   padding: 0;
 }
 
 .link {
-  text-decoration: none;
   font-size: 16px;
   line-height: 1;
   font-weight: 500;
@@ -146,11 +152,19 @@
   color: v.$color-blue-500;
 }
 
+.link:focus-visible {
+  outline: 2px solid v.$color-blue-500;
+  outline-offset: 3px;
+}
+
 .active {
   color: v.$color-blue-700;
 }
 
-/* CTA BUTTON */
+/* =========================================
+   CTA BUTTON
+========================================= */
+
 .btn {
   position: relative;
   overflow: hidden;
@@ -165,11 +179,16 @@
   background: v.$btn-primary-bg;
   border: none;
   cursor: pointer;
+  color: v.$color-text-100;
 
   transform: translateZ(0);
 }
 
-/* контент выше блика */
+.btn:focus-visible {
+  outline: 2px solid v.$color-blue-500;
+  outline-offset: 3px;
+}
+
 .btnDesktop {
   position: relative;
   z-index: 2;
@@ -178,10 +197,8 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  color: v.$color-text-100;
 }
 
-/* shine */
 .btn::after {
   content: "";
   position: absolute;
@@ -216,7 +233,10 @@
   display: none;
 }
 
-/* BURGER */
+/* =========================================
+   BURGER
+========================================= */
+
 .burger {
   display: none;
   flex-direction: column;
@@ -226,10 +246,14 @@
   width: 44px;
   height: 44px;
 
-  border: 0;
   background: transparent;
   cursor: pointer;
   flex-shrink: 0;
+}
+
+.burger:focus-visible {
+  outline: 2px solid v.$color-blue-500;
+  outline-offset: 3px;
 }
 
 .burgerLine {
@@ -250,7 +274,6 @@
   margin-top: 3px;
 }
 
-/* анимация крестика */
 .isActive .burgerLine:nth-child(1) {
   transform: translateY(7px) rotate(45deg);
 }
@@ -261,25 +284,28 @@
   transform: translateY(-7px) rotate(-45deg);
 }
 
-/* =========================
+/* =========================================
    MOBILE MENU
-========================= */
+========================================= */
+
 @media (max-width: 900px) {
+  .header {
+    --header-h: 64px;
+  }
+
   .wrapper {
-    min-height: 64px;
     gap: 14px;
   }
 
   .menu {
     position: fixed;
-    top: 64px;
+    top: var(--header-h);
     left: 0;
     right: 0;
 
     flex: unset;
     display: block;
 
-    /* стеклянное меню в твоей тёмной теме */
     background: rgba(14, 15, 17, 0.72);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -334,7 +360,7 @@
 }
 
 @media (max-width: 420px) {
-  .logoLink {
-    font-size: 22px;
+  .logoImage {
+    height: 32px;
   }
 }

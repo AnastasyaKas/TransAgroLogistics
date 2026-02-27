@@ -1,0 +1,221 @@
+@use "../../../../styles/variables" as v;
+
+/* =========================
+   SUPPORT
+========================= */
+
+.support {
+  padding: 120px 0;
+  color: v.$color-text-100;
+}
+
+.supportCard {
+  position: relative;
+  overflow: hidden;
+
+  border-radius: v.$radius-md;
+  padding: 56px 56px 72px;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(420px, 540px);
+  column-gap: 56px;
+
+  background:
+          radial-gradient(
+                          900px 520px at 22% 10%,
+                          rgba(37, 99, 235, 0.16),
+                          transparent 60%
+          ),
+          radial-gradient(
+                          700px 420px at 88% 22%,
+                          rgba(37, 99, 235, 0.10),
+                          transparent 58%
+          ),
+          linear-gradient(
+                          135deg,
+                          rgba(14, 15, 17, 0.96) 0%,
+                          rgba(17, 24, 39, 0.88) 100%
+          );
+
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow:
+          0 22px 70px rgba(0, 0, 0, 0.55),
+          0 0 60px rgba(37, 99, 235, 0.10);
+}
+
+/* лёгкий “glass” блик */
+.supportCard::before {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  pointer-events: none;
+  opacity: 0.22;
+
+  background: linear-gradient(
+                  120deg,
+                  rgba(255, 255, 255, 0.10) 0%,
+                  rgba(255, 255, 255, 0.03) 36%,
+                  rgba(255, 255, 255, 0.00) 60%
+  );
+
+  transform: rotate(10deg);
+}
+
+.supportLeft,
+.supportRight {
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== LEFT ===== */
+
+.supportLeft {
+  display: flex;
+  flex-direction: column;
+  min-height: 420px;
+}
+
+.supportContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.supportTitle {
+  margin: 0 0 18px;
+  font-family: v.$font-secondary;
+  font-size: 56px;
+  font-weight: 800;
+  line-height: 1.05;
+  color: rgba(236, 239, 243, 0.95);
+}
+
+.supportText {
+  margin: 0;
+  max-width: 520px;
+  font-size: 16px;
+  line-height: 1.65;
+  color: rgba(174, 180, 189, 0.88);
+}
+
+.supportText + .supportText {
+  margin-top: 18px;
+}
+
+.supportStats {
+  margin-top: auto;
+  padding: 0;
+  list-style: none;
+
+  display: grid;
+  grid-template-columns: repeat(3, minmax(160px, 1fr));
+  text-align: center;
+  align-items: center;
+  gap: 40px;
+}
+
+.supportStat {
+  display: grid;
+  justify-items: center;
+}
+
+.supportStatValue {
+  margin-bottom: 12px;
+  font-family: v.$font-secondary;
+  font-size: 56px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: rgba(236, 239, 243, 0.78);
+  text-shadow: 0 0 20px rgba(37, 99, 235, 0.15);
+}
+
+.supportStatLabel {
+  max-width: 180px;
+  margin-top: 10px;
+  font-size: 13px;
+  line-height: 1.35;
+  color: rgba(174, 180, 189, 0.88);
+}
+
+/* ===== RIGHT ===== */
+
+.supportRight {
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 26px;
+}
+
+.reviewCard {
+  position: relative;
+  width: 520px;
+  max-width: 520px;
+  padding: 22px;
+
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+
+  color: #fff;
+}
+
+.reviewTop {
+  border-radius: 28px 28px 28px 0;
+}
+
+.reviewMid {
+  width: 320px;
+  max-width: 320px;
+  padding: 18px;
+
+  border-radius: 28px 28px 0 28px;
+}
+
+.reviewBottom {
+  border-radius: 28px 28px 28px 0;
+}
+
+.reviewHeader {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.reviewInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.reviewAvatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+
+  box-shadow:
+          inset 0 0 0 2px rgba(255, 255, 255, 0.18),
+          0 8px 18px rgba(0, 0, 0, 0.35);
+}
+
+.reviewName {
+  font-weight: 700;
+  font-size: 16px;
+  color: rgba(236, 239, 243, 0.92);
+}
+
+.reviewStars {
+  font-size: 18px;
+  letter-spacing: 0.10em;
+  color: rgba(236, 239, 243, 0.90);
+}
+
+.reviewText {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.55;
+  color: rgba(174, 180, 189, 0.90);
+}
+
