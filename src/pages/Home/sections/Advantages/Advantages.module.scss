@@ -1,7 +1,7 @@
 @use "../../../../styles/variables" as v;
 
 /* =========================
-   ADVANTAGES
+   ADVANTAGES (final)
 ========================= */
 
 .advantagesList {
@@ -9,31 +9,50 @@
   z-index: 1;
 
   width: 100%;
-  margin-top: 0;
+  margin: 0;
   padding: 0;
   list-style: none;
 
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 24px;
+
+  /* важно для стабильности внутри grid */
+  align-items: stretch;
 }
+
+/* 🔥 КЛЮЧЕВОЕ: растягиваем li по высоте строки grid */
+.advantagesList > li {
+  display: flex;
+  min-width: 0;
+}
+
+/* =========================
+   CARD
+========================= */
 
 .advantagesCard {
   all: unset;
   box-sizing: border-box;
+
+  /* 🔥 КЛЮЧЕВОЕ: карточка занимает всю высоту li */
   width: 100%;
-  text-align: left;
+  height: 100%;
+
   cursor: pointer;
+  text-align: left;
 
   display: flex;
   flex-direction: column;
+  gap: 12px;
+
   font-family: v.$font-main;
 
   position: relative;
   overflow: hidden;
 
-  border-radius: v.$radius-md;
   padding: 20px;
+  border-radius: v.$radius-md;
 
   background: rgba(17, 24, 39, 0.55);
   backdrop-filter: blur(10px);
@@ -42,18 +61,21 @@
   border: 1px solid rgba(255, 255, 255, 0.07);
   box-shadow: 0 14px 44px rgba(0, 0, 0, 0.4);
 
-  gap: 12px;
-
-  transition: transform 0.18s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+          transform 0.18s ease,
+          border-color 0.2s ease,
+          box-shadow 0.2s ease;
 }
 
-.advantagesCard:hover {
-  transform: translateY(-4px);
-  border-color: rgba(37, 99, 235, 0.28);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+@media (hover: hover) and (pointer: fine) {
+  .advantagesCard:hover {
+    transform: translateY(-4px);
+    border-color: rgba(37, 99, 235, 0.28);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+  }
 }
 
-/* ✨ анимированный "перелив" по рамке */
+/* Animated border glow */
 .advantagesCard::after {
   content: "";
   position: absolute;
@@ -83,30 +105,27 @@
 }
 
 @keyframes border-loop {
-  from {
-    background-position: 200% 0;
-  }
-  to {
-    background-position: 0 0;
-  }
+  from { background-position: 200% 0; }
+  to   { background-position: 0 0; }
 }
 
-/* prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
-  .advantagesCard::after {
-    animation: none;
-  }
+  .advantagesCard::after { animation: none; }
 }
+
+/* =========================
+   CONTENT
+========================= */
 
 .cardTop {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  min-width: 0;
 }
 
 .cardTitle {
   margin: 0;
-  font-family: v.$font-main;
   font-size: 16px;
   font-weight: 500;
   color: v.$color-text-100;
@@ -115,9 +134,17 @@
 .cardText {
   margin: 0;
   font-size: 14px;
-  line-height: 1.45;
+  line-height: 1.5;
   color: rgba(236, 239, 243, 0.72);
-  max-width: 320px;
+
+  /* чтобы текст не ломал сетку */
+  max-width: none;
+
+  /* optional: стабилизирует высоту (если хочешь) */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
 }
 
 .cardBottom {
@@ -141,12 +168,58 @@
 .cardArrow {
   font-size: 18px;
   color: rgba(236, 239, 243, 0.7);
-  transition: transform 0.2s ease, color 0.2s ease;
   opacity: 0.6;
+  transition: transform 0.2s ease, color 0.2s ease;
 }
 
-.advantagesCard:hover .cardArrow {
-  transform: translateX(4px);
-  color: rgba(37, 99, 235, 0.9);
+@media (hover: hover) and (pointer: fine) {
+  .advantagesCard:hover .cardArrow {
+    transform: translateX(4px);
+    color: rgba(37, 99, 235, 0.9);
+  }
 }
 
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1200px) {
+  .advantagesList { gap: 20px; }
+  .advantagesCard { padding: 18px; }
+}
+
+@media (max-width: 900px) {
+  .advantagesList {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+}
+
+@media (max-width: 600px) {
+  .advantagesList {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .advantagesCard {
+    padding: 16px;
+    border-radius: 14px;
+  }
+
+  .cardTitle { font-size: 15px; }
+  .cardText  { font-size: 13px; -webkit-line-clamp: 4; }
+}
+
+/* touch: no hover jump */
+@media (hover: none) and (pointer: coarse) {
+  .advantagesCard:hover {
+    transform: none;
+    border-color: rgba(255, 255, 255, 0.07);
+    box-shadow: 0 14px 44px rgba(0, 0, 0, 0.4);
+  }
+
+  .advantagesCard:hover .cardArrow {
+    transform: none;
+    color: rgba(236, 239, 243, 0.7);
+  }
+}
