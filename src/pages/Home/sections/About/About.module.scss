@@ -187,3 +187,152 @@
   color: v.$color-text-100;
 }
 
+
+/* =========================
+   RESPONSIVE (senior-grade, stable card)
+   Goals:
+   - <=760: меняется только layout секции (1 колонка),
+           но experienceCard внутри НЕ перестраивается
+   - без clamp() для line-height с vw (Sass error fix)
+========================= */
+
+/* Fluid base (без опасных clamp по line-height) */
+.about {
+  padding-block: clamp(72px, 9vw, 100px);
+}
+
+.aboutInner {
+  gap: clamp(28px, 6vw, 80px);
+}
+
+.aboutContent {
+  gap: clamp(18px, 3vw, 32px);
+}
+
+.aboutBrandLogo {
+  height: clamp(32px, 3.2vw, 40px);
+}
+
+.aboutText {
+  font-size: clamp(15px, 1.35vw, 17px);
+  line-height: 1.7; /* ✅ FIX: без clamp(vw) */
+  max-width: 54ch;
+}
+
+/* experienceCard можно делать “fluid” по паддингу/высоте,
+   НО не трогаем внутреннюю композицию */
+.experienceCard {
+  padding: clamp(40px, 4vw, 56px) clamp(44px, 4.8vw, 64px);
+  min-height: clamp(240px, 22vw, 260px);
+  border-radius: clamp(20px, 2.4vw, 28px);
+}
+
+/* ВАЖНО: по твоему требованию — после 760px НЕ меняем типографику
+   Поэтому оставляем фикс, без clamp */
+.experienceNumber {
+  font-size: 140px;
+  line-height: 0.9;
+}
+
+.experienceLabel {
+  font-size: 42px;
+}
+
+/* badge остаётся absolute всегда */
+.experienceBadge {
+  top: 40px;
+  right: 40px;
+}
+
+/* <= 1100px: 2 колонки остаются, но мягче пропорции + меньше “грязи” от glow */
+@media (max-width: 1100px) {
+  .aboutInner {
+    grid-template-columns: 1.05fr 0.95fr;
+  }
+
+  .about::before {
+    background: radial-gradient(
+                    circle at 78% 45%,
+                    rgba(37, 99, 235, 0.06),
+                    transparent 72%
+    );
+
+    -webkit-mask-image: linear-gradient(
+                    to left,
+                    rgba(0, 0, 0, 1) 0%,
+                    rgba(0, 0, 0, 0) 62%
+    );
+    mask-image: linear-gradient(
+                    to left,
+                    rgba(0, 0, 0, 1) 0%,
+                    rgba(0, 0, 0, 0) 62%
+    );
+  }
+}
+
+/* <= 760px: 1 колонка.
+   experienceCard внутри НЕ трогаем (badge absolute, main как был). */
+@media (max-width: 760px) {
+  .aboutInner {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .aboutContent {
+    padding-top: 0;
+  }
+
+  .aboutText {
+    max-width: none;
+  }
+
+  /* glow на мобиле делаем мягче, чтобы не мешал чтению */
+  .about::before {
+    background: radial-gradient(
+                    circle at 50% 18%,
+                    rgba(37, 99, 235, 0.05),
+                    transparent 72%
+    );
+
+    -webkit-mask-image: none;
+    mask-image: none;
+    opacity: 0.9;
+  }
+
+  /* Можно чуть уменьшить паддинги карточки,
+     но НЕ менять align/justify и НЕ трогать badge */
+  .experienceCard {
+    padding: 48px 48px;
+    min-height: 240px;
+  }
+
+  /* Если начинает поджимать badge — уменьшаем только его отступы,
+     позиционирование остаётся absolute */
+  .experienceBadge {
+    top: 28px;
+    right: 28px;
+  }
+}
+
+/* <= 420px: очень узкие — ещё компактнее паддинги,
+   композиция внутри по-прежнему НЕ меняется */
+@media (max-width: 420px) {
+  .experienceCard {
+    padding: 36px 24px;
+    min-height: 220px;
+  }
+
+  .experienceBadge {
+    top: 18px;
+    right: 18px;
+    padding: 8px 10px;
+    font-size: 10px;
+  }
+}
+
+/* Touch devices: просто чуть спокойнее декоративный блик */
+@media (hover: none) and (pointer: coarse) {
+  .experienceCard::after {
+    opacity: 0.28;
+  }
+}

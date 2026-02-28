@@ -188,19 +188,43 @@
   .advantagesCard { padding: 18px; }
 }
 
+/* ✅ tablet: 2 колонки + центрируем одиночную карточку в последней строке */
 @media (max-width: 900px) {
   .advantagesList {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 18px;
   }
+
+  /* если элементов нечётное число — последняя карточка одна в строке */
+  .advantagesList > li:last-child:nth-child(odd) {
+    grid-column: 1 / -1;     /* занимает всю строку */
+    justify-content: center; /* центрируем саму карточку */
+  }
+
+  .advantagesList > li:last-child:nth-child(odd) .advantagesCard {
+    width: 100%;
+    max-width: 420px;        /* 🔥 ключ: не даём стать "полосой" */
+  }
 }
 
+/* ✅ mobile: строго 1 колонка + сброс tablet-центрирования */
 @media (max-width: 600px) {
   .advantagesList {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* 🔥 ключ: всегда 1 колонка */
     gap: 14px;
   }
 
+  /* сброс tablet-хаков */
+  .advantagesList > li:last-child:nth-child(odd) {
+    grid-column: auto;
+    justify-content: stretch;
+  }
+
+  .advantagesList > li:last-child:nth-child(odd) .advantagesCard {
+    max-width: none;
+  }
+
+  /* optional mobile tuning */
   .advantagesCard {
     padding: 16px;
     border-radius: 14px;

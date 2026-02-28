@@ -1,72 +1,302 @@
+@use "../../styles/variables" as v;
+
+/* =========================
+   POPUP (TransAgro modern)
+========================= */
+
 .overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  inset: 0;
   z-index: 1000;
+
+  display: grid;
+  place-items: center;
+
+  padding: clamp(14px, 3vw, 28px);
+
+  /* dark overlay + blur */
+  background: rgba(2, 6, 23, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  /* enter */
+  animation: overlayIn 180ms ease-out both;
 }
 
 .modal {
-  background: white;
-  padding: 40px;
-  border-radius: 12px;
-  max-width: 400px;
-  width: 90%;
   position: relative;
-  animation: fadeIn 0.3s ease;
+  width: min(520px, 100%);
+  padding: clamp(18px, 3.2vw, 28px);
+  border-radius: v.$radius-md;
+
+  /* dark glass like site */
+  background:
+          radial-gradient(
+                          900px 520px at 22% 10%,
+                          rgba(37, 99, 235, 0.18),
+                          transparent 60%
+          ),
+          radial-gradient(
+                          700px 420px at 88% 22%,
+                          rgba(37, 99, 235, 0.12),
+                          transparent 58%
+          ),
+          linear-gradient(
+                          135deg,
+                          rgba(14, 15, 17, 0.94) 0%,
+                          rgba(17, 24, 39, 0.88) 100%
+          );
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+          0 24px 80px rgba(0, 0, 0, 0.62),
+          0 0 60px rgba(37, 99, 235, 0.10);
+
+  /* slight lift + smooth entry */
+  animation: modalIn 200ms ease-out both;
+  transform: translateZ(0);
+
+  /* focus ring when modal itself focused */
+  outline: none;
 }
 
-.subtitle{
+.modal::after {
+  content: "";
+  position: absolute;
+  inset: -35%;
+  pointer-events: none;
+  opacity: 0.22;
 
+  background: linear-gradient(
+                  120deg,
+                  rgba(255, 255, 255, 0.10) 0%,
+                  rgba(255, 255, 255, 0.03) 34%,
+                  rgba(255, 255, 255, 0.00) 60%
+  );
+
+  transform: rotate(10deg);
 }
 
-.form{
-
-}
-
+/* close button — round + glass */
 .closeBtn {
   position: absolute;
-  top: 10px;
-  right: 15px;
-  border: none;
-  background: none;
-  font-size: 32px;
+  top: 14px;
+  right: 14px;
+
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+
+  display: grid;
+  place-items: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(17, 24, 39, 0.38);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  color: rgba(236, 239, 243, 0.86);
+  font-size: 24px;
+  line-height: 1;
+
   cursor: pointer;
-  color: #999;
+  transition:
+          transform 0.15s ease,
+          background-color 0.2s ease,
+          border-color 0.2s ease,
+          box-shadow 0.2s ease;
 }
 
-.title {
-  margin-bottom: 10px;
-}
-
-.input {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-}
-
-.submitBtn {
-  width: 100%;
-  padding: 12px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #0056b3;
+@media (hover: hover) and (pointer: fine) {
+  .closeBtn:hover {
+    transform: translateY(-1px);
+    background: rgba(17, 24, 39, 0.52);
+    border-color: rgba(255, 255, 255, 0.16);
   }
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
+.closeBtn:focus-visible {
+  outline: none;
+  box-shadow:
+          0 0 0 3px rgba(37, 99, 235, 0.22),
+          0 10px 26px rgba(37, 99, 235, 0.14);
+  border-color: rgba(37, 99, 235, 0.45);
+}
+
+/* typography */
+.title {
+  margin: 0 0 8px;
+  padding-right: 46px; /* space for close button */
+
+  font-family: v.$font-secondary;
+  font-size: clamp(20px, 2.2vw, 26px);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+
+  color: rgba(236, 239, 243, 0.95);
+}
+
+.subtitle {
+  margin: 0 0 18px;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: rgba(174, 180, 189, 0.88);
+  max-width: 52ch;
+}
+
+/* form layout */
+.form {
+  display: grid;
+  gap: 14px;
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(174, 180, 189, 0.78);
+}
+
+/* inputs — dark glass + correct focus */
+.input {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 12px 14px;
+  min-height: 44px;
+  border-radius: 14px;
+
+  color: rgba(236, 239, 243, 0.92);
+  background: rgba(255, 255, 255, 0.05);
+
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  outline: none;
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  transition:
+          border-color 0.2s ease,
+          background-color 0.2s ease,
+          box-shadow 0.2s ease;
+}
+
+.input::placeholder {
+  color: rgba(174, 180, 189, 0.62);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .input:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.14);
+  }
+}
+
+.input:focus-visible {
+  border-color: rgba(37, 99, 235, 0.55);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.20);
+}
+
+/* ✅ autofill fix (Chrome) — no yellow */
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus {
+  -webkit-text-fill-color: rgba(236, 239, 243, 0.92);
+  -webkit-box-shadow: 0 0 0px 1000px rgba(17, 24, 39, 0.72) inset;
+  transition: background-color 9999s ease-out 0s;
+}
+
+/* submit — blue gradient like project */
+.submitBtn {
+  width: 100%;
+  min-height: 46px;
+
+  border: none;
+  border-radius: 14px;
+
+  cursor: pointer;
+
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.3px;
+
+  color: #fff;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  box-shadow:
+          0 14px 34px rgba(37, 99, 235, 0.28),
+          inset 0 1px 0 rgba(255, 255, 255, 0.10);
+
+  transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .submitBtn:hover {
+    transform: translateY(-1px);
+    box-shadow:
+            0 18px 44px rgba(37, 99, 235, 0.40),
+            inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+}
+
+.submitBtn:active {
+  transform: translateY(0);
+}
+
+.submitBtn:focus-visible {
+  outline: none;
+  box-shadow:
+          0 0 0 3px rgba(37, 99, 235, 0.24),
+          0 18px 44px rgba(37, 99, 235, 0.34);
+}
+
+/* optional disabled state (если добавишь disabled в TSX) */
+.submitBtn:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  filter: grayscale(0.2);
+  box-shadow: none;
+}
+
+/* responsive: modal a bit above center feels nicer on mobile */
+@media (max-width: 600px) {
+  .overlay {
+    place-items: start center;
+    padding-top: 18px;
+  }
+
+  .subtitle {
+    max-width: none;
+  }
+}
+
+/* reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  .overlay,
+  .modal {
+    animation: none;
+  }
+
+  .closeBtn,
+  .input,
+  .submitBtn {
+    transition: none;
+  }
+}
+
+/* animations */
+@keyframes overlayIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }

@@ -211,3 +211,140 @@
   }
 }
 
+
+/* =========================
+   RESPONSIVE (senior-grade)
+   Strategy:
+   - Desktop keeps your composed layout (spans)
+   - Tablet keeps 3 cols but compresses spacing/typography/icons
+   - <=900 switches to deterministic 2-col flow (no spans)
+   - <=600 switches to 1-col flow
+========================= */
+
+/* 0) Fluid spacing for the section (doesn't break layout) */
+.stages {
+  padding-block: clamp(88px, 10vw, 160px) clamp(72px, 8vw, 120px);
+}
+
+/* 1) Tablet / small laptop: keep 3 columns, reduce pressure */
+@media (max-width: 1199px) {
+  .stagesGrid {
+    gap: clamp(14px, 2vw, 20px);
+  }
+
+  .stageCard {
+    padding: clamp(18px, 2vw, 22px);
+    min-height: 210px;
+    border-radius: 22px;
+  }
+
+  .stageTitle {
+    font-size: 17px;
+    margin-bottom: 8px;
+  }
+
+  .stageText {
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .stageText + .stageText {
+    margin-top: 8px;
+  }
+
+  .stageIcon {
+    width: clamp(120px, 16vw, 150px);
+    max-width: 62%;
+    margin-top: 12px;
+  }
+
+  .stage_start .stageIcon,
+  .stage_deliver .stageIcon {
+    width: clamp(170px, 22vw, 220px);
+    max-width: 78%;
+    margin-top: 14px;
+  }
+}
+
+/* 2) <= 900px: deterministic 2-column grid (no spans, no tall cards)
+   IMPORTANT: we do not change TSX, so we reset explicit placement. */
+@media (max-width: 900px) {
+  .stagesGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: auto;
+    gap: 16px;
+  }
+
+  /* reset all manual placement so cards flow 01→02→03→04 */
+  .stage_request,
+  .stage_estimate,
+  .stage_start,
+  .stage_deliver {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .stageCard {
+    min-height: 220px; /* consistent feel */
+  }
+
+  /* keep big icons under control */
+  .stage_start .stageIcon,
+  .stage_deliver .stageIcon {
+    width: clamp(150px, 26vw, 210px);
+    max-width: 80%;
+  }
+}
+
+/* 3) <= 600px: 1 column, compact but readable */
+@media (max-width: 600px) {
+  .stagesGrid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .stageCard {
+    padding: 16px;
+    border-radius: 20px;
+    min-height: unset; /* allow natural height */
+  }
+
+  .stageTextBlock {
+    max-width: none;
+  }
+
+  .stageTitle {
+    font-size: 16px;
+  }
+
+  .stageText {
+    font-size: 13.5px;
+    line-height: 1.55;
+  }
+
+  .stageIcon {
+    width: clamp(110px, 44vw, 170px);
+    max-width: 72%;
+    margin-top: 10px;
+  }
+
+  .stage_start .stageIcon,
+  .stage_deliver .stageIcon {
+    width: clamp(140px, 56vw, 220px);
+    max-width: 82%;
+  }
+
+  /* number stays non-intrusive */
+  .stageNumber {
+    left: 14px;
+    bottom: 12px;
+  }
+}
+
+/* 4) Touch devices: avoid hover “jumps” (spotlight can stay, but no motion) */
+@media (hover: none) and (pointer: coarse) {
+  .stageCard {
+    transition: border-color 0.2s ease, box-shadow 0.25s ease;
+  }
+}
+

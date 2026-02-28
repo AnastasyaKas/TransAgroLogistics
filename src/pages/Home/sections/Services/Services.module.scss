@@ -27,17 +27,17 @@
 
   --gap: clamp(16px, 2.2vw, 28px);
 
-  /* card width corridor (prevents “fat” cards) */
+  /* corridor for card width (prevents "fat" cards) */
   --col-min: 260px;
   --col-max: 360px;
 
   display: grid;
   gap: var(--gap);
 
-  /* ✅ desktop: strictly 3 columns */
+  /* desktop: строго 3 колонки */
   grid-template-columns: repeat(3, minmax(var(--col-min), var(--col-max)));
 
-  /* ✅ keeps grid centered when max width limits columns */
+  /* центрируем всю сетку, потому что колонки ограничены max */
   justify-content: center;
   align-items: stretch;
 
@@ -45,18 +45,36 @@
   margin-inline: auto;
 }
 
-/* ✅ tablet: strictly 2 columns (covers Nest Hub / ~1024px) */
+
+/* tablet / Nest Hub: строго 2 колонки */
 @media (max-width: 1100px) {
   .servicesList {
     grid-template-columns: repeat(2, minmax(var(--col-min), var(--col-max)));
   }
+
+  /* ✅ если элементов нечётное число → последняя карточка одна в строке
+     делаем её на всю строку и центрируем, но НЕ растягиваем шире max */
+  .serviceItem:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: 100%;
+    max-width: var(--col-max);
+  }
 }
 
-/* ✅ mobile: strictly 1 column */
+
+/* mobile: строго 1 колонка */
 @media (max-width: 600px) {
   .servicesList {
     grid-template-columns: minmax(0, 520px);
     justify-content: center;
+  }
+
+  /* на мобиле правило "последний нечётный" не нужно */
+  .serviceItem:last-child:nth-child(odd) {
+    grid-column: auto;
+    justify-self: stretch;
+    max-width: none;
   }
 }
 

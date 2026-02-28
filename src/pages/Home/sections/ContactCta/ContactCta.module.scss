@@ -1,22 +1,36 @@
 @use "../../../../styles/variables" as v;
 
 /* =========================
-   CONTACT CTA
+   CONTACT CTA (senior-grade)
+   Goals:
+   - premium glass look
+   - bounded max width (no endless stretch)
+   - responsive: row -> column
+   - touch-friendly button
+   - hover only on hover-capable devices
 ========================= */
 
 .contact {
-  padding: 80px 0;
+  padding-block: clamp(56px, 7vw, 80px);
 }
 
 .contactInner {
+  position: relative;
+  overflow: hidden;
+
+  /* ✅ не растягиваем плашку на всю ширину больших экранов */
+  width: min(980px, 100%);
+  margin-inline: auto;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 48px;
 
-  padding: 34px 56px;
+  /* ✅ gap/padding — fluid */
+  gap: clamp(18px, 4vw, 48px);
+  padding: clamp(20px, 3.2vw, 34px) clamp(18px, 4vw, 56px);
+
   border-radius: v.$radius-md;
-  transition: transform 0.25s ease;
 
   background:
           radial-gradient(
@@ -36,12 +50,14 @@
           0 18px 50px rgba(0, 0, 0, 0.55),
           inset 0 1px 0 rgba(255, 255, 255, 0.04);
 
-  position: relative;
-  overflow: hidden;
+  transition: transform 0.25s ease;
 }
 
-.contactInner:hover {
-  transform: translateY(-2px);
+/* hover only on fine pointers */
+@media (hover: hover) and (pointer: fine) {
+  .contactInner:hover {
+    transform: translateY(-2px);
+  }
 }
 
 /* лёгкий стеклянный блик */
@@ -63,22 +79,31 @@
 }
 
 .contactTitle {
+  position: relative;
+  z-index: 1;
+
   margin: 0;
   font-family: v.$font-secondary;
-  font-size: 28px;
+  font-size: clamp(18px, 2.1vw, 28px);
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: -0.01em;
 
   color: rgba(236, 239, 243, 0.92);
+
+  /* ✅ читабельность при переносах */
+  text-wrap: balance;
   text-align: center;
+
+  /* ✅ чтобы заголовок не “давил” кнопку */
+  max-width: 34ch;
 }
 
-/* синяя CTA */
 .contactBtn {
   position: relative;
-  overflow: hidden;
+  z-index: 1;
 
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -86,12 +111,16 @@
   padding: 10px 22px;
   border-radius: v.$radius-sm;
 
+  /* ✅ touch target */
+  min-height: 44px;
+
   border: 1px solid rgba(255, 255, 255, 0.10);
   background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
 
   color: #fff;
   font-weight: 600;
   font-size: 13px;
+  letter-spacing: 0.2px;
 
   cursor: pointer;
 
@@ -100,9 +129,12 @@
   transition: transform 0.15s ease, box-shadow 0.2s ease;
 }
 
-.contactBtn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 14px 32px rgba(37, 99, 235, 0.42);
+/* hover only on fine pointers */
+@media (hover: hover) and (pointer: fine) {
+  .contactBtn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 14px 32px rgba(37, 99, 235, 0.42);
+  }
 }
 
 .contactBtn:active {
@@ -116,3 +148,48 @@
           0 14px 32px rgba(37, 99, 235, 0.40);
 }
 
+/* =========================
+   RESPONSIVE
+========================= */
+
+/* ✅ <= 1024px: можем уходить в колонку — выглядит “дорого” на планшете */
+@media (max-width: 1024px) {
+  .contactInner {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .contactTitle {
+    max-width: 40ch;
+  }
+}
+
+/* ✅ <= 600px: строго колонка + кнопка на всю ширину плашки */
+@media (max-width: 600px) {
+  .contactInner {
+    gap: 14px;
+    padding: 18px 16px;
+  }
+
+  .contactTitle {
+    font-size: 18px;
+    line-height: 1.25;
+    max-width: none;
+  }
+
+  .contactBtn {
+    width: 100%;
+  }
+}
+
+/* touch: no hover jump */
+@media (hover: none) and (pointer: coarse) {
+  .contactInner:hover {
+    transform: none;
+  }
+
+  .contactBtn:hover {
+    transform: none;
+    box-shadow: 0 10px 26px rgba(37, 99, 235, 0.30);
+  }
+}
