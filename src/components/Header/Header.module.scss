@@ -1,0 +1,366 @@
+@use "../../styles/variables" as v;
+
+/* =========================================
+   HEADER
+========================================= */
+
+.header {
+  /* единый источник высоты (важно для hero/menu) */
+  --header-h: 72px;
+
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  color: v.$color-text-100;
+
+  /* premium glass */
+  background: rgba(14, 15, 17, 0.62);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+          0 18px 44px rgba(0, 0, 0, 0.28),
+          inset 0 1px 0 rgba(255, 255, 255, 0.04);
+
+  /* НЕ прячем overflow — иначе иногда режется фокус/эффекты */
+  will-change: backdrop-filter;
+}
+
+/* мягкие блики */
+.header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  background:
+          radial-gradient(120% 160% at 50% -40%, rgba(255, 255, 255, 0.10) 0%, transparent 55%),
+          radial-gradient(80% 180% at 0% 50%, rgba(37, 99, 235, 0.10) 0%, transparent 55%),
+          radial-gradient(80% 180% at 100% 50%, rgba(37, 99, 235, 0.10) 0%, transparent 55%);
+
+  opacity: 0.9;
+}
+
+/* тонкий перелив по бордеру на hover */
+.header::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  padding: 1px;
+
+  background: linear-gradient(
+                  120deg,
+                  rgba(255, 255, 255, 0) 0%,
+                  rgba(255, 255, 255, 0) 40%,
+                  rgba(37, 99, 235, 0.55) 50%,
+                  rgba(255, 255, 255, 0) 60%,
+                  rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 220% 100%;
+  background-position: 220% 0;
+
+  opacity: 0;
+  transition: opacity 0.25s ease;
+
+  -webkit-mask:
+          linear-gradient(#000 0 0) content-box,
+          linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+
+  mask:
+          linear-gradient(#000 0 0) content-box,
+          linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+.header:hover::after {
+  opacity: 1;
+  animation: header-border-loop 6s linear infinite;
+}
+
+@keyframes header-border-loop {
+  from { background-position: 220% 0; }
+  to   { background-position: 0 0; }
+}
+
+.wrapper {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: var(--header-h);
+
+  gap: 24px;
+  min-width: 0; /* анти-выдавливание в flex */
+}
+
+/* =========================================
+   LOGO
+========================================= */
+
+.logoLink {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.logoImage {
+  display: block;
+  height: 36px;
+  width: auto;
+}
+
+/* =========================================
+   NAV
+========================================= */
+
+.menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  min-width: 0;
+}
+
+.list {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+
+  margin: 0;
+  padding: 0;
+}
+
+.link {
+  font-size: 16px;
+  line-height: 1;
+  font-weight: 500;
+
+  padding: 10px 6px;
+  border-radius: 10px;
+
+  color: rgba(236, 239, 243, 0.88);
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.link:hover {
+  color: v.$color-blue-500;
+}
+
+.link:focus-visible {
+  outline: 2px solid v.$color-blue-500;
+  outline-offset: 3px;
+}
+
+.active {
+  color: v.$color-blue-700;
+}
+
+/* =========================================
+   CTA BUTTON
+========================================= */
+
+.btn {
+  position: relative;
+  overflow: hidden;
+
+  font-family: v.$font-main;
+  font-size: 15px;
+  font-weight: 500;
+
+  padding: 12px 18px;
+  border-radius: v.$radius-sm;
+
+  background: v.$btn-primary-bg;
+  border: none;
+  cursor: pointer;
+  color: v.$color-text-100;
+
+  transform: translateZ(0);
+}
+
+.btn:focus-visible {
+  outline: 2px solid v.$color-blue-500;
+  outline-offset: 3px;
+}
+
+.btnDesktop {
+  position: relative;
+  z-index: 2;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.btn::after {
+  content: "";
+  position: absolute;
+  top: -20%;
+  left: -150%;
+  width: 70%;
+  height: 140%;
+
+  background: linear-gradient(
+                  120deg,
+                  transparent 0%,
+                  rgba(255, 255, 255, 0.35) 50%,
+                  transparent 100%
+  );
+
+  transform: skewX(-20deg);
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+}
+
+.btn:hover::after {
+  opacity: 1;
+  animation: btn-shine 0.9s ease;
+}
+
+@keyframes btn-shine {
+  to { left: 150%; }
+}
+
+.btnMobile {
+  display: none;
+}
+
+/* =========================================
+   BURGER
+========================================= */
+
+.burger {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 44px;
+  height: 44px;
+
+  background: transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.burger:focus-visible {
+  outline: 2px solid v.$color-blue-500;
+  outline-offset: 3px;
+}
+
+.burgerLine {
+  width: 22px;
+  height: 2px;
+
+  background: rgba(236, 239, 243, 0.9);
+  border-radius: 2px;
+
+  transition: transform 0.18s ease, opacity 0.18s ease;
+}
+
+.burgerLine:not(:last-child) {
+  margin-bottom: 3px;
+}
+
+.burgerLine + .burgerLine {
+  margin-top: 3px;
+}
+
+.isActive .burgerLine:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.isActive .burgerLine:nth-child(2) {
+  opacity: 0;
+}
+.isActive .burgerLine:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* =========================================
+   MOBILE MENU
+========================================= */
+
+@media (max-width: 900px) {
+  .header {
+    --header-h: 64px;
+  }
+
+  .wrapper {
+    gap: 14px;
+  }
+
+  .menu {
+    position: fixed;
+    top: var(--header-h);
+    left: 0;
+    right: 0;
+
+    flex: unset;
+    display: block;
+
+    background: rgba(14, 15, 17, 0.72);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 18px 30px rgba(0, 0, 0, 0.35);
+
+    padding: 18px 16px 22px;
+
+    transform: translateY(-8px);
+    opacity: 0;
+    pointer-events: none;
+
+    transition: transform 0.18s ease, opacity 0.18s ease;
+  }
+
+  .isOpen {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .list {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .link {
+    display: block;
+    padding: 14px 12px;
+    border-radius: 12px;
+  }
+
+  .btnDesktop {
+    display: none;
+  }
+
+  .btnMobile {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    margin-top: 14px;
+    padding: 14px 18px;
+  }
+
+  .burger {
+    display: inline-flex;
+  }
+}
+
+@media (max-width: 420px) {
+  .logoImage {
+    height: 32px;
+  }
+}

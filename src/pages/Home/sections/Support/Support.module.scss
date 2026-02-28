@@ -1,0 +1,429 @@
+@use "../../../../styles/variables" as v;
+
+/* =========================
+   SUPPORT
+========================= */
+
+.support {
+  padding: 120px 0;
+  color: v.$color-text-100;
+}
+
+.supportCard {
+  position: relative;
+  overflow: hidden;
+
+  border-radius: v.$radius-md;
+  padding-top: clamp(28px, 4vw, 56px);
+  padding-bottom: clamp(34px, 5vw, 72px);
+
+  padding-left: clamp(22px, 4vw, 56px);
+  padding-right: clamp(18px, 3vw, 32px);
+
+  display: grid;
+
+  /* ✅ правая колонка может ужиматься, но не ломает grid */
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 42%);
+
+  /* ✅ gap тоже fluid */
+  column-gap: clamp(18px, 3.2vw, 44px);
+
+  background:
+          radial-gradient(
+                          900px 520px at 22% 10%,
+                          rgba(37, 99, 235, 0.16),
+                          transparent 60%
+          ),
+          radial-gradient(
+                          700px 420px at 88% 22%,
+                          rgba(37, 99, 235, 0.10),
+                          transparent 58%
+          ),
+          linear-gradient(
+                          135deg,
+                          rgba(14, 15, 17, 0.96) 0%,
+                          rgba(17, 24, 39, 0.88) 100%
+          );
+
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow:
+          0 22px 70px rgba(0, 0, 0, 0.55),
+          0 0 60px rgba(37, 99, 235, 0.10);
+}
+
+/* лёгкий “glass” блик */
+.supportCard::before {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  pointer-events: none;
+  opacity: 0.22;
+
+  background: linear-gradient(
+                  120deg,
+                  rgba(255, 255, 255, 0.10) 0%,
+                  rgba(255, 255, 255, 0.03) 36%,
+                  rgba(255, 255, 255, 0.00) 60%
+  );
+
+  transform: rotate(10deg);
+}
+
+.supportLeft,
+.supportRight {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+}
+
+/* ===== LEFT ===== */
+
+.supportLeft {
+  display: flex;
+  flex-direction: column;
+  min-height: 420px;
+}
+
+.supportContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.supportTitle {
+  margin: 0 0 18px;
+  font-family: v.$font-secondary;
+  font-size: 56px;
+  font-weight: 800;
+  line-height: 1.05;
+  color: rgba(236, 239, 243, 0.95);
+}
+
+.supportText {
+  margin: 0;
+  max-width: 520px;
+  font-size: 16px;
+  line-height: 1.65;
+  color: rgba(174, 180, 189, 0.88);
+}
+
+.supportText + .supportText {
+  margin-top: 18px;
+}
+
+.supportStats {
+  margin-top: auto;
+  padding: 0;
+  list-style: none;
+
+  display: grid;
+  grid-template-columns: repeat(3, minmax(160px, 1fr));
+  text-align: center;
+  align-items: center;
+  gap: 40px;
+}
+
+.supportStat {
+  display: grid;
+  justify-items: center;
+}
+
+.supportStatValue {
+  margin-bottom: 12px;
+  font-family: v.$font-secondary;
+  font-size: 56px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: rgba(236, 239, 243, 0.78);
+  text-shadow: 0 0 20px rgba(37, 99, 235, 0.15);
+}
+
+.supportStatLabel {
+  max-width: 180px;
+  margin-top: 10px;
+  font-size: 13px;
+  line-height: 1.35;
+  color: rgba(174, 180, 189, 0.88);
+}
+
+/* ===== RIGHT ===== */
+
+.supportRight {
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 26px;
+}
+
+.reviewCard {
+  position: relative;
+  box-sizing: border-box;
+
+  /* ✅ карточка никогда не шире своей колонки */
+  width: min(520px, 100%);
+  max-width: 100%;
+
+  padding: 22px;
+
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+
+  color: #fff;
+}
+
+.reviewTop {
+  border-radius: 28px 28px 28px 0;
+}
+
+/* средняя карточка — тоже резиновая */
+.reviewMid {
+  width: min(320px, 100%);
+  max-width: 100%;
+  padding: 18px;
+
+  border-radius: 28px 28px 0 28px;
+}
+
+.reviewBottom {
+  border-radius: 28px 28px 28px 0;
+}
+
+.reviewHeader {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.reviewInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.reviewAvatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+
+  box-shadow:
+          inset 0 0 0 2px rgba(255, 255, 255, 0.18),
+          0 8px 18px rgba(0, 0, 0, 0.35);
+}
+
+.reviewName {
+  font-weight: 700;
+  font-size: 16px;
+  color: rgba(236, 239, 243, 0.92);
+}
+
+.reviewStars {
+  font-size: 18px;
+  letter-spacing: 0.10em;
+  color: rgba(236, 239, 243, 0.90);
+}
+
+.reviewText {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.55;
+  color: rgba(174, 180, 189, 0.90);
+}
+
+/* =========================
+   RESPONSIVE (senior-grade)
+   Strategy:
+   - base: fluid via clamp()
+   - breakpoints: only for layout breaks + stats grid
+========================= */
+
+/* 1) <= 1200px: уменьшаем давление без смены сетки */
+@media (max-width: 1200px) {
+  .supportRight {
+    gap: 22px;
+  }
+
+  .supportTitle {
+    font-size: clamp(40px, 5.2vw, 56px);
+  }
+
+  .supportStats {
+    gap: 28px;
+    grid-template-columns: repeat(3, minmax(140px, 1fr));
+  }
+
+  .supportStatValue {
+    font-size: clamp(42px, 5vw, 56px);
+  }
+
+  .reviewCard {
+    padding: 20px;
+  }
+
+  .reviewMid {
+    padding: 16px;
+  }
+}
+
+/* 2) <= 980px: tablet break — меньше давления справа */
+@media (max-width: 980px) {
+  .supportCard {
+    grid-template-columns: minmax(0, 1fr) minmax(260px, 38%);
+    column-gap: clamp(16px, 3vw, 32px);
+  }
+
+  .supportText {
+    max-width: 46ch;
+  }
+
+  .supportRight {
+    align-items: flex-start;
+  }
+}
+
+/* 3) <= 840px: 1 колонка + ВЕСЬ контент по центру */
+@media (max-width: 840px) {
+  .supportCard {
+    grid-template-columns: 1fr;
+    row-gap: clamp(22px, 4vw, 32px);
+
+    /* ✅ центрируем grid items как единый столбец */
+    justify-items: center;
+  }
+
+  .supportLeft,
+  .supportRight {
+    min-height: auto;
+
+    /* ✅ ограничиваем ширину “контентного блока” */
+    width: 100%;
+    max-width: 720px;
+    margin-inline: auto;
+  }
+
+  /* TEXT */
+  .supportContent {
+    align-items: center;
+    text-align: center;
+  }
+
+  .supportTitle {
+    text-align: center;
+  }
+
+  .supportText {
+    max-width: 52ch;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  /* ✅ добавляем ритм между текстом и stats (вместо margin-top: auto) */
+  .supportStats {
+    margin-top: clamp(22px, 4vw, 36px);
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+
+    justify-items: center;
+    text-align: center;
+
+    width: 100%;
+    max-width: 560px;
+    margin-inline: auto;
+  }
+
+  .supportStat {
+    justify-items: center;
+  }
+
+  .supportStatLabel {
+    max-width: 22ch;
+  }
+
+  /* ✅ 2 колонки, а одиночный последний элемент центрируем */
+  .supportStats > li:nth-child(odd):last-child {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: min(360px, 100%);
+  }
+
+  /* REVIEWS: по центру */
+  .supportRight {
+    align-items: center;
+    gap: 18px;
+  }
+
+  .reviewCard,
+  .reviewMid {
+    width: 100%;
+    max-width: 720px;
+    margin-inline: auto;
+  }
+
+  /* “лесенка” остаётся: средняя карточка уже */
+  .reviewMid {
+    max-width: 520px;
+  }
+}
+
+/* 4) <= 520px: узкие телефоны — stats 2 → 1, сохраняем центр */
+@media (max-width: 520px) {
+  .supportCard {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .supportTitle {
+    font-size: 34px;
+    line-height: 1.08;
+  }
+
+  .supportText {
+    font-size: 14.5px;
+    line-height: 1.6;
+    max-width: none;
+  }
+
+  .supportLeft,
+  .supportRight {
+    max-width: 520px;
+  }
+
+  .supportStats {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    max-width: 420px;
+  }
+
+  /* на 1 колонке не нужен “спан последнего” */
+  .supportStats > li:nth-child(odd):last-child {
+    grid-column: auto;
+    justify-self: stretch;
+    width: auto;
+  }
+
+  .supportStatValue {
+    font-size: 40px;
+  }
+
+  .reviewHeader {
+    gap: 12px;
+  }
+
+  .reviewStars {
+    font-size: 16px;
+  }
+
+  .reviewText {
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .reviewCard,
+  .reviewMid {
+    max-width: 520px;
+  }
+}

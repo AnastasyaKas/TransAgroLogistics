@@ -1,0 +1,366 @@
+@use "../../../../styles/variables" as v;
+
+/* =========================
+   HERO (final)
+========================= */
+
+.hero {
+  position: relative;
+  isolation: isolate;
+
+  /* высота = экран - высота header (берётся из :root в global.scss) */
+  min-height: calc(100svh - var(--header-h, 72px));
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding-block: 28px 56px;
+  overflow: clip;
+}
+
+@supports not (overflow: clip) {
+  .hero { overflow: hidden; }
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+
+  background: radial-gradient(
+                  900px 500px at 50% 30%,
+                  rgba(37, 99, 235, 0.18),
+                  transparent 70%
+  );
+}
+
+.heroInner {
+  position: relative;
+  z-index: 1;
+
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding-top: 8px;
+}
+
+/* SR only */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ===== GLASS BLOCK ===== */
+
+.heroContent {
+  position: relative;
+
+  width: 100%;
+  max-width: 760px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: clamp(28px, 4vw, 64px) clamp(18px, 4vw, 48px);
+
+  border-radius: 28px;
+  background: rgba(14, 15, 17, 0.55);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  box-shadow:
+          0 40px 120px rgba(0, 0, 0, 0.6),
+          0 0 80px rgba(37, 99, 235, 0.06);
+
+  margin-bottom: clamp(28px, 5vw, 64px);
+}
+
+.heroContent::before {
+  content: "";
+  position: absolute;
+
+  width: min(520px, 92%);
+  height: 120px;
+
+  left: 50%;
+  top: 52%;
+  transform: translate(-50%, -50%);
+
+  background: radial-gradient(
+                  ellipse at center,
+                  rgba(14, 15, 17, 0.55) 0%,
+                  rgba(14, 15, 17, 0.35) 40%,
+                  rgba(14, 15, 17, 0) 75%
+  );
+
+  z-index: -1;
+  pointer-events: none;
+}
+
+.heroContent::after {
+  content: "";
+  position: absolute;
+  bottom: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: min(600px, 100%);
+  height: 120px;
+
+  background: radial-gradient(
+                  ellipse at center,
+                  rgba(37, 99, 235, 0.08),
+                  transparent 70%
+  );
+
+  pointer-events: none;
+}
+
+.heroTitleSvg {
+  display: block;
+  width: min(560px, 92%);
+  height: auto;
+  margin: 0 auto 16px;
+}
+
+.heroSubtitle {
+  margin: 16px 0 24px;
+  max-width: 640px;
+
+  font-size: 18px;
+  line-height: 1.6;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+
+  color: rgba(236, 239, 243, 0.88);
+  text-align: center;
+}
+
+/* =========================
+   CTA BUTTON
+========================= */
+
+.primaryBtn {
+  position: relative;
+  overflow: hidden;
+
+  border: 1px solid rgba(37, 99, 235, 0.35);
+  cursor: pointer;
+
+  padding: 14px 26px;
+  border-radius: v.$radius-sm;
+
+  background: v.$btn-primary-bg;
+  box-shadow:
+          0 18px 38px rgba(0, 0, 0, 0.45),
+          0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+
+  transform: translateZ(0);
+  filter: drop-shadow(0 12px 30px rgba(37, 99, 235, 0.2));
+}
+
+.primaryBtn:focus-visible {
+  outline: 2px solid v.$color-blue-500;
+  outline-offset: 3px;
+}
+
+.btnText {
+  position: relative;
+  z-index: 2;
+
+  font-family: v.$font-main;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: v.$color-text-100;
+  white-space: nowrap;
+}
+
+/* shine */
+.primaryBtn::after {
+  content: "";
+  position: absolute;
+  top: -20%;
+  left: -150%;
+  width: 70%;
+  height: 140%;
+
+  background: linear-gradient(
+                  120deg,
+                  transparent 0%,
+                  rgba(255, 255, 255, 0.32) 50%,
+                  transparent 100%
+  );
+
+  transform: skewX(-20deg);
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+}
+
+.primaryBtn:hover::after {
+  opacity: 1;
+  animation: btn-shine 0.9s ease;
+}
+
+@keyframes btn-shine {
+  to { left: 150%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .primaryBtn:hover::after {
+    animation: none;
+    left: 150%;
+    opacity: 1;
+  }
+}
+
+/* =========================
+   RESPONSIVE (senior-grade)
+   Strategy:
+   - base handles most via clamp()
+   - breakpoints only корректируют “переломы” макета
+========================= */
+
+/* <= 1200px: лёгкое уплотнение на ноутах */
+@media (max-width: 1200px) {
+  .hero {
+    padding-block: 24px 52px;
+  }
+
+  .heroContent {
+    max-width: 720px;
+  }
+
+  .heroTitleSvg {
+    width: min(520px, 92%);
+  }
+}
+
+/* <= 900px: планшеты/малые ноуки */
+@media (max-width: 900px) {
+  .hero {
+    padding-block: 20px 44px;
+  }
+
+  .heroContent {
+    max-width: 680px;
+    border-radius: 24px;
+  }
+
+  .heroSubtitle {
+    font-size: 16px;
+    margin: 14px 0 20px;
+  }
+}
+
+/* <= 600px: телефоны (критичный перелом по “ощущению воздуха”) */
+@media (max-width: 600px) {
+  .hero {
+    padding-block: 16px 36px;
+  }
+
+  .heroInner {
+    padding-top: 6px;
+  }
+
+  .heroContent {
+    max-width: 100%;
+    border-radius: 20px;
+
+    /* фиксируем комфортные паддинги на телефоне */
+    padding: 24px 16px;
+    margin-bottom: 28px;
+  }
+
+  /* декоративные подсветки уменьшаем, чтобы не “съедали” контент */
+  .heroContent::before {
+    height: 96px;
+    top: 50%;
+  }
+
+  .heroContent::after {
+    bottom: -44px;
+    height: 96px;
+  }
+
+  .heroTitleSvg {
+    width: min(460px, 100%);
+    margin-bottom: 12px;
+  }
+
+  .heroSubtitle {
+    max-width: 28ch; /* “премиум” типографика: комфортная строка */
+  }
+}
+
+/* <= 480px: маленькие телефоны */
+@media (max-width: 480px) {
+  .hero {
+    padding-block: 14px 32px;
+  }
+
+  .heroContent {
+    padding: 22px 14px;
+    border-radius: 18px;
+  }
+
+  .heroTitleSvg {
+    width: 100%;
+  }
+
+  .primaryBtn {
+    width: 100%;
+    max-width: 320px;
+  }
+}
+
+/* <= 360px: ультра маленькие экраны (точечная страховка) */
+@media (max-width: 360px) {
+  .heroContent {
+    padding: 20px 12px;
+  }
+
+  .btnText {
+    font-size: 13px;
+  }
+}
+
+/* =========================
+   iOS / safe-area polish (optional)
+========================= */
+@supports (padding: max(0px)) {
+  .hero {
+    padding-top: max(28px, env(safe-area-inset-top));
+    padding-bottom: max(56px, env(safe-area-inset-bottom));
+  }
+
+  @media (max-width: 900px) {
+    .hero {
+      padding-top: max(20px, env(safe-area-inset-top));
+      padding-bottom: max(44px, env(safe-area-inset-bottom));
+    }
+  }
+
+  @media (max-width: 600px) {
+    .hero {
+      padding-top: max(16px, env(safe-area-inset-top));
+      padding-bottom: max(36px, env(safe-area-inset-bottom));
+    }
+  }
+}

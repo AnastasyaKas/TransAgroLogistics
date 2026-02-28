@@ -1,0 +1,315 @@
+@use "../../../../styles/variables" as v;
+
+/* =========================
+   SERVICES (final, production)
+   Goals:
+   - strict grid 3 → 2 → 1 (no auto-fit/auto-fill)
+   - stable card size (min/max width)
+   - square cards (aspect-ratio 1/1)
+   - content grouped at bottom
+   - readable overlay (top cleaner, darker to bottom)
+   - minimal, intentional media queries
+========================= */
+
+.services {
+  color: v.$color-text-100;
+  padding-block: clamp(72px, 10vw, 160px);
+}
+
+/* =========================
+   GRID (STRICT 3 → 2 → 1)
+========================= */
+
+.servicesList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  --gap: clamp(16px, 2.2vw, 28px);
+
+  /* corridor for card width (prevents "fat" cards) */
+  --col-min: 260px;
+  --col-max: 360px;
+
+  display: grid;
+  gap: var(--gap);
+
+  /* desktop: строго 3 колонки */
+  grid-template-columns: repeat(3, minmax(var(--col-min), var(--col-max)));
+
+  /* центрируем всю сетку, потому что колонки ограничены max */
+  justify-content: center;
+  align-items: stretch;
+
+  max-width: 1180px;
+  margin-inline: auto;
+}
+
+
+/* tablet / Nest Hub: строго 2 колонки */
+@media (max-width: 1100px) {
+  .servicesList {
+    grid-template-columns: repeat(2, minmax(var(--col-min), var(--col-max)));
+  }
+
+  /* ✅ если элементов нечётное число → последняя карточка одна в строке
+     делаем её на всю строку и центрируем, но НЕ растягиваем шире max */
+  .serviceItem:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: 100%;
+    max-width: var(--col-max);
+  }
+}
+
+
+/* mobile: строго 1 колонка */
+@media (max-width: 600px) {
+  .servicesList {
+    grid-template-columns: minmax(0, 520px);
+    justify-content: center;
+  }
+
+  /* на мобиле правило "последний нечётный" не нужно */
+  .serviceItem:last-child:nth-child(odd) {
+    grid-column: auto;
+    justify-self: stretch;
+    max-width: none;
+  }
+}
+
+/* =========================
+   CARD (square)
+========================= */
+
+.serviceItem {
+  min-width: 0;
+  position: relative;
+  overflow: hidden;
+
+  aspect-ratio: 1 / 1;
+  border-radius: v.$radius-md;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  flex-direction: column;
+
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.45);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* hover only on fine pointers */
+@media (hover: hover) and (pointer: fine) {
+  .serviceItem:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 28px 80px rgba(0, 0, 0, 0.55);
+  }
+}
+
+/* ✅ overlay like the mock:
+   top cleaner, darker towards bottom for readability */
+.serviceItem::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+
+  background: linear-gradient(
+                  180deg,
+                  rgba(14, 15, 17, 0.10) 0%,
+                  rgba(14, 15, 17, 0.18) 30%,
+                  rgba(14, 15, 17, 0.55) 65%,
+                  rgba(14, 15, 17, 0.92) 100%
+  );
+}
+
+/* variant tint (subtle, doesn't "dirty" top) */
+.serviceItem::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.55;
+}
+
+.serviceBlue::after {
+  background: linear-gradient(
+                  180deg,
+                  rgba(37, 99, 235, 0.06) 0%,
+                  rgba(37, 99, 235, 0.16) 55%,
+                  rgba(37, 99, 235, 0.10) 100%
+  );
+}
+
+.serviceGreen::after {
+  background: linear-gradient(
+                  180deg,
+                  rgba(15, 168, 120, 0.06) 0%,
+                  rgba(15, 168, 120, 0.14) 55%,
+                  rgba(15, 168, 120, 0.10) 100%
+  );
+}
+
+.serviceDark::after {
+  background: linear-gradient(
+                  180deg,
+                  rgba(17, 24, 39, 0.05) 0%,
+                  rgba(17, 24, 39, 0.12) 55%,
+                  rgba(17, 24, 39, 0.08) 100%
+  );
+}
+
+/* =========================
+   CONTENT (bottom grouped)
+========================= */
+
+.serviceBody {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  padding: clamp(18px, 2.2vw, 28px);
+  gap: 12px;
+}
+
+.serviceTitle {
+  margin: 0;
+  font-family: v.$font-secondary;
+  font-size: clamp(18px, 1.35vw, 22px);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: 0.2px;
+  color: rgba(236, 239, 243, 0.95);
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.serviceText {
+  margin: 0;
+  font-size: clamp(12.5px, 1vw, 13.5px);
+  line-height: 1.45;
+  color: rgba(236, 239, 243, 0.72);
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+/* =========================
+   BUTTONS (as in mock)
+========================= */
+
+.serviceBtn {
+  position: relative;
+  overflow: hidden;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: fit-content;
+  align-self: flex-start;
+
+  padding: 8px 14px;
+  border-radius: 8px;
+
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+
+  color: rgba(236, 239, 243, 0.90);
+  background: rgba(31, 41, 55, 0.20);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  transition:
+          transform 0.15s ease,
+          background-color 0.2s ease,
+          border-color 0.2s ease,
+          color 0.2s ease,
+          box-shadow 0.2s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .serviceBtn:hover {
+    transform: translateY(-1px);
+    background: rgba(31, 41, 55, 0.28);
+    border-color: rgba(255, 255, 255, 0.16);
+    color: rgba(236, 239, 243, 0.96);
+  }
+}
+
+.serviceBtn:active {
+  transform: translateY(0);
+}
+
+.serviceBtn:focus-visible {
+  outline: none;
+  border-color: rgba(37, 99, 235, 0.45);
+  box-shadow:
+          0 0 0 3px rgba(37, 99, 235, 0.18),
+          inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.serviceBtnPrimary {
+  border: none;
+  color: #fff;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  box-shadow: 0 10px 26px rgba(37, 99, 235, 0.18);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .serviceBtnPrimary:hover {
+    box-shadow: 0 14px 34px rgba(37, 99, 235, 0.42);
+  }
+}
+
+.serviceBtnGhost {
+  background: rgba(14, 15, 17, 0.28);
+  color: rgba(236, 239, 243, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .serviceBtnGhost:hover {
+    border-color: rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.05);
+  }
+}
+
+/* =========================
+   MOBILE UX
+========================= */
+
+@media (max-width: 600px) {
+  .serviceBtn {
+    width: 100%;
+    align-self: stretch;
+  }
+}
+
+/* touch: no hover jump */
+@media (hover: none) and (pointer: coarse) {
+  .serviceItem:hover {
+    transform: none;
+    box-shadow: 0 22px 60px rgba(0, 0, 0, 0.45);
+  }
+
+  .serviceBtn:hover {
+    transform: none;
+  }
+}

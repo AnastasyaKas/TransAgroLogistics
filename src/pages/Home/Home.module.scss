@@ -1,0 +1,21 @@
+@use "../../styles/variables" as v;
+
+/* =========================
+   PAGE LAYOUT (Home)
+   Здесь НЕ храним стили секций.
+   Только общие/сквозные вещи.
+========================= */
+
+.main {
+  /* если нужен фон на всю страницу — включишь тут */
+  /* background: #0E0F11; */
+}
+
+/* общий заголовок секций (используется в Services/Stages и т.д.) */
+.sectionTitle {
+  margin: 0 0 60px;
+  font-family: v.$font-secondary;
+  font-size: 36px;
+  font-weight: 600;
+}
+

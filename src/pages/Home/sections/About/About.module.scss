@@ -1,0 +1,338 @@
+@use "../../../../styles/variables" as v;
+
+/* =========================
+   ABOUT
+========================= */
+
+.about {
+  position: relative;
+  padding: 100px 0;
+  color: v.$color-text-100;
+}
+
+.about::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+
+  /* только справа */
+  background: radial-gradient(
+                  circle at 80% 50%,
+                  rgba(37, 99, 235, 0.08),
+                  transparent 70%
+  );
+
+  /* мягко ограничим влияние справа */
+  -webkit-mask-image: linear-gradient(
+                  to left,
+                  rgba(0, 0, 0, 1) 0%,
+                  rgba(0, 0, 0, 0) 55%
+  );
+  mask-image: linear-gradient(
+                  to left,
+                  rgba(0, 0, 0, 1) 0%,
+                  rgba(0, 0, 0, 0) 55%
+  );
+}
+
+.aboutInner {
+  position: relative;
+  z-index: 1;
+
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  align-items: start;
+  gap: 80px;
+}
+
+.aboutContent {
+  display: flex;
+  flex-direction: column;
+  padding-top: 8px;
+  gap: 32px;
+  margin-top: 0;
+}
+
+.aboutBrand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.aboutBrandLogo {
+  height: 40px;
+  width: auto;
+  display: block;
+}
+
+.aboutText {
+  margin: 0;
+  max-width: 530px;
+
+  font-size: 17px;
+  line-height: 1.75;
+  color: rgba(236, 239, 243, 0.88);
+}
+
+.aboutText strong {
+  color: #dce3f0;
+}
+
+/* ===== Experience card ===== */
+
+.experienceCard {
+  position: relative;
+  overflow: hidden;
+
+  border-radius: 28px;
+  padding: 56px 64px;
+  min-height: 260px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+          radial-gradient(
+                          circle at 78% 18%,
+                          rgba(37, 99, 235, 0.22) 0%,
+                          rgba(37, 99, 235, 0) 58%
+          ),
+          linear-gradient(
+                          135deg,
+                          rgba(14, 15, 17, 0.92) 0%,
+                          rgba(17, 24, 39, 0.88) 100%
+          );
+
+  border: 1px solid rgba(255, 255, 255, 0.06);
+
+  box-shadow:
+          0 16px 50px rgba(0, 0, 0, 0.5),
+          0 0 40px rgba(37, 99, 235, 0.12);
+}
+
+.experienceCard::after {
+  content: "";
+  position: absolute;
+  inset: -25%;
+  pointer-events: none;
+
+  background: linear-gradient(
+                  120deg,
+                  rgba(255, 255, 255, 0.1) 0%,
+                  rgba(255, 255, 255, 0.03) 34%,
+                  rgba(255, 255, 255, 0) 60%
+  );
+
+  transform: rotate(8deg);
+  opacity: 0.35;
+}
+
+.experienceMain {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.experienceNumber {
+  font-family: v.$font-secondary;
+  font-weight: 700;
+  font-size: 140px;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+
+  color: rgba(236, 239, 243, 0.92);
+}
+
+.experienceLabel {
+  font-family: v.$font-secondary;
+  font-weight: 500;
+  font-size: 42px;
+  letter-spacing: 0.02em;
+  opacity: 0.85;
+
+  color: rgba(174, 180, 189, 0.92);
+}
+
+.experienceBadge {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  z-index: 2;
+
+  display: inline-flex;
+  flex-direction: column;
+  gap: 2px;
+
+  padding: 10px 12px;
+  border-radius: 14px;
+
+  background: rgba(17, 24, 39, 0.45);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  font-family: v.$font-secondary;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  color: v.$color-text-100;
+}
+
+
+/* =========================
+   RESPONSIVE (senior-grade, stable card)
+   Goals:
+   - <=760: меняется только layout секции (1 колонка),
+           но experienceCard внутри НЕ перестраивается
+   - без clamp() для line-height с vw (Sass error fix)
+========================= */
+
+/* Fluid base (без опасных clamp по line-height) */
+.about {
+  padding-block: clamp(72px, 9vw, 100px);
+}
+
+.aboutInner {
+  gap: clamp(28px, 6vw, 80px);
+}
+
+.aboutContent {
+  gap: clamp(18px, 3vw, 32px);
+}
+
+.aboutBrandLogo {
+  height: clamp(32px, 3.2vw, 40px);
+}
+
+.aboutText {
+  font-size: clamp(15px, 1.35vw, 17px);
+  line-height: 1.7; /* ✅ FIX: без clamp(vw) */
+  max-width: 54ch;
+}
+
+/* experienceCard можно делать “fluid” по паддингу/высоте,
+   НО не трогаем внутреннюю композицию */
+.experienceCard {
+  padding: clamp(40px, 4vw, 56px) clamp(44px, 4.8vw, 64px);
+  min-height: clamp(240px, 22vw, 260px);
+  border-radius: clamp(20px, 2.4vw, 28px);
+}
+
+/* ВАЖНО: по твоему требованию — после 760px НЕ меняем типографику
+   Поэтому оставляем фикс, без clamp */
+.experienceNumber {
+  font-size: 140px;
+  line-height: 0.9;
+}
+
+.experienceLabel {
+  font-size: 42px;
+}
+
+/* badge остаётся absolute всегда */
+.experienceBadge {
+  top: 40px;
+  right: 40px;
+}
+
+/* <= 1100px: 2 колонки остаются, но мягче пропорции + меньше “грязи” от glow */
+@media (max-width: 1100px) {
+  .aboutInner {
+    grid-template-columns: 1.05fr 0.95fr;
+  }
+
+  .about::before {
+    background: radial-gradient(
+                    circle at 78% 45%,
+                    rgba(37, 99, 235, 0.06),
+                    transparent 72%
+    );
+
+    -webkit-mask-image: linear-gradient(
+                    to left,
+                    rgba(0, 0, 0, 1) 0%,
+                    rgba(0, 0, 0, 0) 62%
+    );
+    mask-image: linear-gradient(
+                    to left,
+                    rgba(0, 0, 0, 1) 0%,
+                    rgba(0, 0, 0, 0) 62%
+    );
+  }
+}
+
+/* <= 760px: 1 колонка.
+   experienceCard внутри НЕ трогаем (badge absolute, main как был). */
+@media (max-width: 760px) {
+  .aboutInner {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .aboutContent {
+    padding-top: 0;
+  }
+
+  .aboutText {
+    max-width: none;
+  }
+
+  /* glow на мобиле делаем мягче, чтобы не мешал чтению */
+  .about::before {
+    background: radial-gradient(
+                    circle at 50% 18%,
+                    rgba(37, 99, 235, 0.05),
+                    transparent 72%
+    );
+
+    -webkit-mask-image: none;
+    mask-image: none;
+    opacity: 0.9;
+  }
+
+  /* Можно чуть уменьшить паддинги карточки,
+     но НЕ менять align/justify и НЕ трогать badge */
+  .experienceCard {
+    padding: 48px 48px;
+    min-height: 240px;
+  }
+
+  /* Если начинает поджимать badge — уменьшаем только его отступы,
+     позиционирование остаётся absolute */
+  .experienceBadge {
+    top: 28px;
+    right: 28px;
+  }
+}
+
+/* <= 420px: очень узкие — ещё компактнее паддинги,
+   композиция внутри по-прежнему НЕ меняется */
+@media (max-width: 420px) {
+  .experienceCard {
+    padding: 36px 24px;
+    min-height: 220px;
+  }
+
+  .experienceBadge {
+    top: 18px;
+    right: 18px;
+    padding: 8px 10px;
+    font-size: 10px;
+  }
+}
+
+/* Touch devices: просто чуть спокойнее декоративный блик */
+@media (hover: none) and (pointer: coarse) {
+  .experienceCard::after {
+    opacity: 0.28;
+  }
+}
