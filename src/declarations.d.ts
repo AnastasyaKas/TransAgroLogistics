@@ -1,3 +1,4 @@
+// Для CSS/SCSS модулей
 declare module "*.module.scss" {
     const classes: Record<string, string>;
     export default classes;
@@ -8,11 +9,13 @@ declare module "*.module.css" {
     export default classes;
 }
 
+// Для SVG файлов
 declare module "*.svg" {
     const src: string;
     export default src;
 }
 
+// Для изображений
 declare module "*.png" {
     const src: string;
     export default src;
@@ -42,4 +45,3 @@ declare module "*.avif" {
     const src: string;
     export default src;
 }
-

@@ -1,0 +1,69 @@
+@use "../../../styles/variables" as v; /* Импорт переменных */
+
+/* Основной стиль для блока */
+.advantages {
+  background-color: v.$color-bg-1000;
+  padding: 40px 20px;
+  color: v.$color-text-200;
+  text-align: center;
+}
+
+h2 {
+  font-size: 32px;
+  font-weight: 700;
+  color: v.$color-text-400;
+  margin-bottom: 30px;
+}
+
+/* Контейнер для карточек */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  justify-items: center;
+}
+
+/* Стили для каждой карточки */
+.card {
+  background-color: rgba(37, 99, 235, 0.1); /* Лёгкий фон для карточек */
+  border-radius: 8px;
+  padding: 20px;
+  width: 100%;
+  max-width: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Иконки внутри карточек */
+.icon {
+  font-size: 48px;
+  margin-bottom: 20px;
+  color: v.$color-blue-500;
+}
+
+/* Текст заголовка в карточке */
+.cardTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: v.$color-text-400;
+}
+
+/* Адаптивность */
+@media (max-width: 1200px) {
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    max-width: 100%;
+  }
+}

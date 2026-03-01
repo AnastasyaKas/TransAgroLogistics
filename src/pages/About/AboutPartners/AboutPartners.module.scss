@@ -1,0 +1,61 @@
+@use "../../../styles/variables" as v; /* Импорт переменных */
+
+/* Основной стиль для блока партнёров */
+.partners {
+  padding: 40px 20px;
+  background-color: v.$color-bg-1000;
+  text-align: center;
+  color: v.$color-text-200;
+}
+
+h2 {
+  font-size: 32px;
+  font-weight: 700;
+  color: v.$color-text-400;
+  margin-bottom: 40px;
+}
+
+/* Сетка для логотипов партнёров */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  justify-items: center;
+}
+
+/* Стиль для каждого логотипа */
+.partner {
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: rgba(37, 99, 235, 0.1); /* Лёгкий фон для карточек */
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Стиль логотипа */
+.logo {
+  max-width: 100%;
+  height: auto;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Эффект при наведении на логотип */
+.partner:hover .logo {
+  transform: scale(1.1);
+}
+
+/* Адаптивность */
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
