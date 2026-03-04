@@ -5,6 +5,15 @@
    RESET / BASE
 ========================================= */
 
+.section {
+  padding-block: v.$section-space;
+}
+
+.sectionSm {
+  padding-block: v.$section-space-sm;
+}
+
+
 *,
 *::before,
 *::after {
@@ -70,8 +79,8 @@ html, body, #root {
 
 body {
   font-family: v.$font-main;
-  color: v.$color-text-300;
-  background-color: v.$color-bg-900;
+  color: #ECEFF3;
+  background-color: #0E0F11;
   line-height: 1.5;
   min-height: 100vh;
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useId } from 'react';  // Импортируем useId
 import { Link, NavLink } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link'; // импортируем HashLink
-import logo from '@/assets/images/logo.svg';
+import Logo  from '@/assets/images/logo.svg';
 import styles from './Header.module.scss';
 
 interface HeaderProps {
@@ -33,8 +33,15 @@ const Header: React.FC<HeaderProps> = ({ onOpenPopup }) => {
         <header className={styles.header} id="header">
             <div className="container">
                 <div className={styles.wrapper}>
-                    <Link to="/" className={styles.logoLink} aria-label="Трансагро — на главную" onClick={closeMenu}>
-                        <img src={logo} alt="Трансагро" className={styles.logoImage} />
+                    <Link to="/"
+                          className={styles.logoLink}
+                          aria-label="Трансагро — на главную"
+                          onClick={closeMenu}>
+                        <Logo
+                               className={styles.logoImage}
+                               aria-hidden="true"
+                               focusable="false"
+                        />
                     </Link>
 
                     <nav id={navId} className={`${styles.menu} ${isMenuOpen ? styles.isOpen : ''}`} aria-label="Основная навигация">

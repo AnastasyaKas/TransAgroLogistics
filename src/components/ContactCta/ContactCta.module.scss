@@ -1,48 +1,46 @@
-@use "../../../../styles/variables" as v;
+@use "../../styles/variables" as v;
 
 /* =========================
    CONTACT CTA (senior-grade)
-   Goals:
    - premium glass look
-   - bounded max width (no endless stretch)
+   - bounded max width
    - responsive: row -> column
    - touch-friendly button
    - hover only on hover-capable devices
 ========================= */
 
-.contact {
-  padding-block: clamp(56px, 7vw, 80px);
+//.contactCta {
+//  padding-block: clamp(56px, 7vw, 80px);
+//}
+
+/* стандартный контейнер проекта */
+.container {
+  width: 100%;
+  max-width: v.$container-width;
+  margin-inline: auto;
+  padding-inline: v.$container-padding;
 }
 
-.contactInner {
+/* сама “плашка” */
+.inner {
   position: relative;
   overflow: hidden;
 
-  /* ✅ не растягиваем плашку на всю ширину больших экранов */
   width: min(980px, 100%);
   margin-inline: auto;
 
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
 
-  /* ✅ gap/padding — fluid */
   gap: clamp(18px, 4vw, 48px);
   padding: clamp(20px, 3.2vw, 34px) clamp(18px, 4vw, 56px);
 
   border-radius: v.$radius-md;
 
   background:
-          radial-gradient(
-                          circle at 85% 50%,
-                          rgba(37, 99, 235, 0.20) 0%,
-                          rgba(37, 99, 235, 0) 55%
-          ),
-          linear-gradient(
-                          135deg,
-                          rgba(14, 15, 17, 0.94) 0%,
-                          rgba(17, 24, 39, 0.88) 100%
-          );
+          radial-gradient(circle at 85% 50%, rgba(37, 99, 235, 0.20) 0%, rgba(37, 99, 235, 0) 55%),
+          linear-gradient(135deg, rgba(14, 15, 17, 0.94) 0%, rgba(17, 24, 39, 0.88) 100%);
 
   border: 1px solid rgba(255, 255, 255, 0.08);
 
@@ -55,13 +53,13 @@
 
 /* hover only on fine pointers */
 @media (hover: hover) and (pointer: fine) {
-  .contactInner:hover {
+  .inner:hover {
     transform: translateY(-2px);
   }
 }
 
 /* лёгкий стеклянный блик */
-.contactInner::after {
+.inner::after {
   content: "";
   position: absolute;
   inset: -30%;
@@ -78,10 +76,13 @@
   opacity: 0.28;
 }
 
-.contactTitle {
+.content {
   position: relative;
   z-index: 1;
+  min-width: 0;
+}
 
+.title {
   margin: 0;
   font-family: v.$font-secondary;
   font-size: clamp(18px, 2.1vw, 28px);
@@ -91,15 +92,19 @@
 
   color: rgba(236, 239, 243, 0.92);
 
-  /* ✅ читабельность при переносах */
   text-wrap: balance;
-  text-align: center;
-
-  /* ✅ чтобы заголовок не “давил” кнопку */
   max-width: 34ch;
 }
 
-.contactBtn {
+.subtitle {
+  margin: 10px 0 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: rgba(236, 239, 243, 0.68);
+  max-width: 64ch;
+}
+
+.button {
   position: relative;
   z-index: 1;
 
@@ -111,7 +116,6 @@
   padding: 10px 22px;
   border-radius: v.$radius-sm;
 
-  /* ✅ touch target */
   min-height: 44px;
 
   border: 1px solid rgba(255, 255, 255, 0.10);
@@ -129,19 +133,18 @@
   transition: transform 0.15s ease, box-shadow 0.2s ease;
 }
 
-/* hover only on fine pointers */
 @media (hover: hover) and (pointer: fine) {
-  .contactBtn:hover {
+  .button:hover {
     transform: translateY(-1px);
     box-shadow: 0 14px 32px rgba(37, 99, 235, 0.42);
   }
 }
 
-.contactBtn:active {
+.button:active {
   transform: translateY(0);
 }
 
-.contactBtn:focus-visible {
+.button:focus-visible {
   outline: none;
   box-shadow:
           0 0 0 3px rgba(37, 99, 235, 0.20),
@@ -152,43 +155,41 @@
    RESPONSIVE
 ========================= */
 
-/* ✅ <= 1024px: можем уходить в колонку — выглядит “дорого” на планшете */
 @media (max-width: 1024px) {
-  .contactInner {
+  .inner {
     flex-direction: column;
+    align-items: center;
     text-align: center;
   }
 
-  .contactTitle {
+  .title {
     max-width: 40ch;
   }
 }
 
-/* ✅ <= 600px: строго колонка + кнопка на всю ширину плашки */
 @media (max-width: 600px) {
-  .contactInner {
+  .inner {
     gap: 14px;
     padding: 18px 16px;
   }
 
-  .contactTitle {
+  .title {
     font-size: 18px;
     line-height: 1.25;
     max-width: none;
   }
 
-  .contactBtn {
+  .button {
     width: 100%;
   }
 }
 
-/* touch: no hover jump */
 @media (hover: none) and (pointer: coarse) {
-  .contactInner:hover {
+  .inner:hover {
     transform: none;
   }
 
-  .contactBtn:hover {
+  .button:hover {
     transform: none;
     box-shadow: 0 10px 26px rgba(37, 99, 235, 0.30);
   }

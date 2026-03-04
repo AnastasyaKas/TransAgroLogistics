@@ -1,23 +1,23 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 module.exports = {
-    mode: 'development',
+    mode: "development",
 
-    entry: './src/index.tsx',
+    entry: "./src/index.tsx",
 
     output: {
-        path: path.resolve(__dirname, 'dist'),
-        filename: 'bundle.js',
-        publicPath: '/',
+        path: path.resolve(__dirname, "dist"),
+        filename: "bundle.js",
+        publicPath: "/",
         clean: true,
     },
 
     resolve: {
-        extensions: ['.ts', '.tsx', '.js', '.jsx'],
+        extensions: [".ts", ".tsx", ".js", ".jsx"],
         alias: {
-            '@': path.resolve(__dirname, 'src'),
+            "@": path.resolve(__dirname, "src"),
         },
     },
 
@@ -29,7 +29,7 @@ module.exports = {
             {
                 test: /\.tsx?$/,
                 use: {
-                    loader: 'ts-loader',
+                    loader: "ts-loader",
                     options: {
                         transpileOnly: true,
                     },
@@ -43,33 +43,33 @@ module.exports = {
             {
                 test: /\.module\.scss$/i,
                 use: [
-                    'style-loader',
+                    "style-loader",
                     {
-                        loader: 'css-loader',
+                        loader: "css-loader",
                         options: {
                             esModule: false,
                             importLoaders: 1,
                             url: true,
                             modules: {
-                                localIdentName: '[name]__[local]__[hash:base64:5]',
-                                exportLocalsConvention: 'camelCase',
+                                localIdentName: "[name]__[local]__[hash:base64:5]",
+                                exportLocalsConvention: "camelCase",
                             },
                         },
                     },
-                    'sass-loader',
+                    "sass-loader",
                 ],
             },
 
             // =========================
-            // GLOBAL SCSS (everything else)
+            // GLOBAL SCSS
             // =========================
             {
                 test: /\.scss$/i,
                 exclude: /\.module\.scss$/i,
                 use: [
-                    'style-loader',
+                    "style-loader",
                     {
-                        loader: 'css-loader',
+                        loader: "css-loader",
                         options: {
                             esModule: false,
                             importLoaders: 1,
@@ -77,7 +77,7 @@ module.exports = {
                             modules: false,
                         },
                     },
-                    'sass-loader',
+                    "sass-loader",
                 ],
             },
 
@@ -87,14 +87,14 @@ module.exports = {
             {
                 test: /\.module\.css$/i,
                 use: [
-                    'style-loader',
+                    "style-loader",
                     {
-                        loader: 'css-loader',
+                        loader: "css-loader",
                         options: {
                             esModule: false,
                             modules: {
-                                localIdentName: '[name]__[local]__[hash:base64:5]',
-                                exportLocalsConvention: 'camelCase',
+                                localIdentName: "[name]__[local]__[hash:base64:5]",
+                                exportLocalsConvention: "camelCase",
                             },
                         },
                     },
@@ -108,9 +108,9 @@ module.exports = {
                 test: /\.css$/i,
                 exclude: /\.module\.css$/i,
                 use: [
-                    'style-loader',
+                    "style-loader",
                     {
-                        loader: 'css-loader',
+                        loader: "css-loader",
                         options: {
                             esModule: false,
                             modules: false,
@@ -124,20 +124,64 @@ module.exports = {
             // =========================
             {
                 test: /\.(woff2?|eot|ttf|otf)$/i,
-                type: 'asset/resource',
+                type: "asset/resource",
                 generator: {
-                    filename: 'fonts/[name].[hash:8][ext]',
+                    filename: "fonts/[name].[hash:8][ext]",
                 },
             },
 
             // =========================
-            // Images
+            // SVG as URL (for <img src="...">)
+            // import logoUrl from "./logo.svg?url"
             // =========================
             {
-                test: /\.(png|jpe?g|gif|svg|webp)$/i,
-                type: 'asset/resource',
+                test: /\.svg$/i,
+                resourceQuery: /url/, // *.svg?url
+                type: "asset/resource",
                 generator: {
-                    filename: 'assets/images/[name][ext]',
+                    filename: "assets/images/[name].[contenthash:8][ext]",
+                },
+            },
+
+            // =========================
+            // SVG as React Component (SVGR)
+            // import Icon from "./icon.svg"
+            // =========================
+            {
+                test: /\.svg$/i,
+                issuer: /\.[jt]sx?$/,
+                resourceQuery: { not: [/url/] },
+                use: [
+                    {
+                        loader: "@svgr/webpack",
+                        options: {
+                            icon: true,
+                            svgo: true,
+                            svgoConfig: {
+                                plugins: [
+                                    {
+                                        name: "preset-default",
+                                        params: {
+                                            overrides: {
+                                                removeViewBox: false,
+                                            },
+                                        },
+                                    },
+                                ],
+                            },
+                        },
+                    },
+                ],
+            },
+
+            // =========================
+            // Images (NO SVG here!)
+            // =========================
+            {
+                test: /\.(png|jpe?g|gif|webp|avif|ico)$/i,
+                type: "asset/resource",
+                generator: {
+                    filename: "assets/images/[name].[contenthash:8][ext]",
                 },
             },
         ],
@@ -145,7 +189,7 @@ module.exports = {
 
     devServer: {
         static: {
-            directory: path.join(__dirname, 'dist'),
+            directory: path.join(__dirname, "dist"),
         },
         compress: true,
         port: 9000,
@@ -155,8 +199,8 @@ module.exports = {
 
     plugins: [
         new HtmlWebpackPlugin({
-            template: './src/index.html',
-            favicon: './src/assets/images/favicon.ico',
+            template: "./src/index.html",
+            favicon: "./src/assets/images/favicon.ico",
         }),
         new ForkTsCheckerWebpackPlugin(),
     ],

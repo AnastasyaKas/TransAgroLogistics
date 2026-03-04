@@ -1,0 +1,278 @@
+/* src/pages/About/AboutPartners/AboutPartners.module.scss */
+@use "../../../styles/variables" as v;
+
+/* =========================
+   AboutPartners — Marquee (senior-grade)
+   - seamless loop (2x items)
+   - pause on hover + focus-within
+   - respects prefers-reduced-motion
+   - premium panel + fades
+   - ✅ valid list semantics (ul > li)
+========================= */
+
+//.partners {
+//  padding-block: clamp(56px, 7vw, 110px);
+//}
+
+.container {
+  width: 100%;
+  max-width: v.$container-width;
+  margin-inline: auto;
+  padding-inline: v.$container-padding;
+}
+
+/* =========================
+   Header
+========================= */
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: clamp(18px, 2.2vw, 28px);
+}
+
+.headText {
+  min-width: 0;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(28px, 3vw, 36px);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: #eceff3;
+}
+
+.subtitle {
+  margin: 10px 0 0;
+  max-width: 72ch;
+  font-size: 14px;
+  line-height: 1.55;
+  color: rgba(236, 239, 243, 0.68);
+}
+
+/* =========================
+   Marquee shell
+========================= */
+
+.marquee {
+  position: relative;
+  border-radius: 18px;
+
+  background:
+          radial-gradient(120% 120% at 50% 0%, rgba(37, 99, 235, 0.10), transparent 55%),
+          linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.01)),
+          rgba(10, 12, 16, 0.76);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  box-shadow:
+          0 26px 70px rgba(0,0,0,0.58),
+          inset 0 1px 0 rgba(255,255,255,0.06);
+
+  padding: clamp(12px, 1.6vw, 16px);
+  overflow: hidden;
+
+  /* UX: фиксируем ленту по высоте, чтобы не прыгала */
+  min-height: 106px;
+}
+
+/* =========================
+   Track (animated)
+========================= */
+
+.track {
+  /* скорость: регулируй только эту переменную */
+  --duration: 32s;
+  --gap: clamp(14px, 2vw, 18px);
+
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  gap: var(--gap);
+
+  /* ключ: ширина по контенту, чтобы translateX считался корректно */
+  width: max-content;
+
+  /* плавный бесконечный ход */
+  animation: marquee var(--duration) linear infinite;
+
+  will-change: transform;
+}
+
+/* ✅ пауза при hover и при фокусе табом */
+.marquee:hover .track,
+.marquee:focus-within .track {
+  animation-play-state: paused;
+}
+
+/* li wrapper */
+.cell {
+  flex: 0 0 auto;
+  min-width: 0;
+}
+
+/* =========================
+   Item
+========================= */
+
+.item {
+  /* и для <a>, и для <div> */
+  display: grid;
+  place-items: center;
+  text-decoration: none;
+
+  height: 78px;
+  padding: 12px 18px;
+  border-radius: 16px;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background:
+          linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)),
+          rgba(10, 12, 16, 0.55);
+
+  box-shadow:
+          0 16px 40px rgba(0,0,0,0.42),
+          inset 0 1px 0 rgba(255,255,255,0.06);
+
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.item:hover {
+  transform: translateY(-2px);
+  border-color: rgba(37, 99, 235, 0.22);
+  box-shadow:
+          0 22px 56px rgba(0,0,0,0.55),
+          inset 0 1px 0 rgba(255,255,255,0.07),
+          0 0 0 1px rgba(37, 99, 235, 0.10);
+}
+
+.item:focus-visible {
+  outline: 2px solid rgba(37, 99, 235, 0.55);
+  outline-offset: 3px;
+}
+
+/* =========================
+   Logo
+========================= */
+
+.logo {
+  width: min(180px, 92%);
+  height: 46px;
+  object-fit: contain;
+  display: block;
+
+  /* чуть мягче, чтобы читалось лучше (как на твоём улучшенном скрине) */
+  filter: grayscale(0.15) saturate(0.95) contrast(1.06) brightness(0.98);
+  opacity: 0.95;
+
+  transition: filter 180ms ease, opacity 180ms ease, transform 180ms ease;
+}
+
+.item:hover .logo,
+.item:focus-visible .logo {
+  filter: grayscale(0) saturate(1) contrast(1.08) brightness(1.02);
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+/* =========================
+   Fades
+========================= */
+
+.fadeLeft,
+.fadeRight {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: clamp(28px, 6vw, 70px);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.fadeLeft {
+  left: 0;
+  background: linear-gradient(90deg, rgba(10, 12, 16, 0.95), rgba(10, 12, 16, 0));
+}
+
+.fadeRight {
+  right: 0;
+  background: linear-gradient(270deg, rgba(10, 12, 16, 0.95), rgba(10, 12, 16, 0));
+}
+
+/* =========================
+   Responsive
+========================= */
+
+@media (max-width: 560px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .track {
+    --duration: 26s; /* на мобиле чуть быстрее, потому что viewport меньше */
+  }
+
+  .item {
+    height: 72px;
+    padding: 10px 14px;
+  }
+
+  .logo {
+    height: 42px;
+  }
+}
+
+/* =========================
+   Motion accessibility
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .marquee::-webkit-scrollbar {
+    display: none;
+  }
+
+  .track {
+    animation: none !important;
+    width: max-content;
+    padding-bottom: 4px;
+  }
+
+  .item,
+  .logo {
+    transition: none !important;
+  }
+
+  .item:hover {
+    transform: none;
+  }
+
+  .item:hover .logo {
+    transform: none;
+  }
+}
+
+/* =========================
+   Keyframes
+   Важно: при 2x списке проезжаем ровно половину трека
+========================= */
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}

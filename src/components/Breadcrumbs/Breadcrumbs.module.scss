@@ -1,0 +1,41 @@
+@use "@/styles/variables" as v;
+
+.breadcrumbs {
+  font-size: 12px;
+  line-height: 1.2;
+  color: rgba(124, 133, 150, 0.75);
+}
+
+.list {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.link {
+  color: rgba(124, 133, 150, 0.75);
+  text-decoration: none;
+  transition: color 200ms ease;
+}
+
+.link:hover {
+  color: v.$color-blue-500;
+}
+
+.current {
+  color: rgba(124, 133, 150, 0.9);
+}
+
+.separator {
+  opacity: 0.55;
+}

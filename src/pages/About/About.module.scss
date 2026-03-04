@@ -1,0 +1,52 @@
+/* Общие переменные */
+@use "../../styles/variables" as v; /* Импорт переменных */
+
+/* Общий фон для страницы */
+.about {
+  padding: 20px;
+
+}
+
+/* Общие отступы для блоков */
+.about > * {
+  margin-bottom: 40px; /* Отступы между блоками */
+}
+
+/* Заголовки */
+h1, h2, h3, h4 {
+  font-family: v.$font-secondary;
+  color: v.$color-text-400; /* Заголовки будут использовать этот цвет */
+  margin-bottom: 16px;
+}
+
+/* Flexbox для размещения блоков на странице */
+.about-flex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Адаптивность */
+@media (max-width: 1200px) {
+  .about {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .about > * {
+    margin-bottom: 30px;
+  }
+
+  /* Настройки для флекс-контейнера на мобильных устройствах */
+  .about-flex {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .about > * {
+    margin-bottom: 20px;
+  }
+}
