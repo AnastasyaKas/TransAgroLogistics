@@ -1,117 +1,144 @@
-@use "../../../styles/variables" as v; /* Импорт переменных для гибкости */
+@use "../../../styles/variables" as v;
 
-/* Контейнер для всего блока */
+/* =========================
+   AboutHeader (senior-grade)
+   Goals:
+   - clearer hierarchy (headline + readable body)
+   - 50/50 layout with reliable wrapping
+   - image looks premium (depth + subtle border)
+   - less specificity / less nesting
+========================= */
+
 .aboutHeader {
-  padding: 40px 20px;
-  background: linear-gradient(180deg, #F4F6F8 100%, #C7DBFF 100%) !important; /* Фон с градиентом */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  min-height: 100vh; /* Гарантируем, что блок займет всю высоту экрана */
+  min-height: 100vh;
   display: flex;
-  flex-direction: column; /* Минимальная высота блока, чтобы фон точно заполнил экран */
+  flex-direction: column;
 
-  /* Убедитесь, что текст и изображение правильно ограничены */
-  .container {
-    width: 100%;
-    max-width: v.$container-width; /* Используем переменную для ограничения ширины */
-    margin-inline: auto; /* Автоматические отступы слева и справа */
-    padding-inline: v.$container-padding; /* Отступы по бокам */
+  padding-top: clamp(60px, 6vw, 84px);
+  padding-bottom: clamp(24px, 4vw, 48px);
+
+
+}
+
+/* оставляем, т.к. в TSX используется styles.container */
+.container {
+  width: 100%;
+  max-width: v.$container-width;
+  margin-inline: auto;
+  padding-inline: v.$container-padding;
+}
+
+
+.title {
+  font-size: clamp(32px, 3.2vw, 44px);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+  color: #eceff3;
+  margin-bottom: clamp(24px, 3vw, 40px);
+}
+
+/* Main split layout */
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  gap: clamp(20px, 4vw, 56px);
+
+  /* critical: prevents text/image overflow issues in flex */
+  min-width: 0;
+}
+
+.text {
+  flex: 1 1 50%;
+  min-width: 0;
+  max-width: 600px;
+
+
+
+  /* ЛИД — визуально сильнее обычного текста */
+  .lead {
+    margin: 0 0 22px;
+    font-size: clamp(16px, 1.2vw, 20px);
+    line-height: 1.5;
+    color: #f3f6fa;
+    font-weight: 500;
+
+    /* subtle accent line */
+    padding-left: 16px;
+    border-left: 3px solid v.$color-blue-500;
   }
 
-  /* Блок хлебных крошек */
-  .breadcrumbs {
-    font-size: 14px; /* Размер текста для хлебных крошек */
-    color: #3a3a3a; /* Цвет для текста */
-    margin-bottom: 16px;
-
-    span {
-      color: #007aff; /* Цвет ссылок */
-    }
+  p {
+    margin: 0 0 16px;
+    font-size: 16px;
+    line-height: 1.7;
+    color: rgba(174, 180, 189, 0.95);
   }
 
-  /* Основной блок контента */
-  .content {
-    display: flex; /* Flexbox для размещения текста и изображения */
-    justify-content: space-between; /* Пространство между элементами */
-    align-items: flex-start;
-    flex-wrap: wrap;
-
-    /* Текстовый блок */
-    .text {
-      flex: 1; /* Текст занимает всю доступную ширину */
-      padding-right: 20px; /* Отступ справа для текста */
-      max-width: 50%; /* Максимальная ширина текста */
-
-      h1 {
-        font-size: 36px; /* Размер заголовка */
-        color: #333; /* Цвет заголовка */
-        margin-bottom: 16px; /* Отступ снизу */
-      }
-
-      p {
-        font-size: 16px; /* Размер текста */
-        line-height: 1.6; /* Межстрочный интервал */
-        color: #666; /* Цвет текста */
-        margin-bottom: 16px; /* Отступ снизу */
-      }
-    }
-
-    /* Блок с изображением */
-    .image {
-      flex: 1;
-      max-width: 45%; /* Максимальная ширина изображения */
-      position: relative;
-
-      .imageContent {
-        width: 100%; /* Ширина изображения */
-        height: auto; /* Автоматическая высота */
-        border-radius: 8px; /* Скругленные углы */
-        object-fit: cover; /* Картинка будет покрывать весь контейнер */
-      }
-    }
+  p:last-child {
+    margin-bottom: 0;
   }
 }
 
-/* Медиазапросы для адаптивности */
+.image {
+  flex: 1 1 50%;
+  min-width: 0;
 
-/* Планшеты и большие мобильные устройства */
+  /* keeps image feeling "weighted" and not too huge */
+  max-width: 560px;
+  margin-left: auto;
+}
+
+.imageContent {
+  width: 100%;
+  height: auto;
+  display: block;
+
+  border-radius: 14px;
+  object-fit: cover;
+
+  /* premium depth */
+  box-shadow:
+          0 22px 60px rgba(0, 0, 0, 0.35),
+          0 0 0 1px rgba(255, 255, 255, 0.06);
+
+  /* optional: slightly richer contrast on dark background */
+  filter: saturate(1.03) contrast(1.03);
+  transition: transform 400ms ease, box-shadow 400ms ease;
+}
+
+.imageContent:hover {
+  transform: translateY(-4px);
+  box-shadow:
+          0 28px 70px rgba(0, 0, 0, 0.45),
+          0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+/* =========================
+   Responsive
+========================= */
+
+/* <= 1023px: stack */
 @media (max-width: 1023px) {
-  .aboutHeader {
-    padding: 20px;
-  }
-
   .content {
-    flex-direction: column; /* Размещение контента вертикально */
-    align-items: center;
-  }
-
-  .text {
-    max-width: 100%; /* Текст занимает всю ширину */
-    padding-right: 0;
-    margin-bottom: 20px; /* Отступ снизу */
+    flex-direction: column;
+    align-items: stretch;
   }
 
   .image {
-    max-width: 100%; /* Изображение не выходит за пределы */
+    max-width: 720px;
+    width: 100%;
+    margin-inline: auto;
   }
 }
 
-/* Мобильные устройства */
-@media (max-width: 767px) {
-  .aboutHeader {
-    padding: 20px 10px; /* Уменьшаем отступы */
-  }
 
-  .content {
-    flex-direction: column; /* Контент в колонку */
-    align-items: center;
-  }
 
-  .text {
-    max-width: 100%; /* Текст также занимает всю ширину */
-    padding-right: 0;
-  }
-
-  .image {
-    max-width: 100%; /* Изображение по ширине контейнера */
+/* <= 768px: align with global container rhythm */
+@media (max-width: 768px) {
+  .container {
+    padding-inline: 16px;
   }
 }

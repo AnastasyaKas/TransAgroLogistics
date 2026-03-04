@@ -8,12 +8,8 @@ import Popup from "@/components/Popup/Popup";
 const Home = React.lazy(() => import("@/pages/Home/Home"));
 const About = React.lazy(() => import("@/pages/About/About"));
 const Contact = React.lazy(() => import("@/pages/Contact/Contact"));
-const TermsOfService = React.lazy(
-    () => import("@/pages/TermsOfService/TermsOfService")
-);
-const PrivacyPolicy = React.lazy(
-    () => import("@/pages/PrivacyPolicy/PrivacyPolicy")
-);
+const TermsOfService = React.lazy(() => import("@/pages/TermsOfService/TermsOfService"));
+const PrivacyPolicy = React.lazy(() => import("@/pages/PrivacyPolicy/PrivacyPolicy"));
 
 const App: React.FC = () => {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -23,7 +19,6 @@ const App: React.FC = () => {
 
     return (
         <Router>
-            {/* ✅ fallback показывается пока подгружается чанк страницы */}
             <Suspense fallback={<div style={{ padding: 24 }}>Loading…</div>}>
                 <Routes>
                     <Route
@@ -34,14 +29,16 @@ const App: React.FC = () => {
                             </Layout>
                         }
                     />
+
                     <Route
                         path="/about"
                         element={
                             <Layout>
-                                <About />
+                                <About onOpenPopup={handleOpenPopup} />
                             </Layout>
                         }
                     />
+
                     <Route
                         path="/contact"
                         element={

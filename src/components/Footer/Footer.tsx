@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Footer.module.scss';
 
-import logo from '@/assets/images/logo-footer.svg'; // или logo-footer.svg
+import logoUrl from "@/assets/images/logo-footer.svg?url"; // или logo-footer.svg
 
 const Footer: React.FC = () => {
     return (
@@ -26,11 +26,7 @@ const Footer: React.FC = () => {
                     </div>
 
                     <div className={styles.brand}>
-                        <img
-                            src={logo}
-                            alt="ТрансАгро"
-                            className={styles.logo}
-                        />
+                        <img src={logoUrl} alt="ТрансАгро" className={styles.logo}/>
                     </div>
                 </div>
 

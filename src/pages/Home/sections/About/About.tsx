@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./About.module.scss";
 
-import aboutTitle from "@/assets/images/about-title.svg";
+import aboutTitleUrl  from "@/assets/images/about-title.svg?url";
 
 export const About: React.FC = () => {
     return (
@@ -15,7 +15,7 @@ export const About: React.FC = () => {
                     <div className={styles.aboutContent}>
                         <div className={styles.aboutBrand}>
                             <img
-                                src={aboutTitle}
+                                src={aboutTitleUrl }
                                 alt="ТРАНСАГРО"
                                 className={styles.aboutBrandLogo}
                             />

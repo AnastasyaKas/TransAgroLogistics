@@ -62,3 +62,7 @@ $btn-card-bg: rgba(31, 41, 55, 0.145); // #1F2937 + ~15% alpha
 /* Layout */
 $container-width: 1200px;
 $container-padding: 15px;
+
+/* vertical rhythm */
+$section-space: clamp(64px, 8vw, 120px);
+$section-space-sm: clamp(44px, 6vw, 80px); /* если где-то нужно компактнее */

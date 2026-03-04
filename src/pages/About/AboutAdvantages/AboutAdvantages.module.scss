@@ -1,69 +1,218 @@
-@use "../../../styles/variables" as v; /* Импорт переменных */
+@use "../../../styles/variables" as v;
 
-/* Основной стиль для блока */
-.advantages {
-  background-color: v.$color-bg-1000;
-  padding: 40px 20px;
-  color: v.$color-text-200;
-  text-align: center;
-}
+/* =========================
+   AboutAdvantages (senior-grade)
+   - modern glass cards
+   - consistent grid
+   - clean hover + focus
+========================= */
 
-h2 {
-  font-size: 32px;
-  font-weight: 700;
-  color: v.$color-text-400;
-  margin-bottom: 30px;
-}
+//.advantages {
+//  padding-block: clamp(56px, 10vw, 110px);
+//}
 
-/* Контейнер для карточек */
-.cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  justify-items: center;
-}
-
-/* Стили для каждой карточки */
-.card {
-  background-color: rgba(37, 99, 235, 0.1); /* Лёгкий фон для карточек */
-  border-radius: 8px;
-  padding: 20px;
+.container {
   width: 100%;
-  max-width: 250px;
+  max-width: v.$container-width;
+  margin-inline: auto;
+  padding-inline: v.$container-padding;
+}
+
+.header {
+  margin-bottom: clamp(22px, 3vw, 34px);
+}
+
+.title {
+  font-size: clamp(28px, 3vw, 36px);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0 0 clamp(36px, 5vw, 64px);
+  color: #ECEFF3;
+}
+
+/* === GRID === */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+}
+
+/* === CARD === */
+.card {
+  position: relative;
+  isolation: isolate;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+
+  /* ✅ стабильная “воздушность” между иконкой и текстом */
+  gap: 14px;
+
+  border-radius: v.$radius-md;
+  min-height: 200px;
+  padding: 40px 30px;
+  text-align: center;
+
+  background:
+          radial-gradient(120% 120% at 10% 0%, rgba(37,99,235,0.12), transparent 55%),
+          linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.01)),
+          rgba(10, 12, 16, 0.86);
+
+  border: 1px solid rgba(255,255,255,0.08);
+
+  box-shadow:
+          0 24px 60px rgba(0,0,0,0.58),
+          inset 0 1px 0 rgba(255,255,255,0.06);
+
+  transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
 }
 
-/* Иконки внутри карточек */
+/* Верхняя кромка */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+
+  background: linear-gradient(
+                  180deg,
+                  rgba(255,255,255,0.11) 0%,
+                  rgba(255,255,255,0.03) 22%,
+                  transparent 45%
+  );
+  opacity: 0.50;
+}
+
+/* Glow только на hover — и чуть слабее (премиальнее) */
+.card::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
+
+  background: radial-gradient(70% 80% at 50% 115%, rgba(37,99,235,0.38), transparent 60%);
+  opacity: 0;
+  transition: opacity .25s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(37,99,235,0.26);
+
+  box-shadow:
+          0 30px 80px rgba(0,0,0,0.65),
+          inset 0 1px 0 rgba(255,255,255,0.07),
+          0 0 0 1px rgba(37,99,235,0.12);
+}
+
+.card:hover::after {
+  opacity: 0.28;
+}
+
+.card:focus-within {
+  border-color: rgba(59, 130, 246, 0.55);
+  box-shadow:
+          0 28px 70px rgba(0, 0, 0, 0.55),
+          inset 0 1px 0 rgba(255, 255, 255, 0.06),
+          0 0 0 3px rgba(59, 130, 246, 0.20);
+}
+
+/* === ICON WRAP === */
 .icon {
-  font-size: 48px;
-  margin-bottom: 20px;
-  color: v.$color-blue-500;
+  width: 72px;
+  height: 72px;
+
+  border-radius: v.$radius-md;
+
+  background: rgba(37, 99, 235, 0.08);
+  border: 1px solid rgba(37, 99, 235, 0.18);
+
+  box-shadow:
+          inset 0 1px 0 rgba(255,255,255,0.06),
+          0 10px 24px rgba(0,0,0,0.35);
+
+  backdrop-filter: blur(6px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Текст заголовка в карточке */
+/* === SVG === */
+.iconSvg {
+  width: 32px;
+  height: 32px;
+  display: block;
+
+  transition: transform 220ms ease, opacity 220ms ease;
+  opacity: 0.95;
+}
+
+.iconWide .iconSvg {
+  width: 62px;
+  height: 34px;
+}
+
+.iconSvg :where(path, circle, rect, line, polyline, polygon) {
+  stroke: currentColor;
+  fill: none;
+}
+
+.card:hover .iconSvg {
+  transform: scale(1.06);
+  opacity: 1;
+}
+
+/* === TEXT === */
 .cardTitle {
-  font-size: 16px;
-  font-weight: 600;
-  color: v.$color-text-400;
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.45;
+  color: rgba(236, 239, 243, 0.88);
+  font-weight: 500;
 }
 
-/* Адаптивность */
-@media (max-width: 1200px) {
-  .cards {
-    grid-template-columns: repeat(2, 1fr);
+/* =========================
+   Motion accessibility
+========================= */
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .iconSvg,
+  .card::after {
+    transition: none;
+  }
+  .card:hover {
+    transform: none;
   }
 }
 
-@media (max-width: 768px) {
-  .cards {
+/* =========================
+   Responsive
+========================= */
+@media (max-width: 1023px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .grid {
     grid-template-columns: 1fr;
   }
 
   .card {
-    max-width: 100%;
+    min-height: 160px;
+    padding: 22px 18px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding-inline: 16px;
   }
 }

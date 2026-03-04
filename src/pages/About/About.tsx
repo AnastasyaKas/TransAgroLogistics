@@ -1,36 +1,30 @@
-import React from 'react';
-import Layout from '../../components/Layout/Layout';
+import React from "react";
 
-// Импортируем компоненты для разных блоков страницы About
-import AboutHeader from './AboutHeader/AboutHeader';
-import AboutAdvantages from './AboutAdvantages/AboutAdvantages';
-import AboutGallery from './AboutGallery/AboutGallery';
-import AboutPartners from './AboutPartners/AboutPartners';
-import { AboutContactCta } from './AboutContactCta/AboutContactCta';
+import AboutHeader from "./AboutHeader/AboutHeader";
+import AboutAdvantages from "./AboutAdvantages/AboutAdvantages";
+import AboutGallery from "./AboutGallery/AboutGallery";
+import AboutPartners from "./AboutPartners/AboutPartners";
 
-const About = () => {
-    // Функция, которая будет вызвана при открытии попапа
-    const handleOpenPopup = () => {
-        console.log('Popup opened');
-        // Здесь можно добавить логику для открытия попапа
-    };
+import ContactCta from "@/components/ContactCta/ContactCta";
 
+type AboutProps = {
+    onOpenPopup: () => void;
+};
+
+const About: React.FC<AboutProps> = ({ onOpenPopup }) => {
     return (
         <div className="about">
-            {/* Блок О компании */}
             <AboutHeader />
-
-            {/* Блок Преимущества */}
             <AboutAdvantages />
-
-            {/* Блок Галерея */}
             <AboutGallery />
-
-            {/* Блок Партнеры */}
             <AboutPartners />
 
-            {/* Блок Контактная форма с передачей функции для открытия попапа */}
-            <AboutContactCta onOpenPopup={handleOpenPopup} />
+            <ContactCta
+                onOpenPopup={onOpenPopup}
+                title="Остались вопросы?"
+                subtitle="Оставьте заявку — ответим в ближайшее время."
+                buttonText="Связаться"
+            />
         </div>
     );
 };

@@ -83,7 +83,7 @@
 
 @keyframes header-border-loop {
   from { background-position: 220% 0; }
-  to   { background-position: 0 0; }
+  to { background-position: 0 0; }
 }
 
 .wrapper {
@@ -109,11 +109,21 @@
   flex-shrink: 0;
 }
 
+/* ВАЖНО:
+   - если ты рендеришь лого как SVG-компонент (<Logo /> через SVGR),
+     указываем явные размеры (width/height), а не height + width:auto
+*/
 .logoImage {
   display: block;
+  flex-shrink: 0;
+
+  width: 170px; /* подгони под свой макет */
   height: 36px;
-  width: auto;
+
+  max-width: 100%;
 }
+
+/* чтобы сам svg занимал размер контейнера */
 
 /* =========================================
    NAV
@@ -361,6 +371,7 @@
 
 @media (max-width: 420px) {
   .logoImage {
+    width: 140px;
     height: 32px;
   }
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Hero.module.scss";
 
-import heroTitleSvg from "@/assets/images/hero-title.svg";
+import heroTitleSvg  from "@/assets/images/hero-title.svg?url";
 import { Advantages } from "../Advantages/Advantages";
 
 type HeroProps = {
