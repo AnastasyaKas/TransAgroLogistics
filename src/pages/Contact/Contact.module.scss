@@ -1,0 +1,408 @@
+/* src/pages/Contact/Contact.module.scss */
+@use "../../styles/variables" as v;
+
+.page {
+  min-height: 100vh;
+}
+
+.container {
+  width: 100%;
+  max-width: v.$container-width;
+  margin-inline: auto;
+  padding-inline: v.$container-padding;
+}
+
+.hero {
+  padding-top: clamp(56px, 6vw, 84px);
+  padding-bottom: clamp(22px, 3vw, 36px);
+}
+
+.title {
+  margin: 0 0 10px;
+  font-size: clamp(30px, 3.2vw, 44px);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+  color: #eceff3;
+}
+
+.lead {
+  margin: 0;
+  max-width: 70ch;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(174, 180, 189, 0.96);
+}
+
+.section {
+  padding-block: clamp(26px, 4vw, 48px);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1.25fr;
+  gap: clamp(14px, 2.2vw, 18px);
+  align-items: start;
+}
+
+.panel,
+.mapPanel {
+  border-radius: 18px;
+  overflow: hidden;
+
+  background:
+          radial-gradient(120% 120% at 50% 0%, rgba(37, 99, 235, 0.10), transparent 55%),
+          linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.01)),
+          rgba(10, 12, 16, 0.76);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  box-shadow:
+          0 26px 70px rgba(0,0,0,0.58),
+          inset 0 1px 0 rgba(255,255,255,0.06);
+}
+
+.panel {
+  padding: clamp(14px, 2vw, 18px);
+}
+
+.panelHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: rgba(236, 239, 243, 0.92);
+}
+
+.company {
+  font-size: 13px;
+  color: rgba(236, 239, 243, 0.62);
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.item {
+  display: grid;
+  grid-template-columns: 38px 1fr;
+  gap: 12px;
+
+  padding: 12px;
+  border-radius: 16px;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background:
+          linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)),
+          rgba(10, 12, 16, 0.55);
+
+  box-shadow:
+          0 16px 40px rgba(0,0,0,0.34),
+          inset 0 1px 0 rgba(255,255,255,0.06);
+}
+
+.icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+
+  background: rgba(37, 99, 235, 0.12);
+  border: 1px solid rgba(37, 99, 235, 0.16);
+}
+
+/* ✅ SVG from SVGR */
+.iconSvg {
+  width: 18px;
+  height: 18px;
+  display: block;
+  color: rgba(236, 239, 243, 0.92);
+}
+
+
+
+.itemBody {
+  min-width: 0;
+}
+
+.itemLabel {
+  font-size: 12px;
+  color: rgba(236, 239, 243, 0.55);
+  margin-bottom: 2px;
+}
+
+.itemValue {
+  font-size: 14px;
+  color: rgba(236, 239, 243, 0.9);
+  line-height: 1.4;
+
+  a {
+    color: rgba(236, 239, 243, 0.9);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(236, 239, 243, 0.18);
+    transition: border-color 180ms ease, color 180ms ease;
+  }
+
+  a:hover {
+    color: rgba(37, 99, 235, 0.95);
+    border-color: rgba(37, 99, 235, 0.35);
+  }
+
+  a:focus-visible {
+    outline: 2px solid rgba(37, 99, 235, 0.55);
+    outline-offset: 3px;
+    border-bottom-color: transparent;
+  }
+}
+
+.itemHint {
+  margin-top: 4px;
+  font-size: 12px;
+  color: rgba(174, 180, 189, 0.9);
+
+  /* ✅ делаем ссылку в hint такой же “кликабельной”, как обычные ссылки */
+  a {
+    color: rgba(174, 180, 189, 0.95);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(174, 180, 189, 0.28);
+    transition: border-color 180ms ease, color 180ms ease;
+  }
+
+  a:hover {
+    color: rgba(37, 99, 235, 0.95);
+    border-color: rgba(37, 99, 235, 0.35);
+  }
+
+  a:focus-visible {
+    outline: 2px solid rgba(37, 99, 235, 0.55);
+    outline-offset: 3px;
+    border-bottom-color: transparent;
+  }
+}
+
+.actions {
+  margin-top: 14px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.primaryBtn,
+.secondaryBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 16px;
+  border-radius: 14px;
+
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 13px;
+
+  transition: transform 160ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.primaryBtn {
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: #fff;
+  box-shadow: 0 12px 30px rgba(37, 99, 235, 0.28);
+}
+
+.secondaryBtn {
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(10, 12, 16, 0.52);
+  color: rgba(236, 239, 243, 0.92);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.35);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .primaryBtn:hover,
+  .secondaryBtn:hover {
+    transform: translateY(-1px);
+  }
+  .primaryBtn:hover {
+    box-shadow: 0 16px 40px rgba(37, 99, 235, 0.38);
+  }
+}
+
+.mapPanel {
+  padding: clamp(14px, 2vw, 18px);
+  position: sticky;
+  top: 92px;
+}
+
+.mapTop {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.mapLink {
+  font-size: 13px;
+  color: rgba(37, 99, 235, 0.92);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(37, 99, 235, 0.25);
+  transition: color 180ms ease, border-color 180ms ease;
+}
+
+.mapLink:hover {
+  color: rgba(37, 99, 235, 1);
+  border-color: rgba(37, 99, 235, 0.45);
+}
+
+.mapFrameWrap {
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.25);
+
+  box-shadow:
+          0 18px 46px rgba(0,0,0,0.45),
+          inset 0 1px 0 rgba(255,255,255,0.06);
+}
+
+/* ✅ лёгкая “вуаль” поверх карты — вписывает в тёмную тему, не мешает кликам */
+.mapFrameWrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0.10);
+  z-index: 1;
+}
+
+.mapFrame {
+  width: 100%;
+  height: clamp(320px, 44vh, 520px);
+  border: 0;
+  display: block;
+}
+
+.mapBadge {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  z-index: 2;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 10px 12px;
+  border-radius: 14px;
+
+  background: rgba(10, 12, 16, 0.62);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(10px);
+
+  box-shadow: 0 14px 34px rgba(0,0,0,0.45);
+}
+
+.mapPin {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: rgba(37, 99, 235, 0.95);
+  box-shadow: 0 0 0 6px rgba(37, 99, 235, 0.16);
+}
+
+.mapBadgeText {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(236, 239, 243, 0.92);
+  letter-spacing: 0.2px;
+}
+
+.mapCta {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  z-index: 2;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 40px;
+  padding: 8px 12px;
+  border-radius: 14px;
+
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 12.5px;
+
+  color: rgba(236, 239, 243, 0.95);
+  background: rgba(10, 12, 16, 0.62);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(10px);
+
+  box-shadow: 0 14px 34px rgba(0,0,0,0.45);
+
+  transition: transform 160ms ease, border-color 180ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .mapCta:hover {
+    transform: translateY(-1px);
+    border-color: rgba(37, 99, 235, 0.22);
+  }
+}
+
+.mapNote {
+  margin: 10px 0 0;
+  font-size: 12px;
+  line-height: 1.45;
+  color: rgba(174, 180, 189, 0.9);
+}
+
+@media (max-width: 1023px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .mapPanel {
+    position: static;
+  }
+
+  .mapFrame {
+    height: min(52vh, 520px);
+  }
+}
+
+@media (max-width: 560px) {
+  .actions {
+    flex-direction: column;
+  }
+  .primaryBtn,
+  .secondaryBtn {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .primaryBtn,
+  .secondaryBtn,
+  .mapLink,
+  .itemValue a,
+  .itemHint a,
+  .mapCta {
+    transition: none !important;
+  }
+}
