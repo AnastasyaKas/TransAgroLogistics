@@ -14,10 +14,10 @@ const Footer: React.FC = () => {
                         <h3 className={styles.title}>Контакты</h3>
 
                         <a
-                            href="mailto:info@transagro.group"
+                            href="mailto:site@transagro.group"
                             className={styles.contactLink}
                         >
-                            info@transagro.group
+                            site@transagro.group
                         </a>
 
                         <p className={styles.address}>
