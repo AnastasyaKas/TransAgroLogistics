@@ -73,7 +73,6 @@ const AboutHeader = () => {
                             <img
                                 src={aboutHeaderDesktopJpg}
                                 alt="Truck"
-                                loading="lazy"
                                 className={styles.imageContent}
                             />
                         </picture>

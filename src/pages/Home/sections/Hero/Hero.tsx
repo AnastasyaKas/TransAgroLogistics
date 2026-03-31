@@ -23,7 +23,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenPopup }) => {
                             className={styles.heroTitleSvg}
                             src={heroTitleSvg}
                             alt="Логистика для бизнеса"
-                            loading="eager"
+                            fetchPriority="high"
                         />
 
                         <p className={styles.heroSubtitle}>
